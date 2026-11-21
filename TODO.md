@@ -82,7 +82,13 @@ Dernière mise à jour : 2026-11-21 (badges, sons par page, musiques YouTube)
 - [x] Intrigue de fond changée (2026-11-21) : perturbations issues de mondes parallèles qui tentent de s'insérer dans notre monde réel (plus d'"anachronique" ni d'"époque" pour les objets)
 - [ ] Régénérer les MP3 (textes.json a changé : mondes parallèles) et relire les fiches dans scenario/univers.md
 - [ ] Créer les pages d'épreuve manquantes pour aventure.html (Star Wars, K-Pop, Montmartre, Mousquetaires) : Entrée ou postMessage {type:"next"} = épreuve finie
-- [ ] Page de conclusion : ajouter le code du coffre une fois défini
+- [ ] Écran final "Mission accomplie" en 4 temps (validé) : 1) vortex final et plan avec les 5 gemmes allumées, 2) retour du chef (texte tapé, mondes à leur place), 3) tampon "Mission accomplie" et rapport clos, 4) mot final à trouver puis félicitations. Confettis rouge/jaune/crème (canvas) et fanfare synthétisée (Web Audio)
+- [ ] Mécanisme final à la Fort Boyard (validé) : chaque épreuve donne un mot, les 5 mots font penser au mot final CLAIRE (clair). Mots validés, dans l'ordre de jeu : Star Wars = OBSCURE (côté obscur ; l'utilisateur a confirmé ce choix après l'avoir remis en question), K-Pop = BRILLANTE (Briller), Montmartre = LUMINEUSE (lumière des peintres), Mousquetaires = NETTE (touche nette sur la cible), Harry Potter = TRANSPARENTE (cape d'invisibilité, potion limpide), accepter "clair" et "claire" comme réponse, encoder la réponse (hash) dans la page
+- [x] Cadeaux à emporter (validé) : diplôme d'agent, pochette de 5 souvenirs, photo d'équipe
+- [x] Modèle de diplôme : html/diplomes.html (A4 paysage, nom, nom de code, spécialité, signature du chef, tampon)
+- [ ] Imprimer les diplômes (papier épais) et les remplir
+- [ ] Pochette de 5 souvenirs, un par univers : fiole pailletée (Harry Potter), médaille en chocolat (Mousquetaires), bracelet lumineux (K-Pop), bâton fluo (Star Wars), carte postale de Montmartre (jeu de piste). Acheter 4 à 6 exemplaires de chaque, prévoir 4 à 6 pochettes
+- [ ] Photo d'équipe en agents (fond rouge ou écran du plan), impression ou envoi aux parents
 - [ ] Option inspirée de la série Sliders : variante du vortex en bleu et blanc, objet "Chronomètre" de l'agence (sans compte à rebours visible), à trancher. Ne réutiliser ni images, ni musique, ni noms de la série
 - [ ] Sons et musique par page : chaque page HTML (briefing, portails, potions, K-Pop, Star Wars, jeu de piste, final) embarque ses propres sons et sa musique d'ambiance (fichiers locaux dans audio/, lecture hors ligne, touche M pour couper). Décider : sons synthétisés en Web Audio (sonnerie, tampon, jingle) ou fichiers MP3 libres de droits ; musiques de K-Pop ("Briller", "Ton sauveur") fournies par le maître du jeu
 - [ ] Définir le personnage récurrent du directeur (portrait SVG ou illustration simple en HTML)

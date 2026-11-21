@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diplômes d'agent</title>
+<style>
+  :root { --deep: #2a0508; --red: #e8142b; --black: #111111; --yellow: #ffe14d; --gold: #ffd23f; --cream: #fff1d6; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #ddd; font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif; color: var(--black); }
+  .bar { background: var(--black); color: var(--cream); padding: 10px 16px; font-size: 14px; line-height: 1.5; }
+  .bar button { font: inherit; padding: 4px 12px; margin-left: 8px; cursor: pointer; }
+  .page { width: 297mm; height: 210mm; margin: 10px auto; background: var(--cream); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  .frame { position: absolute; inset: 8mm; border: 2mm solid var(--black); outline: 1mm solid var(--red); outline-offset: -4mm; }
+  .stripe { position: absolute; left: 8mm; right: 8mm; height: 9mm; background: repeating-linear-gradient(135deg, var(--black) 0 6mm, var(--yellow) 6mm 12mm); }
+  .stripe.top { top: 8mm; } .stripe.bottom { bottom: 8mm; }
+  .content { position: relative; text-align: center; width: 230mm; }
+  .org { display: inline-block; background: var(--red); color: #fff; font-weight: bold; letter-spacing: .3em; text-transform: uppercase; font-size: 5mm; padding: 1.5mm 8mm; border-radius: 99mm; border: .6mm solid var(--black); }
+  h1 { font-size: 17mm; margin: 8mm 0 2mm; line-height: 1; text-transform: uppercase; letter-spacing: .06em; text-shadow: 1mm 1mm 0 var(--yellow); }
+  .line { font-size: 6mm; margin: 3mm 0; }
+  .name { font-size: 15mm; font-weight: bold; color: var(--red); min-width: 120mm; display: inline-block; border-bottom: .5mm solid var(--black); outline: none; line-height: 1.2; }
+  .code { font-size: 7mm; font-weight: bold; }
+  .code span[contenteditable] { display: inline-block; min-width: 50mm; border-bottom: .4mm solid var(--black); outline: none; }
+  .spec { display: inline-block; margin: 4mm 0 2mm; background: var(--black); color: var(--yellow); font-weight: bold; text-transform: uppercase; letter-spacing: .1em; font-size: 7mm; padding: 2mm 8mm; border-radius: 4mm; }
+  .spec select { font: inherit; color: inherit; background: transparent; border: 0; text-transform: uppercase; letter-spacing: inherit; appearance: none; text-align: center; }
+  .text { font-size: 5.2mm; line-height: 1.4; margin: 5mm auto 0; max-width: 200mm; }
+  .sign { margin-top: 9mm; display: flex; justify-content: space-between; align-items: flex-end; padding: 0 14mm; }
+  .sign .who { font-size: 4.5mm; border-top: .4mm solid var(--black); padding-top: 1.5mm; min-width: 60mm; }
+  .sign .chief { font-family: "Brush Script MT", "Segoe Script", cursive; font-size: 11mm; color: var(--deep); line-height: 1; }
+  .stamp { width: 38mm; height: 38mm; border: 1.4mm solid var(--red); border-radius: 50%; color: var(--red); display: flex; align-items: center; justify-content: center; text-align: center; font-weight: bold; text-transform: uppercase; font-size: 5mm; line-height: 1.1; transform: rotate(-12deg); outline: .6mm solid var(--red); outline-offset: -3.5mm; }
+  @media print {
+    @page { size: A4 landscape; margin: 0; }
+    body { background: #fff; } .bar { display: none; }
+    .page { margin: 0; page-break-after: always; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="bar">
+  Diplômes d'agent, à imprimer en A4 paysage (couleurs activées). Cliquer sur le nom, le nom de code ou la spécialité pour modifier.
+  <button onclick="addPage()">Ajouter un diplôme</button>
+  <button onclick="window.print()">Imprimer</button>
+</div>
+<div id="pages"></div>
+<script>
+  var SPECS = ["Décodeur", "Éclaireur", "Stratège", "Acrobate", "Mémoire", "Voix"];
+  var pages = document.getElementById("pages");
+  function addPage(i) {
+    var opts = SPECS.map(function (s, k) { return '<option' + (k === (i || 0) ? " selected" : "") + '>' + s + '</option>'; }).join("");
+    var d = document.createElement("div");
+    d.className = "page";
+    d.innerHTML =
+      '<div class="frame"></div><div class="stripe top"></div><div class="stripe bottom"></div>' +
+      '<div class="content">' +
+        '<div class="org">Agence Chronos</div>' +
+        '<h1>Diplôme d\'agent</h1>' +
+        '<div class="line">Le quartier général décerne ce diplôme à</div>' +
+        '<div class="name" contenteditable="true" spellcheck="false">&nbsp;</div>' +
+        '<div class="code">nom de code : <span contenteditable="true" spellcheck="false">&nbsp;</span></div>' +
+        '<div class="spec">Spécialité : <select>' + opts + '</select></div>' +
+        '<div class="text">Pour avoir traversé cinq mondes, renvoyé cinq objets intrus à leur place et protégé notre monde réel. Mission accomplie.</div>' +
+        '<div class="sign"><div><div class="chief">Le Chef</div><div class="who">Le Chef, Agence Chronos</div></div><div class="stamp">Mission<br>accomplie</div></div>' +
+      '</div>';
+    pages.appendChild(d);
+  }
+  for (var i = 0; i < SPECS.length; i++) addPage(i);
+</script>
+</body>
+</html>
