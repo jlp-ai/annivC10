@@ -23,14 +23,15 @@
   .tpl svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
 
   /* cartes LUMINEUSE */
-  .g4 { grid-template-columns: repeat(2, 92mm); grid-auto-rows: 125mm; gap: 8mm 6mm; padding-top: 12mm; }
-  .syl { position: relative; width: 92mm; height: 125mm; border: 0.35mm dashed var(--black); border-radius: 4mm; padding: 3mm; }
-  .syl .in { width: 100%; height: 100%; border: 0.9mm solid var(--black); border-radius: 3mm; background: var(--cream); overflow: hidden; position: relative; display: flex; flex-direction: column; }
-  .syl .top { background: var(--red); color: #fff; text-align: center; font-weight: bold; letter-spacing: .22em; text-transform: uppercase; font-size: 3.6mm; padding: 3mm 0; border-bottom: 0.9mm solid var(--black); }
-  .syl .step { text-align: center; font-size: 3.2mm; letter-spacing: .12em; text-transform: uppercase; color: var(--red); font-weight: bold; margin-top: 4mm; }
-  .syl .big { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 40mm; font-weight: bold; color: var(--black); letter-spacing: .02em; }
-  .stamp { position: absolute; right: 5mm; bottom: 9mm; transform: rotate(-14deg); border: 0.9mm solid var(--red); color: var(--red); border-radius: 2mm; padding: 1.4mm 3mm; text-align: center; font-weight: bold; text-transform: uppercase; letter-spacing: .1em; font-size: 3.2mm; line-height: 1.25; background: rgba(255,255,255,.35); }
-  .stamp b { display: block; font-size: 4.2mm; }
+  .g4 { grid-template-columns: repeat(3, 60mm); grid-auto-rows: 64mm; gap: 5mm 4mm; padding-top: 10mm; }
+  .syl { position: relative; width: 60mm; height: 64mm; border: 0.35mm dashed var(--black); border-radius: 3mm; padding: 2mm; }
+  .syl .in { width: 100%; height: 100%; border: 0.7mm solid var(--black); border-radius: 2.2mm; background: var(--cream); overflow: hidden; position: relative; display: flex; flex-direction: column; }
+  .syl .top { background: var(--red); color: #fff; text-align: center; font-weight: bold; letter-spacing: .2em; text-transform: uppercase; font-size: 2.6mm; padding: 1.8mm 0; border-bottom: 0.7mm solid var(--black); }
+  .syl .step { text-align: center; font-size: 2.6mm; letter-spacing: .1em; text-transform: uppercase; color: var(--red); font-weight: bold; margin-top: 2mm; }
+  .syl .big { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 24mm; padding-bottom: 6mm; font-weight: bold; color: var(--black); line-height: 1; }
+  .syl.blank .big { font-size: 10mm; color: #999; }
+  .stamp { position: absolute; right: 2mm; bottom: 5.5mm; transform: rotate(-14deg); border: 0.9mm solid var(--red); color: var(--red); border-radius: 2mm; padding: 0.8mm 1.8mm; text-align: center; font-weight: bold; text-transform: uppercase; letter-spacing: .08em; font-size: 2.2mm; line-height: 1.2; background: rgba(255,255,255,.35); }
+  .stamp b { display: block; font-size: 2.8mm; }
   .stripe { height: 5mm; background: repeating-linear-gradient(135deg, var(--black) 0 3mm, var(--yellow) 3mm 6mm); }
 
   /* cartes NETTE */
@@ -68,7 +69,7 @@
 <div class="cap noprint">Page 1 : gabarit des 7 cartes à calquer au marqueur ou à la peinture fluorescente.</div>
 <section class="sheet g8" id="p1"></section>
 
-<div class="cap noprint">Page 2 : 4 cartes syllabes à plastifier.</div>
+<div class="cap noprint">Page 2 : 9 cartes lettres (L U M I N E U S E) et 3 cartes vierges, à plastifier.</div>
 <section class="sheet g4" id="p2"></section>
 
 <div class="cap noprint">Page 3 : 5 cartes lettres à coller au dos des cibles.</div>
@@ -98,14 +99,15 @@
   }
   document.getElementById("p1").innerHTML = h1;
 
-  // Page 2 : LUMINEUSE
-  var syl = ["LU", "MI", "NEU", "SE"];
+  // Page 2 : LUMINEUSE, 9 lettres puis 3 cartes vierges
+  var word2 = "LUMINEUSE";
   var h2 = "";
-  for (var j = 0; j < syl.length; j++) {
-    h2 += '<div class="syl"><div class="in">' +
+  for (var j = 0; j < 12; j++) {
+    var blank = j >= word2.length;
+    h2 += '<div class="syl' + (blank ? ' blank' : '') + '"><div class="in">' +
       '<div class="top">Agence Chronos</div>' +
-      '<div class="step">Syllabe ' + (j + 1) + ' sur 4</div>' +
-      '<div class="big">' + syl[j] + '</div>' +
+      '<div class="step">' + (blank ? 'Carte vierge' : 'Étape ' + (j + 1) + ' sur 9') + '</div>' +
+      '<div class="big">' + (blank ? '&nbsp;' : word2.charAt(j)) + '</div>' +
       '<div class="stamp">Agence<b>Chronos</b>Validé</div>' +
       '<div class="stripe"></div>' +
       '</div></div>';

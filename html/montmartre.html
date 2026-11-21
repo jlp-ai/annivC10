@@ -23,11 +23,11 @@
   .panel b { color: var(--yellow); }
   .warn { margin-top: 1.4vh; background: var(--yellow); color: var(--deep); font-weight: bold; border-radius: 12px; padding: 1vh 2vw; font-size: clamp(20px, 3.4vh, 44px); }
 
-  /* syllable tracker */
-  .syl { display: flex; gap: 1.2vw; justify-content: center; }
-  .sy { min-width: 11vw; padding: .6vh 1.2vw; border-radius: 14px; border: 4px solid var(--black); background: rgba(0,0,0,.4); color: transparent; font-weight: bold; text-align: center; font-size: clamp(36px, 9vh, 120px); line-height: 1.1; box-shadow: 0 6px 0 var(--black); }
-  .sy.on { background: var(--yellow); color: var(--deep); animation: pop .5s cubic-bezier(.2,1.4,.4,1); }
-  .sy.cur { border-color: var(--gold); box-shadow: 0 0 24px rgba(255,210,63,.7), 0 6px 0 var(--black); }
+  /* word boxes: one per letter, empty until found */
+  .cells { display: flex; gap: .8vw; justify-content: center; flex-wrap: wrap; }
+  .cell { width: 7.4vw; max-width: 10vh; min-width: 36px; aspect-ratio: 3 / 4; border-radius: 12px; border: 4px solid var(--black); background: rgba(0,0,0,.4); color: transparent; font-weight: bold; display: flex; align-items: center; justify-content: center; font-size: clamp(32px, 9vh, 120px); line-height: 1; box-shadow: 0 6px 0 var(--black); }
+  .cell.on { background: var(--yellow); color: var(--deep); animation: pop .5s cubic-bezier(.2,1.4,.4,1); }
+  .cell.cur { border-color: var(--gold); box-shadow: 0 0 24px rgba(255,210,63,.7), 0 6px 0 var(--black); }
 
   .stepbox { flex: 1; min-height: 0; width: 100%; display: flex; gap: 3vw; align-items: stretch; justify-content: center; }
   .col { flex: 1; max-width: 46vw; display: flex; flex-direction: column; gap: 1.6vh; justify-content: center; }
@@ -40,26 +40,30 @@
   .hintbox small { display: block; color: var(--muted); font-size: .55em; letter-spacing: .14em; text-transform: uppercase; margin-bottom: .5vh; }
   .big { font-size: clamp(30px, 6vh, 76px); font-weight: bold; color: var(--yellow); line-height: 1.25; text-align: center; }
 
+  #alert { position: fixed; top: 0; left: 0; right: 0; z-index: 30; display: none; background: var(--black); color: var(--yellow); border-bottom: 4px solid var(--red); padding: 1.2vh 3vw; font-size: clamp(16px, 2.6vh, 32px); text-align: center; font-weight: bold; }
+  #alert.on { display: block; }
+
   .hud { position: fixed; bottom: 1vh; left: 0; right: 0; padding: 0 3vw; font-size: 12px; line-height: 1.3; text-align: center; color: var(--muted); opacity: .7; z-index: 6; }
 </style>
 </head>
 <body>
+<div id="alert"></div>
 
-<!-- Screen 0: start screen, in titi language -->
+<!-- Screen 0: start screen, in titi language. The word is never written here. -->
 <section class="view center" id="v0">
   <div class="org">Agence Chronos</div>
   <h1>Les titis de Montmartre</h1>
   <div class="panel">
     <p>Ohé, les titis ! Ici, c'est Montmartre, mes p'tits loups.</p>
-    <p>Quatre cartes sont planquées dans le quartier. Chacune cache <b>une syllabe</b>.</p>
+    <p>Des cartes sont planquées dans le quartier. Chacune cache <b>des lettres</b>.</p>
     <p>Ouvrez les mirettes, creusez-vous la cervelle : pour des malins comme vous, c'est du gâteau.</p>
     <div class="warn">Restez groupés avec votre adulte. Ne traversez jamais sans lui.</div>
   </div>
 </section>
 
-<!-- Screens 1 to 4: game master help -->
+<!-- Screens 1 to N: game master help -->
 <section class="view" id="vs">
-  <div class="syl" id="syl"></div>
+  <div class="cells" id="cells"></div>
   <div class="stepbox">
     <div class="col">
       <div class="step" id="step"></div>
@@ -72,56 +76,84 @@
   </div>
 </section>
 
-<!-- Screen 5: all syllables found -->
+<!-- Screen N+1: all letters found -->
 <section class="view center" id="v5">
   <div class="org">Agence Chronos</div>
   <h1>Bravo, les titis !</h1>
-  <div class="syl" id="syl2"></div>
-  <div class="big">Les quatre cartes sont réunies.<br>Remettez-les dans le bon ordre pour lire le mot.</div>
+  <div class="cells" id="cells2"></div>
+  <div class="big">Toutes les lettres sont réunies.<br>Lisez le mot, puis tapez-le à l'écran.</div>
 </section>
 
-<div class="hud">Espace = syllabe trouvée et étape suivante, Flèches = naviguer, Retour arrière = annuler la dernière syllabe, H = indice suivant (1, 2, 3, puis masqué), I = écran de départ, F = plein écran, Entrée = ouvrir la saisie du mot</div>
+<div class="hud">Espace = étape réussie et suivante, Flèches = naviguer, Retour arrière = annuler la dernière étape, H = indice suivant (1, 2, 3, puis masqué), I = écran de départ, F = plein écran, Entrée = ouvrir la saisie du mot</div>
 
 <script>
   // ---------------------------------------------------------------------------
-  // CONFIG: to adapt once the perimeter is defined.
-  //  - place: exact location of the hidden card (game master only)
-  //  - riddle: text read aloud to the children (generic spotting riddles by default)
-  //  - hints: coup de pouce, piste, solution
+  // CONFIG: to adapt after the scouting walk (the number of stops is free).
+  //  word: the word to find. The letters of all steps, concatenated, must equal it.
+  //  steps[]: { letters, place, riddle, hints:[3] }
+  //    letters: one or several letters hidden on the card of this step
+  //             (ex. 9 steps of one letter, or 5 steps "LU","MI","N","EU","SE")
+  //    place:   exact location of the hidden card (game master only)
+  //    riddle:  text read aloud to the children
+  //    hints:   coup de pouce, piste, solution
+  //  The places and riddles below are generic PLACEHOLDERS to replace.
   // ---------------------------------------------------------------------------
+  function S(letters, place, riddle, h2) {
+    return { letters: letters, place: place, riddle: riddle,
+      hints: ["Lisez l'énigme à voix haute, tous ensemble.", h2, "L'adulte montre l'endroit."] };
+  }
   var CONFIG = {
+    word: "LUMINEUSE",
     steps: [
-      { syllable: "LU", place: "À renseigner (un escalier du périmètre)",
-        riddle: "Trouvez un escalier. Comptez ses marches, une par une. La carte est cachée à l'endroit que raconte ce nombre.",
-        hints: ["Lisez l'énigme à voix haute, tous ensemble.", "Cherchez un escalier ou une volée de marches, pas très loin du départ.", "L'adulte montre l'escalier et la bonne marche."] },
-      { syllable: "MI", place: "À renseigner (une porte colorée du périmètre)",
-        riddle: "Cherchez une porte qui n'a pas la même couleur que ses voisines. Regardez bien autour d'elle : la carte n'est jamais loin.",
-        hints: ["Une porte, ça se repère de loin. Levez le nez et regardez autour de vous.", "La porte est d'une couleur vive. Regardez à gauche et à droite du trottoir.", "L'adulte montre la porte et la cachette."] },
-      { syllable: "NEU", place: "À renseigner (une inscription sur un mur)",
-        riddle: "Un mur a quelque chose à dire : une inscription, un nom, une plaque. Lisez-la en entier. La carte se cache juste en dessous.",
-        hints: ["Regardez les murs, à hauteur d'enfant.", "L'inscription est gravée ou peinte. Elle est facile à lire de près.", "L'adulte montre le mur et la plaque."] },
-      { syllable: "SE", place: "À renseigner (dernière cachette, par exemple un numéro de rue)",
-        riddle: "Dernière étape, mes p'tits loups ! Trouvez un numéro de rue qui contient un chiffre impair. La dernière carte est tout près.",
-        hints: ["Relisez l'énigme en cherchant les numéros.", "Regardez les plaques de rue et les numéros sur les portes.", "L'adulte montre le numéro et la cachette."] }
+      S("L", "À renseigner (un escalier)", "Trouvez un escalier. Comptez ses marches, une par une. La carte est cachée là où le nombre vous mène.", "Cherchez des marches, pas très loin du départ."),
+      S("U", "À renseigner (une porte colorée)", "Cherchez une porte d'une autre couleur que ses voisines. La carte n'est jamais loin d'elle.", "La porte est de couleur vive. Regardez des deux côtés du trottoir."),
+      S("M", "À renseigner (une inscription sur un mur)", "Un mur a quelque chose à dire : une inscription, un nom, une plaque. Lisez-la en entier. La carte se cache juste en dessous.", "Regardez les murs, à hauteur d'enfant."),
+      S("I", "À renseigner (un numéro de rue)", "Trouvez un numéro de rue qui contient un chiffre impair. La carte est tout près.", "Regardez les plaques et les numéros sur les portes."),
+      S("N", "À renseigner (un banc ou un arbre)", "Cherchez un banc ou un arbre au bord du chemin. Comptez les lattes ou les troncs. La carte attend à l'endroit du nombre.", "Regardez les bancs, puis les arbres alentour."),
+      S("E", "À renseigner (des volets ou une fenêtre)", "Trouvez une fenêtre dont les volets ont une couleur rare. La carte dort sous le rebord.", "Levez les yeux, puis baissez-les sous la fenêtre."),
+      S("U", "À renseigner (un lampadaire)", "Un lampadaire porte un numéro ou une marque. Lisez-la. La carte est collée tout près.", "Regardez le pied du lampadaire."),
+      S("S", "À renseigner (une enseigne)", "Une enseigne montre un dessin. Dites ce qu'elle représente. La carte se cache dans le coin voisin.", "Cherchez une enseigne ou une vitrine."),
+      S("E", "À renseigner (dernière cachette)", "Dernière étape, mes p'tits loups ! Cherchez la plus vieille plaque du quartier. La dernière carte est tout près.", "Regardez les plaques au ras des murs.")
     ]
   };
 
   var $ = function (id) { return document.getElementById(id); };
-  var N = CONFIG.steps.length;
-  var found = 0;       // number of syllables found
+  var WORD = CONFIG.word, N = CONFIG.steps.length;
+  var found = 0;       // number of steps found
   var view = 0;        // 0 = start, 1..N = steps, N+1 = end
   var hint = 0;
 
-  function buildSyl(id) {
+  // Check at load: the letters of all steps must form the word.
+  (function () {
+    var all = "", i;
+    for (i = 0; i < N; i++) all += CONFIG.steps[i].letters;
+    if (all.toUpperCase() !== WORD.toUpperCase()) {
+      var a = $("alert");
+      a.textContent = "Attention, maître du jeu : les lettres des étapes ne forment pas le mot attendu (CONFIG.word). Il y a " + all.length + " lettres dans les étapes pour " + WORD.length + " attendues. À corriger dans CONFIG.steps.";
+      a.className = "on";
+    }
+  })();
+
+  // Number of letters revealed after "n" steps found
+  function revealedCount(n) {
+    var c = 0;
+    for (var i = 0; i < n && i < N; i++) c += CONFIG.steps[i].letters.length;
+    return c;
+  }
+  function buildCells(id) {
     var box = $(id); box.innerHTML = "";
-    for (var k = 0; k < N; k++) {
-      var d = document.createElement("div"); d.className = "sy"; d.textContent = CONFIG.steps[k].syllable; box.appendChild(d);
+    for (var k = 0; k < WORD.length; k++) {
+      var d = document.createElement("div"); d.className = "cell"; d.setAttribute("data-k", k); box.appendChild(d);
     }
   }
-  function paintSyl(id) {
-    var kids = $(id).children;
+  function paintCells(id) {
+    var rc = revealedCount(found), kids = $(id).children, nextEnd = revealedCount(found + 1);
     for (var k = 0; k < kids.length; k++) {
-      kids[k].className = "sy" + (k < found ? " on" : "") + (k === found && view > 0 && view <= N ? " cur" : "");
+      var on = k < rc, was = kids[k].className.indexOf("on") >= 0;
+      kids[k].className = "cell" + (on ? " on" : "") + (!on && k < nextEnd && view > 0 && view <= N ? " cur" : "");
+      // letters are only written into boxes already found
+      kids[k].textContent = on ? WORD.charAt(k) : "";
+      if (on && was) kids[k].style.animation = "none"; else kids[k].style.animation = "";
     }
   }
 
@@ -129,10 +161,10 @@
     $("v0").classList.toggle("on", view === 0);
     $("vs").classList.toggle("on", view >= 1 && view <= N);
     $("v5").classList.toggle("on", view === N + 1);
-    paintSyl("syl"); paintSyl("syl2");
+    paintCells("cells"); paintCells("cells2");
     if (view >= 1 && view <= N) {
-      var s = CONFIG.steps[view - 1];
-      $("step").textContent = "Étape " + view + " sur " + N + (view - 1 < found ? " (syllabe déjà trouvée)" : "");
+      var s = CONFIG.steps[view - 1], nl = s.letters.length;
+      $("step").textContent = "Étape " + view + " sur " + N + " : la carte livre " + nl + (nl > 1 ? " lettres" : " lettre") + (view - 1 < found ? " (déjà trouvée)" : "");
       $("riddle").textContent = s.riddle;
       $("place").innerHTML = "<small>Maître du jeu</small>";
       var t = document.createElement("span"); t.textContent = s.place; $("place").appendChild(t);
@@ -168,8 +200,8 @@
     else if (k === "f" || k === "F") { try { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); } catch (x) {} }
   });
 
-  // montmartre.html#V = open screen V (0 start, 1 to 4 steps, 5 end), steps before V already found; #VhM adds hint level M (testing)
-  buildSyl("syl"); buildSyl("syl2");
+  // montmartre.html#V = open screen V (0 start, 1..N steps, N+1 end), steps before V already found; #VhM adds hint level M (testing)
+  buildCells("cells"); buildCells("cells2");
   var hm = /^#(\d+)(?:h(\d))?/.exec(location.hash);
   if (hm) { view = Math.min(N + 1, parseInt(hm[1], 10)); found = Math.min(N, Math.max(0, view - 1)); hint = hm[2] ? Math.min(3, parseInt(hm[2], 10)) : 0; }
   render();

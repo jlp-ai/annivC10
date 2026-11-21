@@ -22,9 +22,10 @@ Mots, dans l'ordre de jeu : OBSCURE, BRILLANTE, LUMINEUSE, NETTE, TRANSPARENTE. 
 
 ## 3. Titis de Montmartre (dehors) : LUMINEUSE
 
-- **Mécanisme** : jeu de piste en 4 étapes, chacune livre une syllabe sur une carte cachée : LU, MI, NEU, SE. Les cartes sont à retrouver avec une énigme de repérage (nombre de marches, couleur d'une porte, inscription).
+- **Mécanisme** : jeu de piste dont chaque étape livre une ou plusieurs lettres successives de LUMINEUSE (L U M I N E U S E) sur une carte cachée. Le nombre d'étapes est libre, à fixer après le repérage : par défaut 9 étapes d'une lettre, ou par exemple 5 étapes « LU », « MI », « N », « EU », « SE ». Les cartes sont à retrouver avec une énigme de repérage (nombre de marches, couleur d'une porte, inscription). La page html/montmartre.html sert d'écran de départ et d'aide du maître du jeu : cases du mot qui se remplissent au fil des étapes, énoncés et indices à adapter dans CONFIG.steps (la page vérifie que les lettres des étapes forment bien le mot).
+- **Repérage** : lieux et énigmes actuels sont des placeholders génériques, à remplacer après le repérage du périmètre.
 - **Spécialités** : Stratège (carte, itinéraire), Éclaireur (cartes cachées), Mémoire (détails du décor).
-- **Accessoires** : 4 cartes plastifiées, 4 énigmes écrites, sacs étanches, plan du périmètre, adulte accompagnateur par groupe, plan B en cas de pluie (cartes cachées dans l'immeuble).
+- **Accessoires** : une carte plastifiée et une énigme écrite par étape (4 à 9 selon le repérage), sacs étanches, plan du périmètre, adulte accompagnateur par groupe, plan B en cas de pluie (cartes cachées dans l'immeuble).
 - **Indices** : 1) lisez l'énigme à voix haute. 2) donne la direction. 3) l'adulte montre l'endroit.
 
 ## 4. Mousquetaires (chambre 2) : NETTE

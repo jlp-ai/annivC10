@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fiche de repérage du jeu de piste</title>
+<style>
+  :root { --red: #e8142b; --black: #111111; --yellow: #ffe14d; --cream: #fff1d6; }
+  * { box-sizing: border-box; }
+  @page { size: A4 landscape; margin: 0; }
+  body { margin: 0; background: #ddd; font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif; color: var(--black); }
+  .bar { background: var(--black); color: var(--cream); padding: 10px 16px; font-size: 14px; line-height: 1.5; }
+  .bar button { font: inherit; padding: 4px 12px; margin-left: 8px; cursor: pointer; }
+  .sheet { width: 297mm; height: 210mm; margin: 10px auto; padding: 7mm 8mm 0; background: #fff; position: relative; overflow: hidden; }
+  h1 { margin: 0; font-size: 6.4mm; letter-spacing: .08em; text-transform: uppercase; display: flex; align-items: center; gap: 4mm; }
+  h1 .tag { background: var(--red); color: #fff; font-size: 3mm; padding: 1mm 3mm; border-radius: 99mm; letter-spacing: .14em; }
+  h1 .pg { margin-left: auto; font-size: 3mm; color: #666; letter-spacing: .1em; }
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; margin-top: 3mm; }
+  th { background: var(--black); color: var(--yellow); font-size: 2.6mm; letter-spacing: .08em; text-transform: uppercase; padding: 1.4mm 1mm; border: 0.3mm solid var(--black); }
+  td { border: 0.3mm solid var(--black); padding: 0.8mm 1.2mm; font-size: 3mm; line-height: 1.25; vertical-align: top; overflow: hidden; }
+  tr.p1 td { height: 12.2mm; }
+  tr.p2 td { height: 17.2mm; }
+  td.n { text-align: center; font-weight: bold; background: var(--cream); font-size: 3.2mm; vertical-align: middle; }
+  td.l { text-align: center; font-weight: bold; font-size: 7mm; color: var(--red); vertical-align: middle; }
+  td.k { text-align: center; vertical-align: middle; }
+  tr.edge td.n { background: var(--yellow); }
+  tr.edge td { background: #fffbe8; }
+  .box { display: inline-block; width: 4.6mm; height: 4.6mm; border: 0.5mm solid var(--black); border-radius: 0.8mm; cursor: pointer; vertical-align: middle; position: relative; }
+  .box.on::after { content: ""; position: absolute; left: 0.6mm; top: -0.4mm; width: 1.6mm; height: 3.4mm; border: solid var(--red); border-width: 0 0.8mm 0.8mm 0; transform: rotate(40deg); }
+  .photo { color: #aaa; font-size: 2.4mm; }
+  .tips { margin-top: 4mm; border: 0.5mm solid var(--black); border-radius: 2mm; background: var(--cream); padding: 2.4mm 4mm; font-size: 3mm; line-height: 1.4; }
+  .tips b { color: var(--red); text-transform: uppercase; letter-spacing: .1em; }
+  .tips ul { margin: 1mm 0 0; padding-left: 5mm; columns: 2; column-gap: 8mm; }
+  .tips li { break-inside: avoid; margin-bottom: .6mm; }
+  .stripe { position: absolute; left: 0; right: 0; bottom: 0; height: 4mm; background: repeating-linear-gradient(135deg, var(--black) 0 3mm, var(--yellow) 3mm 6mm); }
+  [contenteditable]:focus { background: #fff8cf; outline: none; }
+  @media print {
+    body { background: #fff; }
+    .bar { display: none; }
+    .sheet { margin: 0; page-break-after: always; break-after: page; }
+    .sheet:last-child { page-break-after: auto; break-after: auto; }
+    [contenteditable]:focus { background: transparent; }
+    .photo { color: #ccc; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  Fiche de repérage, 2 pages A4 paysage. Cliquer sur une case pour écrire, cliquer sur une case à cocher pour la cocher. Imprimer en échelle 100 %, couleurs activées, ou remplir à l'écran.
+  <button onclick="window.print()">Imprimer</button>
+</div>
+
+<main>
+<section class="sheet">
+  <h1>Repérage du jeu de piste <span class="tag">9 étapes, 1 lettre chacune</span><span class="pg">Page 1 sur 2 : lieux, cachettes, énigmes</span></h1>
+  <table>
+    <colgroup>
+      <col style="width:15mm"><col style="width:11mm"><col style="width:48mm"><col style="width:58mm"><col style="width:62mm"><col style="width:22mm"><col style="width:23mm"><col style="width:23mm"><col style="width:22mm">
+    </colgroup>
+    <thead><tr><th>Étape</th><th>Lettre</th><th>Lieu précis</th><th>Cachette</th><th>Énigme à poser</th><th>Distance</th><th>Adulte nécessaire</th><th>Traversée de rue</th><th>Abri si pluie</th></tr></thead>
+    <tbody id="t1"></tbody>
+  </table>
+  <div class="tips">
+    <b>Conseils de repérage</b>
+    <ul>
+      <li>Périmètre court : tout le parcours dure 15 à 20 minutes.</li>
+      <li>Rester visible depuis l'appartement, ou accompagné d'un adulte.</li>
+      <li>Éviter toute traversée de route sans adulte. Cocher la case et chercher un autre trajet.</li>
+      <li>Cachettes accessibles à des enfants de 10 ans, sans escalade ni objet lourd.</li>
+      <li>Vérifier qu'un passant ne peut pas retirer ni emporter la carte.</li>
+      <li>Prendre une photo de chaque cachette, avec un repère de décor, et noter l'heure du repérage.</li>
+    </ul>
+  </div>
+  <div class="stripe"></div>
+</section>
+
+<section class="sheet">
+  <h1>Repérage du jeu de piste <span class="tag">indices et croquis</span><span class="pg">Page 2 sur 2 : indices, photo ou croquis</span></h1>
+  <table>
+    <colgroup>
+      <col style="width:15mm"><col style="width:11mm"><col style="width:52mm"><col style="width:52mm"><col style="width:52mm"><col style="width:91mm">
+    </colgroup>
+    <thead><tr><th>Étape</th><th>Lettre</th><th>Indice 1 : coup de pouce</th><th>Indice 2 : piste</th><th>Indice 3 : solution</th><th>Photo à coller ou croquis</th></tr></thead>
+    <tbody id="t2"></tbody>
+  </table>
+  <div class="stripe"></div>
+</section>
+</main>
+
+<script>
+  var LETTERS = "LUMINEUSE";
+  var t1 = "", t2 = "", i;
+  function ed(txt) { return '<td contenteditable="true" spellcheck="false">' + (txt || "") + '</td>'; }
+  function chk() { return '<td class="k"><span class="box" onclick="this.className = (this.className.indexOf(\'on\') > -1 ? \'box\' : \'box on\')"></span></td>'; }
+
+  t1 += '<tr class="p1 edge"><td class="n">Départ</td><td class="l">&nbsp;</td>' + ed("Entrée de l'appartement") + ed("") + ed("") + ed("0 m") + chk() + chk() + chk() + '</tr>';
+  t2 += '<tr class="p2 edge"><td class="n">Départ</td><td class="l">&nbsp;</td>' + ed("") + ed("") + ed("") + '<td class="photo" contenteditable="true" spellcheck="false"></td></tr>';
+  for (i = 0; i < LETTERS.length; i++) {
+    t1 += '<tr class="p1"><td class="n">' + (i + 1) + '</td><td class="l">' + LETTERS.charAt(i) + '</td>' + ed() + ed() + ed() + ed() + chk() + chk() + chk() + '</tr>';
+    t2 += '<tr class="p2"><td class="n">' + (i + 1) + '</td><td class="l">' + LETTERS.charAt(i) + '</td>' + ed() + ed() + ed() + '<td class="photo" contenteditable="true" spellcheck="false"></td></tr>';
+  }
+  t1 += '<tr class="p1 edge"><td class="n">Arrivée</td><td class="l">&nbsp;</td>' + ed("Retour à l'appartement") + ed("") + ed("") + ed("") + chk() + chk() + chk() + '</tr>';
+  document.getElementById("t1").innerHTML = t1;
+  document.getElementById("t2").innerHTML = t2;
+</script>
+</body>
+</html>
