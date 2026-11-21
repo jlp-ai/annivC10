@@ -22,7 +22,7 @@ Cinq portails s'ouvrent dans l'appartement. Chaque univers confie à l'équipe u
 |---|---|---|---|
 | 1 | Star Wars | Épreuve dans le noir | OBSCURE (côté obscur) |
 | 2 | K-Pop Demon Hunters | Karaoké "N'oubliez pas les paroles" | BRILLANTE (la chanson Briller) |
-| 3 | Titis de Montmartre | Jeu de piste | LUMINEUSE (lumière des peintres) |
+| 3 | Titis de Montmartre | Jeu de piste | FONTAINE (à la claire fontaine) |
 | 4 | Mousquetaires | Figure + cible | NETTE (touche nette sur la cible) |
 | 5 | Harry Potter | Potion à réaliser | TRANSPARENTE (cape d'invisibilité, potion limpide) |
 
@@ -148,7 +148,7 @@ Lampe UV (lumière noire), peinture ou stylo fluorescent, rubans ou cordelettes 
 |---|---|---|---|---|
 | 1 | Star Wars | bureau, dans le noir | 7 cartes fluo lues à la lampe UV, texte défilant en introduction | OBSCURE |
 | 2 | K-Pop Demon Hunters | salon, télé | karaoké YouTube, 5 mots cachés (brouillage et son coupé), définition à trous | BRILLANTE |
-| 3 | Titis de Montmartre | dehors | jeu de piste, une lettre de LUMINEUSE trouvée à chaque étape (9 lettres, nombre d'étapes libre) | LUMINEUSE |
+| 3 | Titis de Montmartre | dehors | jeu de piste, une lettre de FONTAINE trouvée à chaque étape (8 lettres, nombre d'étapes libre) | FONTAINE |
 | 4 | Mousquetaires | chambre 2 | 5 figures, 5 cibles, cartes lettres N E T T E (fleurets en mousse) | NETTE |
 | 5 | Harry Potter | salon, table | potion et Lego, parchemin à l'encre invisible révélé au jus de chou rouge | TRANSPARENTE |
 

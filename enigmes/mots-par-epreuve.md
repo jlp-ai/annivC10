@@ -2,7 +2,7 @@
 
 Chaque épreuve rapporte un mot (Fort Boyard). Le mot existe en version physique, trouvée par les enfants pendant l'épreuve. Pour valider l'épreuve, les enfants le tapent à l'écran (le maître du jeu ouvre la saisie avec Entrée). Un mot faux fait trembler le champ et donne des indices progressifs : relire les indices, nombre de lettres, première lettre, dernière lettre. Un mot juste déclenche l'animation lettre par lettre du mot rapporté. Maj + Entrée force la validation si besoin.
 
-Mots, dans l'ordre de jeu : OBSCURE, BRILLANTE, LUMINEUSE, NETTE, TRANSPARENTE. Mot de passe final : CLAIRE.
+Mots, dans l'ordre de jeu : OBSCURE, BRILLANTE, FONTAINE, NETTE, TRANSPARENTE. Mot de passe final : CLAIRE.
 
 ## 1. Star Wars (bureau) : OBSCURE
 
@@ -20,9 +20,9 @@ Mots, dans l'ordre de jeu : OBSCURE, BRILLANTE, LUMINEUSE, NETTE, TRANSPARENTE. 
 - **Accessoires** : ordinateur relié à la télé, connexion internet, serveur local (python -m http.server 8000), enceinte, carnets imprimés et crayons, costumes (3 Saja Boys, 3 Huntr/x).
 - **Indices** : 1) cinq mots sont cachés. 2) leurs initiales. 3) la définition à trous.
 
-## 3. Titis de Montmartre (dehors) : LUMINEUSE
+## 3. Titis de Montmartre (dehors) : FONTAINE
 
-- **Mécanisme** : jeu de piste dont chaque étape livre une ou plusieurs lettres successives de LUMINEUSE (L U M I N E U S E) sur une carte cachée. Le nombre d'étapes est libre, à fixer après le repérage : par défaut 9 étapes d'une lettre, ou par exemple 5 étapes « LU », « MI », « N », « EU », « SE ». Les cartes sont à retrouver avec une énigme de repérage (nombre de marches, couleur d'une porte, inscription). La page html/montmartre.html sert d'écran de départ et d'aide du maître du jeu : cases du mot qui se remplissent au fil des étapes, énoncés et indices à adapter dans CONFIG.steps (la page vérifie que les lettres des étapes forment bien le mot).
+- **Mécanisme** : jeu de piste dont chaque étape livre une ou plusieurs lettres successives de FONTAINE (F O N T A I N E) sur une carte cachée. Le nombre d'étapes est libre, à fixer après le repérage : par défaut 8 étapes d'une lettre, ou par exemple 5 étapes « LU », « MI », « N », « EU », « SE ». Les cartes sont à retrouver avec une énigme de repérage (nombre de marches, couleur d'une porte, inscription). La page html/montmartre.html sert d'écran de départ et d'aide du maître du jeu : cases du mot qui se remplissent au fil des étapes, énoncés et indices à adapter dans CONFIG.steps (la page vérifie que les lettres des étapes forment bien le mot).
 - **Repérage** : lieux et énigmes actuels sont des placeholders génériques, à remplacer après le repérage du périmètre.
 - **Spécialités** : Stratège (carte, itinéraire), Éclaireur (cartes cachées), Mémoire (détails du décor).
 - **Accessoires** : une carte plastifiée et une énigme écrite par étape (4 à 9 selon le repérage), sacs étanches, plan du périmètre, adulte accompagnateur par groupe, plan B en cas de pluie (cartes cachées dans l'immeuble).

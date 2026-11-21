@@ -14,14 +14,14 @@ Dernière mise à jour : 2026-11-21. **Fête : dimanche 6 décembre 2026** (J-15
 
 - [ ] Garder ou non la voix du chef activée par défaut (P la coupe) ; garder la voix Azure ou passer à ElevenLabs (clé et voix dans le .env d'Onirologos)
 - [ ] Image de Montmartre : garder la photo du Sacré-Cœur (images/univers-5.jpg) ou revenir au dessin
-- [ ] Jeu de piste Montmartre : repérage prévu le 22 novembre (périmètre, durée, plan B pluie) ; les enfants trouvent les lettres successives de LUMINEUSE (9 lettres, une par étape, nombre d'étapes libre) ; lieux et énigmes à renseigner dans html/montmartre.html avec la fiche html/print-reperage-montmartre.html
+- [ ] Jeu de piste Montmartre : repérage prévu le 22 novembre (périmètre, durée, plan B pluie) ; les enfants trouvent les lettres successives de FONTAINE (8 lettres, une par étape, nombre d'étapes libre) ; lieux et énigmes à renseigner dans html/montmartre.html avec la fiche html/print-reperage-montmartre.html
 - [ ] Inventaire des Lego de l'appartement, choix des 2 constructions manquantes (propositions : Quai 9 3/4, Saule cogneur) et de l'objet caché de chacune ; mettre à jour html/potions.html
 - [ ] Prénom de Claire sur les supports non envoyés à un service externe (badge, invitation, écran de fin)
 - [ ] Confirmer que "chambre 1" est la chambre en haut à droite, statuer sur le balcon et l'entrée (jouables ou non)
 - [ ] Option : variante du vortex inspirée de Sliders (bleu et blanc), sans reprendre images, musique ni noms de la série
 
 ## Pages et code
-
+- [ ] Repérage Montmartre : si une vraie fontaine existe dans le périmètre, en faire une étape (le mot à trouver est FONTAINE, comme dans "à la claire fontaine")
 - [ ] K-Pop : confirmer à l'oreille les temps des 5 mots cachés (sous-titres automatiques YouTube) et placer le bandeau avec le mode calage (C, T, Y) ; vérifier que l'intégration des 2 vidéos est autorisée
 - [ ] Mousquetaires : renseigner le texte de chaque cible dans CONFIG de html/mousquetaires.html
 - [ ] Potions : mettre à jour html/potions.html (mot TRANSPARENTE, parchemin à l'encre invisible)
@@ -39,7 +39,7 @@ Dernière mise à jour : 2026-11-21. **Fête : dimanche 6 décembre 2026** (J-15
 - [ ] Invitation : html/print-invitation.html
 - [ ] Panneaux de porte "Zone temporelle instable" : html/print-panneaux.html (chambre 1, salle de bain, WC, extérieur, bureau)
 - [ ] Étiquettes de fioles : html/print-etiquettes.html
-- [ ] Cartes de mots : html/print-cartes-mots.html (7 cartes OBSCURE, 9 lettres LUMINEUSE, 5 lettres N E T T E, parchemin TRANSPARENTE)
+- [ ] Cartes de mots : html/print-cartes-mots.html (7 cartes OBSCURE, 8 lettres FONTAINE, 5 lettres N E T T E, parchemin TRANSPARENTE)
 - [ ] Carnet K-Pop : html/print-carnet-kpop.html (un par enfant ou par équipe)
 - [ ] Index et liste d'achats : html/print-index.html
 
@@ -49,7 +49,7 @@ Dernière mise à jour : 2026-11-21. **Fête : dimanche 6 décembre 2026** (J-15
 - [ ] Mousquetaires : fleurets en mousse (disponibles, confirmé), 5 cibles en mousse avec les lettres au dos, costume de l'animateur, dégager la chambre 2 (objets fragiles, lampes)
 - [x] K-Pop : costumes reçus, enceinte OK, internet OK (confirmé 2026-11-21)
 - [ ] K-Pop : ordinateur relié à la télé, crayons pour les carnets
-- [ ] Montmartre : 9 cartes lettres plastifiées (L U M I N E U S E), sacs étanches, adulte accompagnateur par groupe
+- [ ] Montmartre : 8 cartes lettres plastifiées (F O N T A I N E), sacs étanches, adulte accompagnateur par groupe
 - [ ] Harry Potter : Lego (constructions cachées dans le salon), jus de chou rouge, bicarbonate, citron ou vinaigre, liquide vaisselle, paillettes, colorant vert, nappe plastique, tabliers, serviettes, pinceau large ; tester la recette et l'encre invisible avant le jour J
 - [ ] Cadeaux : pochettes de 5 souvenirs (fiole pailletée, médaille en chocolat, bracelet lumineux, bâton fluo, carte postale de Montmartre), 4 à 6 exemplaires de chaque ; photo d'équipe en agents
 - [ ] Écran ou vidéoprojecteur, rallonge, câble HDMI, clavier pour les enfants
@@ -58,7 +58,7 @@ Dernière mise à jour : 2026-11-21. **Fête : dimanche 6 décembre 2026** (J-15
 ## Fait
 
 - Fil rouge : Agence Chronos, perturbations de mondes parallèles, un mot rapporté par épreuve (Fort Boyard), mot de passe final CLAIRE, aucun antagoniste, aucun chrono
-- Ordre des épreuves : Star Wars (bureau, OBSCURE), K-Pop (salon, télé, BRILLANTE), Montmartre (dehors, LUMINEUSE trouvée lettre par lettre), Mousquetaires (chambre 2, NETTE), Harry Potter (salon, table, TRANSPARENTE)
+- Ordre des épreuves : Star Wars (bureau, OBSCURE), K-Pop (salon, télé, BRILLANTE), Montmartre (dehors, FONTAINE trouvée lettre par lettre), Mousquetaires (chambre 2, NETTE), Harry Potter (salon, table, TRANSPARENTE)
 - Page maître html/aventure.html : briefing en 7 écrans avec chef animé et voix, plan avec zones temporelles instables, vortex de saut, lieu, épreuve, saisie du mot avec indices, mot rapporté avec "Bravo", conclusion en 4 temps (plan, chef, tampon, CLAIRE avec confettis et fanfare), départ toujours à zéro, touche H pour masquer l'aide
 - Pages d'épreuve : html/starwars.html (défilement), html/kpop.html (mots cachés par brouillage, calage), html/mousquetaires.html, html/montmartre.html, html/potions.html
 - Voix du chef : MP3 Azure (fr-FR-HenriNeural) dans audio/, textes sans prénom

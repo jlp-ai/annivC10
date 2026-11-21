@@ -356,5 +356,5 @@ var UNIVERS = [
   { name: "France des mousquetaires",   era: "XVIIe siècle",        room: "dans la chambre 2",                    zone: 1, word: "NETTE", content: null },
   { name: "Chasseurs de démons",        era: "K-Pop Demon Hunters", room: "au salon, devant la télé",        zone: 2, word: "BRILLANTE", alt: ["ECLATANTE", "EBLOUISSANTE", "RAYONNANTE"], content: null },
   { name: "Galaxie lointaine",          era: "Star Wars",           room: "au bureau",                       zone: 3, word: "OBSCURE", content: "starwars.html" },
-  { name: "Montmartre d'autrefois",     era: "Les titis",           room: "dehors, autour de l'appartement", zone: 4, word: "LUMINEUSE", content: null }
+  { name: "Montmartre d'autrefois",     era: "Les titis",           room: "dehors, autour de l'appartement", zone: 4, word: "FONTAINE", content: null }
 ];

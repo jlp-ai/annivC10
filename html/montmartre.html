@@ -92,7 +92,7 @@
   //  word: the word to find. The letters of all steps, concatenated, must equal it.
   //  steps[]: { letters, place, riddle, hints:[3] }
   //    letters: one or several letters hidden on the card of this step
-  //             (ex. 9 steps of one letter, or 5 steps "LU","MI","N","EU","SE")
+  //             (ex. 8 steps of one letter, or 4 steps "FO","NT","AI","NE")
   //    place:   exact location of the hidden card (game master only)
   //    riddle:  text read aloud to the children
   //    hints:   coup de pouce, piste, solution
@@ -103,16 +103,15 @@
       hints: ["Lisez l'énigme à voix haute, tous ensemble.", h2, "L'adulte montre l'endroit."] };
   }
   var CONFIG = {
-    word: "LUMINEUSE",
+    word: "FONTAINE",
     steps: [
-      S("L", "À renseigner (un escalier)", "Trouvez un escalier. Comptez ses marches, une par une. La carte est cachée là où le nombre vous mène.", "Cherchez des marches, pas très loin du départ."),
-      S("U", "À renseigner (une porte colorée)", "Cherchez une porte d'une autre couleur que ses voisines. La carte n'est jamais loin d'elle.", "La porte est de couleur vive. Regardez des deux côtés du trottoir."),
-      S("M", "À renseigner (une inscription sur un mur)", "Un mur a quelque chose à dire : une inscription, un nom, une plaque. Lisez-la en entier. La carte se cache juste en dessous.", "Regardez les murs, à hauteur d'enfant."),
-      S("I", "À renseigner (un numéro de rue)", "Trouvez un numéro de rue qui contient un chiffre impair. La carte est tout près.", "Regardez les plaques et les numéros sur les portes."),
-      S("N", "À renseigner (un banc ou un arbre)", "Cherchez un banc ou un arbre au bord du chemin. Comptez les lattes ou les troncs. La carte attend à l'endroit du nombre.", "Regardez les bancs, puis les arbres alentour."),
-      S("E", "À renseigner (des volets ou une fenêtre)", "Trouvez une fenêtre dont les volets ont une couleur rare. La carte dort sous le rebord.", "Levez les yeux, puis baissez-les sous la fenêtre."),
-      S("U", "À renseigner (un lampadaire)", "Un lampadaire porte un numéro ou une marque. Lisez-la. La carte est collée tout près.", "Regardez le pied du lampadaire."),
-      S("S", "À renseigner (une enseigne)", "Une enseigne montre un dessin. Dites ce qu'elle représente. La carte se cache dans le coin voisin.", "Cherchez une enseigne ou une vitrine."),
+      S("F", "À renseigner (un escalier)", "Trouvez un escalier. Comptez ses marches, une par une. La carte est cachée là où le nombre vous mène.", "Cherchez des marches, pas très loin du départ."),
+      S("O", "À renseigner (une porte colorée)", "Cherchez une porte d'une autre couleur que ses voisines. La carte n'est jamais loin d'elle.", "La porte est de couleur vive. Regardez des deux côtés du trottoir."),
+      S("N", "À renseigner (une inscription sur un mur)", "Un mur a quelque chose à dire : une inscription, un nom, une plaque. Lisez-la en entier. La carte se cache juste en dessous.", "Regardez les murs, à hauteur d'enfant."),
+      S("T", "À renseigner (un numéro de rue)", "Trouvez un numéro de rue qui contient un chiffre impair. La carte est tout près.", "Regardez les plaques et les numéros sur les portes."),
+      S("A", "À renseigner (un banc ou un arbre)", "Cherchez un banc ou un arbre au bord du chemin. Comptez les lattes ou les troncs. La carte attend à l'endroit du nombre.", "Regardez les bancs, puis les arbres alentour."),
+      S("I", "À renseigner (des volets ou une fenêtre)", "Trouvez une fenêtre dont les volets ont une couleur rare. La carte dort sous le rebord.", "Levez les yeux, puis baissez-les sous la fenêtre."),
+      S("N", "À renseigner (un lampadaire)", "Un lampadaire porte un numéro ou une marque. Lisez-la. La carte est collée tout près.", "Regardez le pied du lampadaire."),
       S("E", "À renseigner (dernière cachette)", "Dernière étape, mes p'tits loups ! Cherchez la plus vieille plaque du quartier. La dernière carte est tout près.", "Regardez les plaques au ras des murs.")
     ]
   };
