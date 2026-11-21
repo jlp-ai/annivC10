@@ -69,9 +69,10 @@
   </div>
 </section>
 
-<div class="hud">Maître du jeu : 1 à 5 ou Espace = ouvrir un portail, Entrée = objet renvoyé à son époque (retour à la vue d'ensemble), Échap = retour, Maj + R = tout remettre à zéro, F = plein écran</div>
+<div class="hud">Maître du jeu : 1 à 5 ou Espace = ouvrir un portail, Entrée = objet renvoyé à son époque (retour à la vue d'ensemble), Échap = retour, Maj + R = tout remettre à zéro, F = plein écran, M = couper le son du saut temporel</div>
 
 <script src="univers-data.js"></script>
+<script src="vortex.js"></script>
 <script>
   var N = UNIVERS.length;
   var state = { opened: [], earned: [] };
@@ -127,8 +128,19 @@
 
   function showOverview() { current = null; renderOverview(); show("overview"); }
 
-  function openPortal(i) {
+  // Time jump: vortex animation, the content is swapped at its peak.
+  function jump(swap) {
+    if (Vortex.isRunning()) return;
+    Vortex.play({ duration: 2600, onMid: swap });
+  }
+
+  function openPortal(i, instant) {
     if (i < 0 || i >= N) return;
+    if (instant) { doOpen(i); return; }
+    jump(function () { doOpen(i); });
+  }
+
+  function doOpen(i) {
     current = i;
     state.opened[i] = true; save();
     var u = UNIVERS[i];
@@ -149,7 +161,8 @@
     if (e.key >= "1" && e.key <= "5") { openPortal(parseInt(e.key, 10) - 1); }
     else if (e.code === "Space" || e.key === "ArrowRight") { e.preventDefault(); if (current === null) openNext(); else showOverview(); }
     else if (e.key === "Escape" || e.key === "ArrowLeft") { showOverview(); }
-    else if (e.key === "Enter") { if (current !== null) { state.earned[current] = true; save(); } showOverview(); }
+    else if (e.key === "Enter") { if (current !== null) { jump(function () { state.earned[current] = true; save(); showOverview(); }); } else showOverview(); }
+    else if (e.key === "m" || e.key === "M") { Vortex.muted = !Vortex.muted; }
     else if (e.key === "R" && e.shiftKey) { state = { opened: [], earned: [] }; for (var j = 0; j < N; j++) { state.opened[j] = false; state.earned[j] = false; } save(); showOverview(); }
     else if (e.key === "f" || e.key === "F") { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); }
   });
@@ -157,7 +170,7 @@
 
   // Optional deep link: portails.html#3 opens portal 3 (useful for testing).
   var h = parseInt(location.hash.slice(1), 10);
-  if (h >= 1 && h <= N) openPortal(h - 1); else showOverview();
+  if (h >= 1 && h <= N) openPortal(h - 1, true); else showOverview();
 </script>
 </body>
 </html>

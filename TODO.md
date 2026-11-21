@@ -75,6 +75,9 @@ Dernière mise à jour : 2026-11-21 (badges, sons par page, musiques YouTube)
 
 ## Animation et voix (remplace les vidéos IA)
 
+- [x] Animation de vortex pour les sauts temporels entre univers : html/vortex.js (spirale, anneaux, flash, son Web Audio, 2,6 s), branchée dans portails.html (ouverture d'un portail et retour après objet renvoyé ; M coupe le son)
+- [ ] Brancher le vortex aussi entre le briefing et les portails, et à l'ouverture des pages d'épreuve
+- [ ] Option inspirée de la série Sliders : variante du vortex en bleu et blanc, objet "Chronomètre" de l'agence (sans compte à rebours visible), à trancher. Ne réutiliser ni images, ni musique, ni noms de la série
 - [ ] Sons et musique par page : chaque page HTML (briefing, portails, potions, K-Pop, Star Wars, jeu de piste, final) embarque ses propres sons et sa musique d'ambiance (fichiers locaux dans audio/, lecture hors ligne, touche M pour couper). Décider : sons synthétisés en Web Audio (sonnerie, tampon, jingle) ou fichiers MP3 libres de droits ; musiques de K-Pop ("Briller", "Ton sauveur") fournies par le maître du jeu
 - [ ] Définir le personnage récurrent du directeur (portrait SVG ou illustration simple en HTML)
 - [ ] Ajouter l'écriture progressive du message du directeur dans le briefing
