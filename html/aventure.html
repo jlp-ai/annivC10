@@ -55,9 +55,9 @@
   /* mot final */
   .words { display: flex; gap: 1.4vw; justify-content: center; flex-wrap: wrap; margin: 2vh 0 3vh; }
   .word { background: var(--black); color: var(--yellow); border: 3px solid var(--gold); border-radius: 14px; padding: 1.2vh 1.6vw; font-weight: bold; letter-spacing: .12em; font-size: clamp(20px, 4.2vh, 56px); animation: pop .6s backwards; }
-  #motInput { font: inherit; font-size: clamp(36px, 9vh, 120px); font-weight: bold; text-transform: uppercase; letter-spacing: .3em; text-align: center; width: min(70vw, 900px); background: rgba(0,0,0,.45); color: var(--yellow); border: 4px solid var(--cream); border-radius: 18px; padding: 1vh 1vw; outline: none; }
-  #motInput:focus { border-color: var(--gold); box-shadow: 0 0 30px rgba(255,210,63,.6); }
-  #motMsg { min-height: 1.4em; margin: 2vh 0 0; font-size: clamp(20px, 3.4vh, 44px); color: var(--yellow); }
+  .wordinput, #motInput { font: inherit; font-size: clamp(36px, 9vh, 120px); font-weight: bold; text-transform: uppercase; letter-spacing: .3em; text-align: center; width: min(70vw, 900px); background: rgba(0,0,0,.45); color: var(--yellow); border: 4px solid var(--cream); border-radius: 18px; padding: 1vh 1vw; outline: none; }
+  .wordinput:focus, #motInput:focus { border-color: var(--gold); box-shadow: 0 0 30px rgba(255,210,63,.6); }
+  .msg, #motMsg { min-height: 1.4em; margin: 2vh 0 0; font-size: clamp(20px, 3.4vh, 44px); color: var(--yellow); }
   .shake { animation: shake .5s; }
   @keyframes shake { 20% { transform: translateX(-2vw); } 40% { transform: translateX(2vw); } 60% { transform: translateX(-1.4vw); } 80% { transform: translateX(1.4vw); } }
   .chef-text { font-size: clamp(24px, 4.6vh, 60px); line-height: 1.5; max-width: 70vw; text-align: left; min-height: 8em; }
@@ -66,6 +66,8 @@
   @keyframes slam { from { transform: rotate(-8deg) scale(3.2); opacity: 0; } to { transform: rotate(-8deg) scale(1); opacity: 1; } }
   .letters { display: flex; gap: 1.2vw; justify-content: center; margin: 2vh 0; }
   .letters span { background: var(--yellow); color: var(--deep); font-weight: bold; font-size: clamp(60px, 18vh, 220px); line-height: 1; padding: 1vh 1.6vw; border-radius: 16px; border: 4px solid var(--black); box-shadow: 0 8px 0 var(--black); animation: pop .5s backwards; }
+  .letters.sm { flex-wrap: wrap; gap: .8vw; max-width: 90vw; }
+  .letters.sm span { font-size: clamp(34px, 9vh, 110px); padding: .8vh 1vw; box-shadow: 0 5px 0 var(--black); }
   #confetti { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 50; pointer-events: none; }
 </style>
 </head>
@@ -138,8 +140,29 @@
     <div class="org" id="emptyOrg"></div>
     <h1 id="emptyName"></h1>
     <p class="sub">Épreuve en cours. La page de cette épreuve reste à créer.</p>
-    <p class="sub">Le maître du jeu appuie sur Entrée quand le mot de ce monde est rapporté.</p>
+    <p class="sub">Le maître du jeu appuie sur Entrée quand l'équipe a trouvé le mot de ce monde. Les enfants le saisissent ensuite à l'écran.</p>
   </div></div>
+</section>
+
+<!-- Saisie du mot trouvé : valide l'épreuve -->
+<section class="view center" id="saisieView">
+  <div class="fit">
+    <div class="org" id="saisieOrg"></div>
+    <h1>Quel est le mot ?</h1>
+    <p class="sub">Tapez le mot trouvé pendant l'épreuve.</p>
+    <input id="saisieInput" class="wordinput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Mot trouvé">
+    <p class="msg" id="saisieMsg"></p>
+  </div>
+</section>
+
+<!-- Mot rapporté après chaque épreuve -->
+<section class="view center" id="gainView">
+  <div class="fit">
+    <div class="org" id="gainOrg"></div>
+    <h1>Mot rapporté</h1>
+    <div class="letters sm" id="gainLetters"></div>
+    <p class="sub" id="gainSub"></p>
+  </div>
 </section>
 
 <!-- Mot final à saisir -->
@@ -183,7 +206,7 @@
 </section>
 <canvas id="confetti" style="display:none"></canvas>
 
-<div class="hud" id="hud">Maître du jeu : Espace = suite (briefing et portail), Entrée = épreuve terminée, ← = retour, Maj + Entrée = valider le mot de passe, Maj + R = tout remettre à zéro, F = plein écran, M = couper le son du saut temporel</div>
+<div class="hud" id="hud">Maître du jeu : Espace = suite (briefing et portail), Entrée = ouvrir la saisie du mot, ← = retour, Maj + Entrée = forcer la validation, Maj + R = tout remettre à zéro, F = plein écran, M = couper le son du saut temporel</div>
 
 <script src="univers-data.js"></script>
 <script src="vortex.js"></script>
@@ -203,7 +226,7 @@
   var steps = [{ t: "intro" }];
   // Order of play (indexes in UNIVERS): Star Wars, K-Pop Demon Hunters, Montmartre, Mousquetaires, Harry Potter.
   var ORDER = [3, 2, 4, 1, 0];
-  for (var u = 0; u < N; u++) { var ui = ORDER[u]; steps.push({ t: "plan", i: ui, p: u }); steps.push({ t: "lieu", i: ui, p: u }); steps.push({ t: "epreuve", i: ui, p: u }); }
+  for (var u = 0; u < N; u++) { var ui = ORDER[u]; steps.push({ t: "plan", i: ui, p: u }); steps.push({ t: "lieu", i: ui, p: u }); steps.push({ t: "epreuve", i: ui, p: u }); steps.push({ t: "saisie", i: ui, p: u }); steps.push({ t: "gain", i: ui, p: u }); }
   steps.push({ t: "mot" }, { t: "fin1" }, { t: "fin2" }, { t: "fin3" }, { t: "fin4" });
 
   var KEY = "escape.aventure", cur = 0;
@@ -284,6 +307,22 @@
       if (c.content) { loadFrame("epreuveFrame", c.content); showView("epreuveView"); }
       else { $("emptyOrg").textContent = c.era; $("emptyName").textContent = c.name; showView("epreuveEmpty"); }
     }
+    else if (st.t === "saisie") {
+      $("saisieOrg").textContent = "Mot " + (st.p + 1) + " sur " + N;
+      $("saisieInput").value = ""; $("saisieMsg").textContent = ""; triesS = 0;
+      showView("saisieView");
+      setTimeout(function () { $("saisieInput").focus(); }, 100);
+    }
+    else if (st.t === "gain") {
+      var wd = UNIVERS[st.i].word, gl = "";
+      for (var g2 = 0; g2 < wd.length; g2++) gl += '<span style="animation-delay:' + (g2 * 0.12) + 's">' + wd.charAt(g2) + '</span>';
+      $("gainLetters").innerHTML = gl;
+      $("gainOrg").textContent = "Mot " + (st.p + 1) + " sur " + N;
+      var got2 = []; for (var w2 = 0; w2 <= st.p; w2++) got2.push(UNIVERS[ORDER[w2]].word);
+      $("gainSub").textContent = st.p < N - 1 ? "Mots rapportés : " + got2.join(" · ") : "Les cinq mots sont rapportés.";
+      showView("gainView");
+      sound("ok"); setTimeout(function () { if (steps[cur].t === "gain") sound("ok"); }, 600);
+    }
     else if (st.t === "mot") {
       var wh = ""; for (var q = 0; q < N; q++) wh += '<div class="word" style="animation-delay:' + (q * 0.15) + 's">' + UNIVERS[ORDER[q]].word + '</div>';
       $("motWords").innerHTML = wh; $("motInput").value = ""; $("motMsg").textContent = ""; tries = 0;
@@ -307,6 +346,25 @@
       showView("finalView");
       celebrate();
     }
+  }
+
+  // Per-epreuve word check: typing the word validates the epreuve.
+  var triesS = 0;
+  function checkSaisie(force) {
+    var st = steps[cur], word = UNIVERS[st.i].word, v = normalize($("saisieInput").value);
+    if (force || v === normalize(word)) { sound("ok"); next(); return; }
+    if (!v) return;
+    sound("no");
+    triesS++;
+    var hints = [
+      "Pas tout à fait. Relisez les indices de l'épreuve.",
+      "Indice : le mot a " + word.length + " lettres.",
+      "Indice : il commence par " + word.charAt(0) + ".",
+      "Indice : il se termine par " + word.charAt(word.length - 1) + ". Vous y êtes presque."
+    ];
+    $("saisieMsg").textContent = hints[Math.min(triesS, hints.length) - 1];
+    var inp = $("saisieInput"); inp.classList.remove("shake"); void inp.offsetWidth; inp.classList.add("shake");
+    inp.select();
   }
 
   // Final word check. Only a salted hash is stored: the answer is not readable in the source.
@@ -412,6 +470,11 @@
   document.addEventListener("keydown", function (e) {
     var t = steps[cur].t;
     var inFrame = t === "intro" || (t === "epreuve" && UNIVERS[steps[cur].i].content);
+    if (t === "saisie") {
+      if (e.key === "Enter") { e.preventDefault(); checkSaisie(e.shiftKey); }
+      else if (e.key === "Escape") { go(cur - 1, false); }
+      return;
+    }
     if (t === "mot") {   // typing the final word: no global shortcut, letters go to the field
       if (e.key === "Enter") { e.preventDefault(); checkWord(e.shiftKey); }   // Shift + Enter = master forces success
       else if (e.key === "Escape") { go(cur - 1, false); }

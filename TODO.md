@@ -86,7 +86,13 @@ Dernière mise à jour : 2026-11-21 (badges, sons par page, musiques YouTube)
 - [x] Écran de saisie du mot de passe avec indices progressifs en cas d'erreur, puis conclusion en 4 temps (plan, chef, tampon, CLAIRE + confettis) dans aventure.html
 - [x] Image Star Wars (foule de stormtroopers) retirée : dessin SVG utilisé en attendant. Fournir de vraies images pour les 5 univers (images/univers-N.jpg)
 - [x] Code de l'agent : plus de mention des armes en mousse (révélait l'univers) ; règle 4 : en cas de blocage, appelez-moi (le maître du jeu aide)
-- [ ] Définir, pour chaque épreuve, le moment où le mot est révélé (ex. fin de l'épreuve, objet ou message trouvé) et l'afficher dans la page d'épreuve
+- [x] Mécanisme de révélation de chaque mot défini : enigmes/mots-par-epreuve.md (Star Wars : 7 cartes UV ; K-Pop : 9 coupures, une lettre chacune ; Montmartre : 4 syllabes ; Mousquetaires : 5 cartes derrière les cibles ; Harry Potter : encre invisible révélée au jus de chou rouge)
+- [x] Chaque épreuve se valide en tapant le mot à l'écran (saisie avec indices progressifs si erreur, accents et majuscules ignorés), puis écran "Mot rapporté"
+- [x] Le briefing ne révèle pas qu'un mot de passe est à trouver avec les 5 mots : annoncé seulement à la fin (écran de saisie du mot de passe)
+- [x] Écran "Mot rapporté" après chaque épreuve (lettres animées) dans aventure.html
+- [ ] Fabriquer les supports de mots : 7 cartes fluo (OBSCURE), 4 cartes syllabes plastifiées (LU MI NEU SE), 5 cartes lettres au dos des cibles (NETTE), parchemin à l'encre invisible (TRANSPARENTE)
+- [ ] Tester l'encre invisible au bicarbonate et au jus de chou rouge, le mot TRANSPARENTE en grosses lettres
+- [ ] Page K-Pop : 9 coupures qui révèlent BRILLANTE lettre par lettre
 - [x] Écran final "Mission accomplie" en 4 temps (validé) : 1) vortex final et plan avec les 5 gemmes allumées, 2) retour du chef (texte tapé, mondes à leur place), 3) tampon "Mission accomplie" et rapport clos, 4) mot final à trouver puis félicitations. Confettis rouge/jaune/crème (canvas) et fanfare synthétisée (Web Audio)
 - [ ] Mécanisme final à la Fort Boyard (validé) : chaque épreuve donne un mot, les 5 mots font penser au mot final CLAIRE (clair). Mots validés, dans l'ordre de jeu : Star Wars = OBSCURE (côté obscur ; l'utilisateur a confirmé ce choix après l'avoir remis en question), K-Pop = BRILLANTE (Briller), Montmartre = LUMINEUSE (lumière des peintres), Mousquetaires = NETTE (touche nette sur la cible), Harry Potter = TRANSPARENTE (cape d'invisibilité, potion limpide), accepter "clair" et "claire" comme réponse, encoder la réponse (hash) dans la page
 - [x] Cadeaux à emporter (validé) : diplôme d'agent, pochette de 5 souvenirs, photo d'équipe
