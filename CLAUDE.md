@@ -13,7 +13,7 @@ Projet personnel (hors OCTO) : créer le contenu d'un escape game pour l'anniver
 - **Révélation progressive** : les univers et leurs lieux dans l'appartement ne sont jamais dévoilés au briefing. Ils s'ouvrent un par un via [html/portails.html](html/portails.html) (données dans [html/univers-data.js](html/univers-data.js)).
 - **Lieux** : Harry Potter au salon (Lego cachés dans tout le salon, potions sur la table du salon), Mousquetaires en chambre 2, KPop sur la télé du salon (mur entre bureau et séjour), Star Wars au bureau, Titis de Montmartre dehors autour de l'appartement.
 - **Palette** : rouge, noir et jaune (agence de détectives), pas de violet.
-- **Fil rouge** : chaque enfant est membre d'une organisation secrète de voyageurs du temps. Les 5 univers sont 5 destinations de mission. Nom de l'organisation, menace et objet final à définir (voir [scenario/univers.md](scenario/univers.md)).
+- **Fil rouge** : chaque enfant est membre d'une organisation secrète de voyageurs du temps. Les 5 univers sont 5 destinations de mission. Organisation : Agence Chronos. Menace : brèches de mondes parallèles. Récompense finale à définir (voir [scenario/univers.md](scenario/univers.md)).
 - **Participants** : 4 à 6 enfants de 10 ans, une seule équipe (idéalement 3 garçons et 3 filles).
 - **Lieu** : appartement du 18ème arrondissement de Paris + extérieur. Plan et zones dans [materiel/plan-appartement.md](materiel/plan-appartement.md). **Zones interdites : chambre 1, salle de bain, WC** (aucun indice ni objet à y placer).
 - **Durée cible** : 45 à 60 minutes pour l'ensemble, soit 8 à 12 minutes par univers (à ajuster, le jeu de piste peut être plus long).
@@ -27,9 +27,9 @@ Projet personnel (hors OCTO) : créer le contenu d'un escape game pour l'anniver
 
 ## Ambiance du briefing
 
-- Inspirations : agence d'espionnage des séries animées des années 2000 (appel du chef, dossier confidentiel, gadgets, couleurs pop rose, violet, turquoise) et enquêtes à travers le monde et les époques d'une agence de détectives face à une organisation de voleurs.
+- Inspirations : agence d'espionnage des séries animées des années 2000 (appel du chef, dossier confidentiel, gadgets, couleurs rouge, noir et jaune) et enquêtes à travers le monde et les époques d'une agence de détectives face à une organisation de voleurs.
 - S'en inspirer sans reprendre de noms ni de personnages protégés : agence inventée (proposition : Agence Chronos).
-- **Aucun ennemi ni méchant** : la menace est une anomalie : des perturbations issues de mondes parallèles qui tentent de s'insérer dans notre monde réel (leurs objets surgissent là où ils n'ont rien à faire). Chaque épreuve rapporte un mot (comme à Fort Boyard), et non un objet : chaque monde est tenu ouvert par un mot-clé, les objets intrus ne sont que des échos, un objet se brise en traversant les mondes alors qu'un mot passe sans dégât. Les cinq mots (OBSCURE, BRILLANTE, LUMINEUSE, NETTE, TRANSPARENTE) mènent au mot de passe final CLAIRE, qui rend tout clair et referme les brèches. Pas de personnage antagoniste.
+- **Aucun ennemi ni méchant** : la menace est une anomalie : des perturbations issues de mondes parallèles qui tentent de s'insérer dans notre monde réel (des morceaux de ces mondes surgissent là où ils n'ont rien à faire). Chaque épreuve rapporte un mot (comme à Fort Boyard), et non un objet : chaque monde est tenu ouvert par un mot-clé, un mot traverse les mondes sans se briser, c'est la seule chose que les agents peuvent en rapporter. Les cinq mots (OBSCURE, BRILLANTE, LUMINEUSE, NETTE, TRANSPARENTE) mènent au mot de passe final CLAIRE, qui rend tout clair et referme les brèches. Pas de personnage antagoniste.
 - Éléments récurrents : appel entrant, le chef (donneur d'ordre), tampon "Anomalie détectée", rapport d'anomalie, nom de code des agents.
 
 ## Public et ton

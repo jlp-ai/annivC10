@@ -12,7 +12,7 @@ Statut : brouillon v0. Les éléments marqués **[à valider]** sont des proposi
 - Une alerte lance la mission : cinq mondes parallèles tentent de s'insérer dans notre monde réel, dans l'appartement. Un message vidéo du directeur de l'organisation (vidéo IA) explique la situation.
 - Chaque épreuve est une destination : le monde magique, la France des mousquetaires, un concert de chasseurs de démons, une galaxie lointaine, le Montmartre d'autrefois.
 - Le motif : des perturbations venues de mondes parallèles qui tentent de s'insérer dans notre monde réel et brouillent tout.
-- Pourquoi des mots et non des objets : chaque monde est tenu ouvert par un mot-clé. Les objets intrus ne sont que des échos de ce mot. Un objet se brise en traversant les mondes, un mot passe partout sans dégât : c'est la seule chose que les agents peuvent rapporter. Réussir l'épreuve d'un monde dissipe l'écho et livre son mot.
+- Pourquoi des mots et non des objets : chaque monde est tenu ouvert par un mot-clé. Un mot traverse les mondes sans se briser : c'est la seule chose que les agents peuvent en rapporter. Réussir l'épreuve d'un monde dissipe l'écho et livre son mot.
 - Pourquoi un mot final : les cinq mots, ensemble, désignent le mot de passe qui relie les mondes. Prononcé, il rend tout clair et referme les brèches. Mot final : CLAIRE (clair).
 - Aucun chrono visible : pas de pression sur les enfants. Le rythme est géré par le maître du jeu (indices, enchaînement des univers). Option douce à valider : une jauge "stabilité du temps" qui monte à chaque mot rapporté, sans compte à rebours.
 

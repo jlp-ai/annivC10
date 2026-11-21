@@ -397,7 +397,7 @@
 
   function go(n, withVortex) {
     if (Vortex.isRunning() || n < 0 || n >= steps.length) return;
-    if (withVortex) Vortex.play({ duration: 2600, onMid: function () { cur = n; render(); } });
+    if (withVortex) Vortex.play({ duration: 5200, onMid: function () { cur = n; render(); } });
     else { cur = n; render(); }
   }
 

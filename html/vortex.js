@@ -45,7 +45,7 @@ var Vortex = (function () {
     opts = opts || {};
     if (running) return;
     running = true;
-    var duration = opts.duration || 2600;
+    var duration = opts.duration || 5200;
     var cv = document.createElement("canvas");
     cv.style.cssText = "position:fixed;left:0;top:0;width:100%;height:100%;z-index:100;pointer-events:none";
     var W = cv.width = window.innerWidth, H = cv.height = window.innerHeight;
@@ -68,9 +68,9 @@ var Vortex = (function () {
       if (!midDone && p >= 0.5) { midDone = true; if (opts.onMid) opts.onMid(); }
 
       // Cover envelope: fade in, fully opaque around the middle, fade out.
-      var cover = p < 0.5 ? ease(p / 0.3) : ease((1 - p) / 0.3);
-      var spin = p * 9 + p * p * 10;           // accelerating rotation
-      var pull = p * 3;                         // inward flow of the particles
+      var cover = p < 0.5 ? ease(p / 0.4) : ease((1 - p) / 0.4);
+      var spin = p * 7 + p * p * 9;            // gentle, accelerating rotation
+      var pull = p * 2.2;                       // inward flow
 
       ctx.clearRect(0, 0, W, H);
       ctx.globalAlpha = cover;
@@ -84,13 +84,13 @@ var Vortex = (function () {
         var base = a * Math.PI * 2 / ARMS;
         ctx.strokeStyle = COLORS[a % COLORS.length];
         var px = cx, py = cy;
-        for (var k = 1; k <= 70; k++) {
-          var t = k / 70;                                // 0 = center, 1 = edge
+        for (var k = 1; k <= 140; k++) {
+          var t = k / 140;                                // 0 = center, 1 = edge
           var rad = R * Math.pow(t, 1.6);
-          var ang = base + spin + t * 4.2 + Math.sin(pull * 2 + t * 6) * 0.15;
+          var ang = base + spin + t * 4.2 + Math.sin(pull * 2 + t * 6) * 0.1;
           var x = cx + Math.cos(ang) * rad, y = cy + Math.sin(ang) * rad * 0.92;
-          ctx.globalAlpha = cover * (0.2 + 0.8 * t);
-          ctx.lineWidth = 1 + t * t * 26;
+          ctx.globalAlpha = cover;
+          ctx.lineWidth = 1 + t * t * 26; ctx.lineJoin = "round";
           ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(x, y); ctx.stroke();
           px = x; py = y;
         }

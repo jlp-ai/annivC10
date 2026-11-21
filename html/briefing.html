@@ -84,7 +84,7 @@
   .row { display: flex; gap: 4vw; align-items: center; justify-content: center; width: 100%; }
   .col { flex: 1; min-width: 0; max-width: 64ch; }
   .portrait { flex: none; width: clamp(160px, 34vh, 400px); text-align: center; }
-  .portrait svg { width: 100%; display: block; border: 4px solid var(--teal); border-radius: 18px; box-shadow: 0 0 30px rgba(255,241,214,.5); }
+  .portrait svg, .portrait img { width: 100%; display: block; border: 4px solid var(--teal); border-radius: 18px; box-shadow: 0 0 30px rgba(255,241,214,.5); }
   .portrait .tag { display: inline-block; margin-top: 1.2vh; background: var(--yellow); color: var(--deep); font-weight: bold; border-radius: 8px; padding: .4vh 1.2vw; font-size: clamp(14px, 2.4vh, 30px); text-transform: uppercase; letter-spacing: .1em; }
   .portrait .mouth { transform-box: fill-box; transform-origin: center; }
   .portrait.talking .mouth { animation: talk .22s ease-in-out infinite alternate; }
@@ -138,72 +138,53 @@
   <div class="portrait" id="portrait">
     <svg viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Portrait du chef de l'agence">
       <defs>
-        <linearGradient id="chiefBg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#3b080e"/>
-          <stop offset="1" stop-color="#c4141f"/>
-        </linearGradient>
-        <linearGradient id="chiefSkin" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#f6c9a0"/>
-          <stop offset="1" stop-color="#e9ad82"/>
-        </linearGradient>
+        <radialGradient id="chiefBg" cx=".72" cy=".3" r=".95"><stop offset="0" stop-color="#a3182a"/><stop offset=".55" stop-color="#3a060c"/><stop offset="1" stop-color="#12030a"/></radialGradient>
+        <linearGradient id="chiefFace" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#100606"/><stop offset=".55" stop-color="#2e1912"/><stop offset="1" stop-color="#8a5640"/></linearGradient>
+        <linearGradient id="chiefCoat" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#050203"/><stop offset=".7" stop-color="#150a0c"/><stop offset="1" stop-color="#43201f"/></linearGradient>
+        <linearGradient id="chiefShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".85"/><stop offset="1" stop-color="#000" stop-opacity="0"/></linearGradient>
       </defs>
       <rect width="200" height="250" fill="url(#chiefBg)"/>
-      <!-- big clock behind the chief -->
-      <circle cx="100" cy="95" r="84" fill="none" stroke="#ffd23f" stroke-opacity=".35" stroke-width="3"/>
-      <circle cx="100" cy="95" r="72" fill="none" stroke="#ffe14d" stroke-opacity=".35" stroke-width="6" stroke-dasharray="2 17.6"/>
-      <!-- jacket -->
-      <path d="M0 250 C4 206 44 190 100 190 C156 190 196 206 200 250 Z" fill="#14080a"/>
-      <path d="M62 196 L100 250 L40 250 C42 224 50 205 62 196 Z" fill="#3a1014"/>
-      <path d="M138 196 L100 250 L160 250 C158 224 150 205 138 196 Z" fill="#3a1014"/>
-      <!-- shirt, tie -->
-      <path d="M76 190 L100 234 L124 190 Z" fill="#ffffff"/>
-      <path d="M94 197 L106 197 L104 208 L96 208 Z" fill="#e8142b"/>
-      <path d="M96 208 L104 208 L111 244 L100 252 L89 244 Z" fill="#e8142b"/>
-      <!-- pocket square and clock pin -->
-      <path d="M144 222 L158 218 L160 228 L146 230 Z" fill="#ffe14d"/>
-      <circle cx="68" cy="216" r="5" fill="#ffe14d"/>
-      <path d="M68 213 L68 216 L71 216" stroke="#14080a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      <!-- neck -->
-      <path d="M86 156 L86 192 Q100 204 114 192 L114 156 Z" fill="#d8996e"/>
-      <!-- ears -->
-      <ellipse cx="57" cy="112" rx="8" ry="13" fill="#e6a97d"/>
-      <ellipse cx="143" cy="112" rx="8" ry="13" fill="#e6a97d"/>
+      <circle cx="100" cy="100" r="86" fill="none" stroke="#ffd23f" stroke-opacity=".22" stroke-width="3"/>
+      <circle cx="100" cy="100" r="74" fill="none" stroke="#ffe14d" stroke-opacity=".2" stroke-width="6" stroke-dasharray="2 17.6"/>
+      <polygon points="-20,50 220,-10 220,4 -20,64" fill="#ffd23f" fill-opacity=".10"/><polygon points="-20,92 220,32 220,46 -20,106" fill="#ffd23f" fill-opacity=".10"/><polygon points="-20,134 220,74 220,88 -20,148" fill="#ffd23f" fill-opacity=".10"/><polygon points="-20,176 220,116 220,130 -20,190" fill="#ffd23f" fill-opacity=".10"/><polygon points="-20,218 220,158 220,172 -20,232" fill="#ffd23f" fill-opacity=".10"/>
+      <!-- coat, raised collar, shirt, tie -->
+      <path d="M0 250 L0 216 C6 198 40 186 74 180 L126 180 C160 186 194 198 200 216 L200 250 Z" fill="url(#chiefCoat)"/>
+      <path d="M200 216 C194 198 160 186 126 180" fill="none" stroke="#ff4a5a" stroke-width="1.6" stroke-opacity=".8"/>
+      <path d="M88 180 L100 220 L112 180 Z" fill="#b9afa3" fill-opacity=".55"/>
+      <path d="M97 192 L103 192 L106 236 L100 244 L94 236 Z" fill="#8e1220"/>
+      <path d="M74 180 L100 240 L52 250 Z" fill="#0b0506"/>
+      <path d="M126 180 L100 240 L148 250 Z" fill="#170a0c"/>
+      <path d="M84 152 L84 184 Q100 196 116 184 L116 152 Z" fill="#1b0e0b"/>
+      <path d="M72 178 L90 164 L100 186 Z" fill="#070304"/>
+      <path d="M128 178 L110 164 L100 186 Z" fill="#0d0607"/>
       <!-- face -->
-      <path d="M58 105 C58 62 80 46 100 46 C120 46 142 62 142 105 C142 140 125 168 100 168 C75 168 58 140 58 105 Z" fill="url(#chiefSkin)"/>
-      <circle cx="75" cy="128" r="9" fill="#ff6fa8" fill-opacity=".3"/>
-      <circle cx="125" cy="128" r="9" fill="#ff6fa8" fill-opacity=".3"/>
-      <!-- hair -->
-      <path d="M55 104 C46 56 70 28 106 30 C138 31 156 56 145 104 C143 84 136 70 122 63 C108 58 88 58 74 66 C62 74 57 88 55 104 Z" fill="#33201a"/>
-      <path d="M74 48 C92 34 120 34 134 48 C116 42 94 44 74 48 Z" fill="#5d3b2c"/>
-      <!-- eyebrows -->
-      <path d="M72 91 Q83 84 95 90" fill="none" stroke="#33201a" stroke-width="4" stroke-linecap="round"/>
-      <path d="M105 90 Q117 84 128 91" fill="none" stroke="#33201a" stroke-width="4" stroke-linecap="round"/>
-      <!-- eyes -->
-      <ellipse cx="84" cy="104" rx="10" ry="8" fill="#ffffff"/>
-      <ellipse cx="116" cy="104" rx="10" ry="8" fill="#ffffff"/>
-      <circle cx="86" cy="104" r="5.5" fill="#3b2a6b"/>
-      <circle cx="118" cy="104" r="5.5" fill="#3b2a6b"/>
-      <circle cx="86" cy="104" r="2.6" fill="#0b0b14"/>
-      <circle cx="118" cy="104" r="2.6" fill="#0b0b14"/>
-      <circle cx="88" cy="101.5" r="1.6" fill="#ffffff"/>
-      <circle cx="120" cy="101.5" r="1.6" fill="#ffffff"/>
-      <path d="M73 100 Q84 94 95 100" fill="none" stroke="#33201a" stroke-width="2" stroke-linecap="round"/>
-      <path d="M105 100 Q116 94 127 100" fill="none" stroke="#33201a" stroke-width="2" stroke-linecap="round"/>
-      <!-- nose -->
-      <path d="M100 108 Q95 126 103 128" fill="none" stroke="#cf8a5f" stroke-width="3" stroke-linecap="round"/>
+      <ellipse cx="67" cy="108" rx="5" ry="9" fill="#1a0d0a"/>
+      <ellipse cx="133" cy="108" rx="5" ry="9" fill="#6a4030"/>
+      <path d="M68 96 C68 64 82 52 100 52 C118 52 132 64 132 96 L132 120 C132 144 118 160 100 162 C82 160 68 144 68 120 Z" fill="url(#chiefFace)"/>
+      <path d="M126 70 C132 90 132 130 120 152" fill="none" stroke="#c98c6e" stroke-opacity=".45" stroke-width="1.6"/>
+      <path d="M101 106 L99 126 Q101 130 107 128" fill="none" stroke="#6b3f2e" stroke-opacity=".7" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M84 120 Q100 128 116 120" fill="none" stroke="#000" stroke-opacity=".15" stroke-width="6"/>
+      <!-- fedora and its shadow -->
+      <rect x="68" y="76" width="64" height="30" fill="url(#chiefShade)"/>
+      <path d="M70 78 C70 42 80 28 100 28 C120 28 130 42 130 78 Z" fill="#0d0507"/>
+      <path d="M70 68 L130 68 L130 77 L70 77 Z" fill="#8e1220"/>
+      <ellipse cx="100" cy="80" rx="64" ry="10" fill="#070304"/>
+      <path d="M126 82 Q150 82 162 78" fill="none" stroke="#ff4a5a" stroke-opacity=".6" stroke-width="1.4"/>
+      <!-- dark glasses -->
+      <rect x="73" y="93" width="23" height="11" rx="4.5" fill="#050203"/>
+      <rect x="104" y="93" width="23" height="11" rx="4.5" fill="#050203"/>
+      <path d="M96 97 L104 97" stroke="#050203" stroke-width="3"/>
+      <path d="M108 95.5 L117 95.5" stroke="#ffd23f" stroke-opacity=".75" stroke-width="1.3" stroke-linecap="round"/>
+      <path d="M77 95.5 L84 95.5" stroke="#ffd23f" stroke-opacity=".5" stroke-width="1.3" stroke-linecap="round"/>
       <!-- mouth -->
       <g class="mouth">
-        <path d="M84 140 Q100 158 116 140 Q100 146 84 140 Z" fill="#7a2230"/>
-        <path d="M88 142 Q100 148 112 142 Q100 145 88 142 Z" fill="#ffffff"/>
+        <ellipse cx="100" cy="143" rx="9" ry="1.1" fill="#0a0305"/>
+        <path d="M86 142 Q100 139 114 142" fill="none" stroke="#0a0305" stroke-width="2.6" stroke-linecap="round"/>
+        <path d="M91 146 Q100 148 109 145" fill="none" stroke="#b46a50" stroke-opacity=".55" stroke-width="1.3" stroke-linecap="round"/>
       </g>
-      <!-- headset -->
-      <path d="M52 108 C44 26 156 26 148 108" fill="none" stroke="#ffd23f" stroke-width="6" stroke-linecap="round"/>
-      <rect x="43" y="98" width="15" height="32" rx="7" fill="#ffd23f"/>
-      <rect x="142" y="98" width="15" height="32" rx="7" fill="#ffd23f"/>
-      <rect x="47" y="104" width="7" height="20" rx="3.5" fill="#b88a00"/>
-      <rect x="146" y="104" width="7" height="20" rx="3.5" fill="#b88a00"/>
-      <path d="M50 126 C50 152 70 158 85 153" fill="none" stroke="#ffd23f" stroke-width="4" stroke-linecap="round"/>
-      <circle cx="88" cy="152" r="5" fill="#e8142b"/>
+      <!-- earpiece -->
+      <rect x="130" y="100" width="7" height="14" rx="3" fill="#ffd23f"/>
+      <path d="M134 114 C134 134 124 150 112 156" fill="none" stroke="#ffd23f" stroke-opacity=".8" stroke-width="2" stroke-linecap="round"/>
     </svg>
     <div class="tag">Le Chef</div>
   </div>
@@ -214,7 +195,7 @@
   <div class="message" id="messageText">
     <p class="typed">Chers agents, une fois de plus, nous faisons appel à vous pour une mission périlleuse.</p>
     <p class="typed">Des perturbations venues de mondes parallèles ont été détectées dans un appartement du 18ème arrondissement de Paris. Ces mondes tentent de s'insérer dans notre monde réel et brouillent tout.</p>
-    <p class="typed">Chaque monde est tenu ouvert par un mot-clé. Les objets intrus ne sont que des échos : un objet se brise en traversant les mondes, un mot passe partout sans dégât. Rapportez les cinq mots, puis trouvez le mot de passe qui les relie. Celui-là rend tout clair et referme les brèches.</p>
+    <p class="typed">Chaque monde est tenu ouvert par un mot-clé. Un mot traverse les mondes sans se briser : c'est la seule chose que vous pouvez en rapporter. Rapportez les cinq mots, puis trouvez le mot de passe qui les relie. Celui-là rend tout clair et referme les brèches.</p>
     <p class="typed">Vous allez une nouvelle fois traverser les époques pour sauver le monde. Nous comptons sur vous. Bonne chance.</p>
     <p class="typed end">Fin de transmission</p>
   </div>
@@ -243,7 +224,7 @@
     <div>
       <p><b>Nature :</b> perturbations de mondes parallèles</p>
       <p><b>Localisation :</b> Paris, 18ème arrondissement</p>
-      <p><b>Effet :</b> des objets de mondes parallèles surgissent et brouillent la réalité</p>
+      <p><b>Effet :</b> des morceaux de mondes parallèles surgissent et brouillent la réalité</p>
       <p><b>Remède :</b> rapporter un mot de chacun des cinq mondes, puis trouver le mot de passe qui les relie</p>
       <p><b>Statut :</b> actives, sous surveillance</p>
     </div>
@@ -263,7 +244,7 @@
   <ol>
     <li>Équipe soudée : personne ne part seul.</li>
     <li>Les zones marquées « Zone temporelle instable » restent fermées.</li>
-    <li>Objets manipulés avec soin, ils appartiennent au monde visité.</li>
+    <li>Chaque monde se respecte : on touche avec soin et on range après usage.</li>
     <li>En cas de blocage, appelez-moi pour que j'essaie de vous aider.</li>
   </ol>
 </section>
@@ -391,6 +372,10 @@
   // The chief's mouth moves while the message is being typed.
   var portrait = document.getElementById("portrait");
   setInterval(function () { portrait.classList.toggle("talking", typing); }, 150);
+  // Optional real picture of the chief: images/chef.jpg replaces the drawing if present.
+  var chefImg = new Image();
+  chefImg.onload = function () { portrait.replaceChild(chefImg, portrait.querySelector("svg")); };
+  chefImg.src = "../images/chef.jpg";
 
   // Video: shown only if the file exists, otherwise the text message stays.
   var vid = document.getElementById("vid");

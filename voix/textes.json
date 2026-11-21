@@ -9,13 +9,13 @@
     "file": "briefing-2.mp3",
     "voice": "fr-FR-HenriNeural",
     "rate": "-5%",
-    "text": "Bienvenue au quartier général de l'agence Chronos. Chers agents, une fois de plus, nous faisons appel à vous pour une mission périlleuse. Des perturbations venues de mondes parallèles ont été détectées dans un appartement du dix-huitième arrondissement de Paris. Ces mondes tentent de s'insérer dans notre monde réel et brouillent tout. Chaque monde est tenu ouvert par un mot-clé. Les objets intrus ne sont que des échos : un objet se brise en traversant les mondes, un mot passe partout sans dégât. Rapportez les cinq mots, puis trouvez le mot de passe qui les relie. Celui-là rend tout clair et referme les brèches. Vous allez une nouvelle fois traverser les époques pour sauver le monde. Nous comptons sur vous. Bonne chance. Fin de transmission."
+    "text": "Bienvenue au quartier général de l'agence Chronos. Chers agents, une fois de plus, nous faisons appel à vous pour une mission périlleuse. Des perturbations venues de mondes parallèles ont été détectées dans un appartement du dix-huitième arrondissement de Paris. Ces mondes tentent de s'insérer dans notre monde réel et brouillent tout. Chaque monde est tenu ouvert par un mot-clé. Un mot traverse les mondes sans se briser : c'est la seule chose que vous pouvez en rapporter. Rapportez les cinq mots, puis trouvez le mot de passe qui les relie. Celui-là rend tout clair et referme les brèches. Vous allez une nouvelle fois traverser les époques pour sauver le monde. Nous comptons sur vous. Bonne chance. Fin de transmission."
   },
   {
     "file": "briefing-3.mp3",
     "voice": "fr-FR-HenriNeural",
     "rate": "-5%",
-    "text": "Anomalie détectée. Nature : perturbations de mondes parallèles. Localisation : Paris, dix-huitième arrondissement. Effet : des objets de mondes parallèles surgissent et brouillent la réalité. Remède : rapporter un mot de chacun des cinq mondes, puis trouver le mot de passe qui les relie. Statut : actives, sous surveillance."
+    "text": "Anomalie détectée. Nature : perturbations de mondes parallèles. Localisation : Paris, dix-huitième arrondissement. Effet : des morceaux de mondes parallèles surgissent et brouillent la réalité. Remède : rapporter un mot de chacun des cinq mondes, puis trouver le mot de passe qui les relie. Statut : actives, sous surveillance."
   },
   {
     "file": "briefing-4.mp3",
@@ -27,7 +27,7 @@
     "file": "briefing-5.mp3",
     "voice": "fr-FR-HenriNeural",
     "rate": "-5%",
-    "text": "Code de l'agent. Un : équipe soudée, personne ne part seul. Deux : les zones marquées zone temporelle instable restent fermées. Trois : objets manipulés avec soin, ils appartiennent au monde visité. Quatre : en cas de blocage, appelez-moi pour que j'essaie de vous aider."
+    "text": "Code de l'agent. Un : équipe soudée, personne ne part seul. Deux : les zones marquées zone temporelle instable restent fermées. Trois : chaque monde se respecte, on touche avec soin et on range après usage. Quatre : en cas de blocage, appelez-moi pour que j'essaie de vous aider."
   },
   {
     "file": "briefing-6.mp3",
