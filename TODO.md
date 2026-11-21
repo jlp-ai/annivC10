@@ -1,6 +1,6 @@
 # TODO escape game
 
-Dernière mise à jour : 2026-11-21
+Dernière mise à jour : 2026-11-21 (badges, sons par page, musiques YouTube)
 
 ## Décisions à prendre
 
@@ -43,7 +43,9 @@ Dernière mise à jour : 2026-11-21
 
 ## Créations à produire
 
-- [ ] Badges des voyageurs du temps (un par enfant : grade, nom de code, nom de l'organisation)
+- [x] Modèles de badges : html/badges.html (6 spécialités : Décodeur, Éclaireur, Stratège, Acrobate, Mémoire, Voix ; photo et noms à ajouter à la main)
+- [ ] Imprimer les badges (A4, échelle 100 %, couleurs), plastifier, ajouter un cordon, remplir photos, prénoms et noms de code
+- [ ] Relier les spécialités aux épreuves : chaque spécialité a un rôle dans au moins une énigme (ex. Voix en K-Pop, Acrobate chez les mousquetaires, Éclaireur dans le noir Star Wars, Décodeur et Mémoire aux potions, Stratège au jeu de piste)
 - [ ] Parchemin d'invitation ou convocation (envoi avant la fête)
 - [ ] Carnet de mission ou passeport temporel (tampons à chaque univers)
 - [ ] Étiquettes des flacons d'ingrédients (noms magiques)
@@ -73,6 +75,7 @@ Dernière mise à jour : 2026-11-21
 
 ## Animation et voix (remplace les vidéos IA)
 
+- [ ] Sons et musique par page : chaque page HTML (briefing, portails, potions, K-Pop, Star Wars, jeu de piste, final) embarque ses propres sons et sa musique d'ambiance (fichiers locaux dans audio/, lecture hors ligne, touche M pour couper). Décider : sons synthétisés en Web Audio (sonnerie, tampon, jingle) ou fichiers MP3 libres de droits ; musiques de K-Pop ("Briller", "Ton sauveur") fournies par le maître du jeu
 - [ ] Définir le personnage récurrent du directeur (portrait SVG ou illustration simple en HTML)
 - [ ] Ajouter l'écriture progressive du message du directeur dans le briefing
 - [ ] Tester la voix off (touche P) sur l'ordinateur du salon : vérifier qu'une voix française est installée
@@ -93,7 +96,7 @@ Dernière mise à jour : 2026-11-21
 - [ ] Armes en mousse, sabre laser, sabre en bois
 - [ ] Costumes : mousquetaire (animateur), Saja Boys (3 gats), Huntr/x (3 filles)
 - [ ] Lampe UV, bâtons lumineux, rubans phosphorescents
-- [ ] Musiques de "Briller" et "Ton sauveur" en local
+- [ ] Musiques de "Briller" et "Ton sauveur" : lues depuis YouTube (décision 2026-11-21). La page K-Pop lance les liens depuis l'HTML (bouton ou touche, ouverture dans un onglet ou lecteur intégré). Exception au mode hors ligne : connexion internet requise pour ces deux pistes. Récupérer les deux URL YouTube, repérer les minutes de coupure pour "N'oubliez pas les paroles", prévoir un plan B (fichiers audio locaux) si le réseau ou les publicités gênent
 - [ ] Écran ou vidéoprojecteur, enceinte, rallonge
 - [ ] Mise en place de l'appartement : plan des cachettes (materiel/)
 

@@ -55,6 +55,7 @@ Projet personnel (hors OCTO) : créer le contenu d'un escape game pour l'anniver
 - **Aucun chrono ni compte à rebours visible** : ne pas mettre la pression aux enfants. La durée cible sert uniquement au maître du jeu pour rythmer la partie.
 - Validation des codes côté page (champ de saisie ou clavier), avec retour visuel et sonore.
 - Vidéos en MP4 (H.264) stockées localement, lecture sans réseau.
+- Exception : les musiques K-Pop ("Briller", "Ton sauveur") sont lues depuis YouTube. La page K-Pop lance les liens depuis l'HTML, internet requis pour cette épreuve seulement.
 - Éviter toute solution dans le code source lisible par un enfant curieux : acceptable à 10 ans, mais encoder légèrement les réponses (hash ou base64).
 
 ## Structure prévue du dossier
