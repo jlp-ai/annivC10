@@ -91,7 +91,6 @@
     <svg id="plan" viewBox="105 25 950 860" xmlns="http://www.w3.org/2000/svg" aria-label="Plan de l'appartement et de l'extérieur">
       <defs>
         <pattern id="hatch" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="14" height="14" fill="#1a0205"/><line x1="0" y1="0" x2="0" y2="14" stroke="#7a1a22" stroke-width="6"/></pattern>
-        <polygon id="gemShape" points="0,-22 20,-8 12,22 -12,22 -20,-8" />
       </defs>
       <path id="r-ext" class="room-shape ext" fill-rule="evenodd" d="M112 32H1048V878H112Z M157 63H1000V787H157Z"/>
       <text class="lbl small" x="580" y="848">Extérieur : Montmartre</text>
@@ -116,7 +115,7 @@
       <text class="lbl zti" x="272" y="450" style="font-size:25px">instable</text>
       <text class="lbl" x="560" y="455">Salon</text>
       <text class="lbl" x="272" y="595">Cuisine</text>
-      <text class="lbl" x="798" y="680">Bureau</text>
+      <text class="lbl" x="798" y="726">Bureau</text>
       <text class="lbl small" x="560" y="640" transform="rotate(0)">Entrée</text>
       <text class="lbl small" transform="translate(965 420) rotate(90)">Balcon</text>
       <g id="gems"></g>
@@ -736,7 +735,7 @@
     { rooms: ["r-bureau"],  x: 798, y: 640, text: "Dans le bureau" },
     { rooms: ["r-ext"],     x: 420, y: 830, text: "Dehors, autour de l'appartement", out: true }
   ];
-  var GEM = '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><polygon points="50,4 90,34 74,92 26,92 10,34" fill="#ffd23f" stroke="#fff1d6" stroke-width="4"/><polygon points="50,4 62,34 38,34" fill="#fff6c9"/><polygon points="10,34 38,34 26,92" fill="#e0a800"/></svg>';
+  var GEM = '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="44" fill="#22b14c" stroke="#fff1d6" stroke-width="6"/><path d="M26 52 L43 69 L75 33" fill="none" stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   // Steps: intro, then for each universe plan > lieu > epreuve, then conclusion.
   var steps = [{ t: "intro" }];
@@ -814,7 +813,7 @@
     z.rooms.forEach(function (id) { $(id).classList.add("hot"); });
     var m = $("marker"); m.style.display = "block"; m.setAttribute("transform", "translate(" + z.x + " " + z.y + ")");
     $("outLabel").style.display = z.out ? "block" : "none";
-    var g = ""; for (var d = 0; d < p; d++) { var zd = ZONES[UNIVERS[ORDER[d]].zone]; g += '<g transform="translate(' + zd.x + ' ' + zd.y + ')"><use href="#gemShape" fill="#ffd23f" stroke="#fff1d6" stroke-width="4"/></g>'; }
+    var g = ""; for (var d = 0; d < p; d++) { var zd = ZONES[UNIVERS[ORDER[d]].zone]; g += '<g transform="translate(' + zd.x + ' ' + zd.y + ')"><circle r="27" fill="#22b14c" stroke="#fff1d6" stroke-width="5"/><path d="M-13 1 L-4 11 L14 -10" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></g>'; }
     $("gems").innerHTML = g;
     $("planAlert").textContent = "Perturbation d'un monde parallèle détectée";
     $("planSub").textContent = "Mot à rapporter " + (p + 1) + " sur " + N + " : " + z.text;
@@ -827,7 +826,7 @@
     var shapes = document.querySelectorAll(".room-shape");
     for (var k = 0; k < shapes.length; k++) shapes[k].classList.remove("hot");
     $("marker").style.display = "none"; $("outLabel").style.display = "none";
-    var g = ""; for (var d = 0; d < N; d++) { var zd = ZONES[UNIVERS[ORDER[d]].zone]; g += '<g transform="translate(' + zd.x + ' ' + zd.y + ')"><use href="#gemShape" fill="#ffd23f" stroke="#fff1d6" stroke-width="4"/></g>'; }
+    var g = ""; for (var d = 0; d < N; d++) { var zd = ZONES[UNIVERS[ORDER[d]].zone]; g += '<g transform="translate(' + zd.x + ' ' + zd.y + ')"><circle r="27" fill="#22b14c" stroke="#fff1d6" stroke-width="5"/><path d="M-13 1 L-4 11 L14 -10" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></g>'; }
     $("gems").innerHTML = g;
     $("planAlert").textContent = "Les cinq brèches sont refermées";
     $("planSub").textContent = "Mots rapportés : " + N + " sur " + N;
