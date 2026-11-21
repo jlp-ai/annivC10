@@ -49,10 +49,9 @@
 <section class="phase" id="p3">
   <div id="crawl">
     <h2>Épisode 1<br>Le signal dans le noir</h2>
-    <p>Une perturbation venue d'un monde parallèle brouille la galaxie. Tous les messages de la flotte se sont éteints, un par un.</p>
-    <p>Dans la base secrète, plus aucune lumière. Les derniers codes sont cachés dans l'obscurité, écrits en lettres qui brillent seulement pour ceux qui savent les trouver.</p>
-    <p>Une équipe d'agents courageux vient d'atterrir. Sept messages lumineux les attendent. Il faudra les retrouver, puis les remettre dans l'ordre pour reconstituer le mot qui rallumera les étoiles.</p>
-    <p>Pas de panique. Avancez ensemble, restez groupés et laissez la lumière vous guider...</p>
+    <p>Une perturbation venue d'un monde parallèle a éteint tous les messages de la galaxie.</p>
+    <p>Sept messages lumineux sont cachés dans l'obscurité de la base. Retrouvez-les et remettez-les dans l'ordre.</p>
+    <p>Restez groupés. Laissez la lumière vous guider...</p>
   </div>
   <div id="fadeTop"></div>
 </section>
@@ -92,7 +91,7 @@
     var c = document.getElementById("crawl"), h = c.offsetHeight;
     var endPct = -((h / innerHeight) * 100 + 60);               // fully gone above the top
     c.style.setProperty("--end", endPct + "%");
-    c.style.setProperty("--dur", Math.round(Math.max(60, h / innerHeight * 38)) + "s");
+    c.style.setProperty("--dur", Math.round(Math.max(32, h / innerHeight * 38)) + "s");
     c.style.animation = "none"; void c.offsetWidth; c.style.animation = "";
     var secs = parseFloat(c.style.getPropertyValue("--dur"));
     timer = setTimeout(function () { go(3); }, secs * 1000);
