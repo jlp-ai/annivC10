@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cours de potions</title>
+<style>
+  :root {
+    --bg: #14100c;
+    --parchment: #ecd9a8;
+    --parchment-dark: #c9a96a;
+    --ink: #3b2412;
+    --accent: #7a1f1f;
+    --gold: #d4a62a;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: radial-gradient(ellipse at center, #2a2017 0%, var(--bg) 70%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    color: var(--ink);
+    overflow: hidden;
+  }
+  .scroll {
+    width: min(92vw, 160vh);
+    height: 92vh;
+    background:
+      radial-gradient(ellipse at 20% 15%, rgba(255,255,255,.35), transparent 45%),
+      radial-gradient(ellipse at 85% 90%, rgba(120,70,20,.35), transparent 50%),
+      var(--parchment);
+    border-radius: 18px;
+    box-shadow: inset 0 0 90px rgba(110,70,20,.55), 0 20px 60px rgba(0,0,0,.7);
+    padding: 3.2vh 4vw;
+    display: flex; flex-direction: column;
+    border: 3px solid var(--parchment-dark);
+  }
+  h1 {
+    margin: 0; text-align: center; color: var(--accent);
+    font-size: clamp(32px, 5.2vh, 64px); letter-spacing: .04em;
+  }
+  .sub {
+    text-align: center; font-style: italic;
+    font-size: clamp(18px, 2.6vh, 32px); margin: .6vh 0 2vh;
+  }
+  table { width: 100%; border-collapse: collapse; flex: 1; }
+  th {
+    font-size: clamp(16px, 2.3vh, 28px); text-transform: uppercase;
+    letter-spacing: .12em; color: var(--accent);
+    border-bottom: 3px double var(--ink); padding-bottom: 1vh;
+  }
+  td {
+    font-size: clamp(22px, 3.6vh, 46px);
+    padding: 0 1.4vw;
+    border-bottom: 1px dashed rgba(59,36,18,.45);
+  }
+  td.place { font-size: clamp(14px, 2.1vh, 26px); font-style: italic; width: 22%; opacity: .8; }
+  td.object { width: 34%; font-weight: bold; }
+  td.arrow { width: 6%; text-align: center; color: var(--accent); font-size: clamp(26px, 4.4vh, 54px); }
+  td.ingredient { font-weight: bold; color: var(--accent); }
+  tr .arrow, tr .ingredient { visibility: hidden; }
+  tr.revealed .arrow, tr.revealed .ingredient { visibility: visible; animation: pop .6s ease; }
+  @keyframes pop {
+    from { opacity: 0; transform: scale(.85); filter: blur(6px); }
+    to { opacity: 1; transform: none; filter: none; }
+  }
+  footer {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: clamp(14px, 2vh, 24px); margin-top: 1.4vh; opacity: .85;
+  }
+  .hint { font-style: italic; }
+  .gm { font-size: 12px; opacity: .55; }
+</style>
+</head>
+<body>
+<main class="scroll">
+  <h1>Cours de potions</h1>
+  <p class="sub">Retrouvez chaque objet dans sa construction. Il ouvre l'accès à un ingrédient.</p>
+  <table id="grid">
+    <thead>
+      <tr><th>Construction</th><th>Objet à retrouver</th><th></th><th>Ingrédient</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <footer>
+    <span class="hint">Attention : l'ordre du mélange compte.</span>
+    <span class="gm">Maître du jeu : Espace = révéler la ligne suivante, A = tout afficher, R = recommencer</span>
+  </footer>
+</main>
+
+<script>
+  // Proposed mapping, to be validated (see scenario/univers.md)
+  var ROWS = [
+    { place: "Cabane de Hagrid", object: "L'oeuf de dragon",   ingredient: "Poudre d'écaille de dragon" },
+    { place: "Volière",          object: "La plume de Hedwige", ingredient: "Poussière d'étoile" },
+    { place: "Cours de potions", object: "La fiole",           ingredient: "Élixir de chou violet" },
+    { place: "Le Terrier",       object: "Le gnome de jardin", ingredient: "Bave de gnome" },
+    { place: "Quai 9 3/4",       object: "Le ticket",          ingredient: "Larme de phénix" },
+    { place: "Saule cogneur",    object: "La branche",         ingredient: "Sève du saule" }
+  ];
+
+  var body = document.querySelector("#grid tbody");
+  ROWS.forEach(function (r) {
+    var tr = document.createElement("tr");
+    [["place", r.place], ["object", r.object], ["arrow", "→"], ["ingredient", r.ingredient]]
+      .forEach(function (c) {
+        var td = document.createElement("td");
+        td.className = c[0];
+        td.textContent = c[1];
+        tr.appendChild(td);
+      });
+    body.appendChild(tr);
+  });
+
+  var rows = body.querySelectorAll("tr");
+
+  function revealNext() {
+    for (var i = 0; i < rows.length; i++) {
+      if (!rows[i].classList.contains("revealed")) { rows[i].classList.add("revealed"); return; }
+    }
+  }
+
+  document.addEventListener("keydown", function (e) {
+    if (e.code === "Space" || e.key === "ArrowRight") { e.preventDefault(); revealNext(); }
+    else if (e.key === "a" || e.key === "A") { rows.forEach(function (r) { r.classList.add("revealed"); }); }
+    else if (e.key === "r" || e.key === "R") { rows.forEach(function (r) { r.classList.remove("revealed"); }); }
+  });
+</script>
+</body>
+</html>

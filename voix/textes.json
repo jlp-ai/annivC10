@@ -1,0 +1,38 @@
+[
+  {
+    "file": "briefing-1.mp3",
+    "voice": "fr-FR-HenriNeural",
+    "rate": "-5%",
+    "text": "Appel entrant. Ligne ultra secrète. Le quartier général vous convoque. Agents, décrochez."
+  },
+  {
+    "file": "briefing-2.mp3",
+    "voice": "fr-FR-HenriNeural",
+    "rate": "-5%",
+    "text": "Bienvenue au quartier général de l'agence Chronos. Chers agents, une fois de plus, nous faisons appel à vous pour une mission périlleuse. Des perturbations anachroniques ont été détectées dans un appartement du dix-huitième arrondissement de Paris. Des mondes qui n'auraient jamais dû se croiser se mélangent. Chaque objet déplacé doit retrouver son époque. Vous allez une nouvelle fois traverser les époques pour sauver le monde. Nous comptons sur vous. Bonne chance. Fin de transmission."
+  },
+  {
+    "file": "briefing-3.mp3",
+    "voice": "fr-FR-HenriNeural",
+    "rate": "-5%",
+    "text": "Anomalie détectée. Nature : perturbations anachroniques. Localisation : Paris, dix-huitième arrondissement. Effet : des objets d'autres époques surgissent. Remède : renvoyer cinq objets anachroniques à leur époque. Statut : actives, sous surveillance."
+  },
+  {
+    "file": "briefing-4.mp3",
+    "voice": "fr-FR-HenriNeural",
+    "rate": "-5%",
+    "text": "Votre mission : renvoyer cinq objets anachroniques à leur époque. Cinq portails vont s'ouvrir, un à la fois. Chaque épreuve réussie renvoie un objet à son époque."
+  },
+  {
+    "file": "briefing-5.mp3",
+    "voice": "fr-FR-HenriNeural",
+    "rate": "-5%",
+    "text": "Code de l'agent. Un : équipe soudée, personne ne part seul. Deux : armes en mousse uniquement, sans viser le visage. Trois : objets manipulés avec soin, ils appartiennent à l'époque visitée. Quatre : en cas de blocage, le chef peut accorder un indice."
+  },
+  {
+    "file": "briefing-6.mp3",
+    "voice": "fr-FR-HenriNeural",
+    "rate": "-5%",
+    "text": "Mission lancée. Cinq objets anachroniques vous attendent. Prenez le temps de réfléchir. Bonne chance, agents."
+  }
+]
