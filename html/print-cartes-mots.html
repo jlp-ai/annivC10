@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cartes des mots, à imprimer</title>
+<style>
+  :root { --red: #e8142b; --black: #111111; --yellow: #ffe14d; --cream: #fff1d6; }
+  * { box-sizing: border-box; }
+  @page { size: A4; margin: 0; }
+  @page land { size: A4 landscape; margin: 0; }
+  body { margin: 0; background: #ddd; font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif; color: var(--black); }
+  .bar { background: var(--black); color: var(--cream); padding: 10px 16px; font-size: 14px; line-height: 1.5; }
+  .bar button { font: inherit; padding: 4px 12px; margin-left: 8px; cursor: pointer; }
+  .cap { width: 210mm; margin: 14px auto 0; font-size: 13px; color: #444; }
+  .cap.wide { width: 297mm; }
+  .sheet { width: 210mm; height: 297mm; margin: 4px auto 10px; padding: 10mm 9mm; background: #fff; position: relative; overflow: hidden; display: grid; justify-content: center; align-content: start; }
+  .sheet.land { width: 297mm; height: 210mm; page: land; padding: 0; display: block; }
+
+  /* cartes OBSCURE (gabarit) */
+  .g8 { grid-template-columns: repeat(2, 92mm); grid-auto-rows: 62mm; gap: 6mm 6mm; padding-top: 12mm; }
+  .tpl { position: relative; width: 92mm; height: 62mm; border: 0.35mm dashed var(--black); border-radius: 3mm; background: #fff; }
+  .tpl svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+
+  /* cartes LUMINEUSE */
+  .g4 { grid-template-columns: repeat(2, 92mm); grid-auto-rows: 125mm; gap: 8mm 6mm; padding-top: 12mm; }
+  .syl { position: relative; width: 92mm; height: 125mm; border: 0.35mm dashed var(--black); border-radius: 4mm; padding: 3mm; }
+  .syl .in { width: 100%; height: 100%; border: 0.9mm solid var(--black); border-radius: 3mm; background: var(--cream); overflow: hidden; position: relative; display: flex; flex-direction: column; }
+  .syl .top { background: var(--red); color: #fff; text-align: center; font-weight: bold; letter-spacing: .22em; text-transform: uppercase; font-size: 3.6mm; padding: 3mm 0; border-bottom: 0.9mm solid var(--black); }
+  .syl .step { text-align: center; font-size: 3.2mm; letter-spacing: .12em; text-transform: uppercase; color: var(--red); font-weight: bold; margin-top: 4mm; }
+  .syl .big { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 40mm; font-weight: bold; color: var(--black); letter-spacing: .02em; }
+  .stamp { position: absolute; right: 5mm; bottom: 9mm; transform: rotate(-14deg); border: 0.9mm solid var(--red); color: var(--red); border-radius: 2mm; padding: 1.4mm 3mm; text-align: center; font-weight: bold; text-transform: uppercase; letter-spacing: .1em; font-size: 3.2mm; line-height: 1.25; background: rgba(255,255,255,.35); }
+  .stamp b { display: block; font-size: 4.2mm; }
+  .stripe { height: 5mm; background: repeating-linear-gradient(135deg, var(--black) 0 3mm, var(--yellow) 3mm 6mm); }
+
+  /* cartes NETTE */
+  .g6 { grid-template-columns: repeat(2, 92mm); grid-auto-rows: 86mm; gap: 6mm 6mm; padding-top: 12mm; }
+  .nt { position: relative; width: 92mm; height: 86mm; border: 0.35mm dashed var(--black); border-radius: 3mm; padding: 2.5mm; }
+  .nt .in { width: 100%; height: 100%; border: 1.2mm solid var(--black); border-radius: 2.5mm; background: var(--yellow); overflow: hidden; display: flex; flex-direction: column; }
+  .nt .top { background: var(--black); color: var(--yellow); text-align: center; font-weight: bold; letter-spacing: .22em; text-transform: uppercase; font-size: 3.2mm; padding: 2mm 0; }
+  .nt .big { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 58mm; font-weight: bold; color: var(--red); line-height: 1; }
+  .nt .stripe { height: 4mm; }
+
+  /* TRANSPARENTE */
+  .land svg { position: absolute; left: 0; top: 0; width: 297mm; height: 210mm; }
+
+  .noprint { }
+  .note { width: 297mm; margin: 4px auto 24px; background: #fff8cf; border: 1px solid #c9a800; padding: 10px 16px; font-size: 13px; line-height: 1.5; }
+
+  @media print {
+    body { background: #fff; }
+    .bar, .cap, .noprint { display: none !important; }
+    .sheet { margin: 0; page-break-after: always; break-after: page; }
+    .sheet:last-child { page-break-after: auto; break-after: auto; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bar noprint">
+  Supports physiques des mots : 4 feuilles A4, échelle 100 %, couleurs activées. Les pointillés sont les traits de découpe.
+  <button onclick="window.print()">Imprimer</button>
+</div>
+
+<main id="main">
+
+<div class="cap noprint">Page 1 : gabarit des 7 cartes à calquer au marqueur ou à la peinture fluorescente.</div>
+<section class="sheet g8" id="p1"></section>
+
+<div class="cap noprint">Page 2 : 4 cartes syllabes à plastifier.</div>
+<section class="sheet g4" id="p2"></section>
+
+<div class="cap noprint">Page 3 : 5 cartes lettres à coller au dos des cibles.</div>
+<section class="sheet g6" id="p3"></section>
+
+<div class="cap wide noprint">Page 4 : feuille à l'encre invisible, format paysage.</div>
+<section class="sheet land" id="p4"></section>
+
+</main>
+
+<div class="note noprint" id="prep">
+  <b>Préparation (adulte).</b> 1) Imprimer cette page en gris très clair ou calquer le contour sur une feuille neuve posée sur une vitre : le mot imprimé ne doit pas rester visible par les enfants. 2) Mélanger 3 cuillères à soupe de bicarbonate dans un demi-verre d'eau tiède, jusqu'à dissolution. 3) Repasser chaque lettre au pinceau large avec cette solution, laisser sécher une nuit. 4) Le jour J, passer un pinceau ou une éponge imbibé de jus de chou rouge : le mot apparaît en bleu vert. Tester avant, car la concentration et le temps de séchage changent le contraste.
+</div>
+
+<script>
+  var NS = "http://www.w3.org/2000/svg";
+
+  // Page 1 : OBSCURE
+  var word1 = "OBSCURE";
+  var h1 = "";
+  for (var i = 0; i < word1.length; i++) {
+    h1 += '<div class="tpl"><svg viewBox="0 0 92 62" aria-hidden="true">' +
+      '<circle cx="9" cy="9" r="5.5" fill="#fff" stroke="#111" stroke-width="1.1"/>' +
+      '<text x="9" y="12.2" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="8.5" fill="none" stroke="#111" stroke-width="0.5">' + (i + 1) + '</text>' +
+      '<text x="46" y="54" text-anchor="middle" font-family="Arial Black, Arial, Helvetica, sans-serif" font-weight="900" font-size="64" fill="#fff" stroke="#111" stroke-width="1.8" stroke-linejoin="round">' + word1.charAt(i) + '</text>' +
+      '</svg></div>';
+  }
+  document.getElementById("p1").innerHTML = h1;
+
+  // Page 2 : LUMINEUSE
+  var syl = ["LU", "MI", "NEU", "SE"];
+  var h2 = "";
+  for (var j = 0; j < syl.length; j++) {
+    h2 += '<div class="syl"><div class="in">' +
+      '<div class="top">Agence Chronos</div>' +
+      '<div class="step">Syllabe ' + (j + 1) + ' sur 4</div>' +
+      '<div class="big">' + syl[j] + '</div>' +
+      '<div class="stamp">Agence<b>Chronos</b>Validé</div>' +
+      '<div class="stripe"></div>' +
+      '</div></div>';
+  }
+  document.getElementById("p2").innerHTML = h2;
+
+  // Page 3 : NETTE
+  var word3 = "NETTE";
+  var h3 = "";
+  for (var k = 0; k < word3.length; k++) {
+    h3 += '<div class="nt"><div class="in">' +
+      '<div class="top">Agence Chronos</div>' +
+      '<div class="big">' + word3.charAt(k) + '</div>' +
+      '<div class="stripe"></div>' +
+      '</div></div>';
+  }
+  document.getElementById("p3").innerHTML = h3;
+
+  // Page 4 : TRANSPARENTE, lettres de 5 cm
+  document.getElementById("p4").innerHTML =
+    '<svg viewBox="0 0 297 210" aria-hidden="true">' +
+    '<g font-family="Arial Black, Arial, Helvetica, sans-serif" font-weight="900" fill="none" stroke="#b9b9b9" stroke-width="0.9" stroke-dasharray="2.2 1.6" stroke-linejoin="round" text-anchor="middle">' +
+    '<text x="148.5" y="86" font-size="70" textLength="240" lengthAdjust="spacingAndGlyphs">TRANS</text>' +
+    '<text x="148.5" y="166" font-size="70" textLength="270" lengthAdjust="spacingAndGlyphs">PARENTE</text>' +
+    '</g></svg>';
+</script>
+</body>
+</html>

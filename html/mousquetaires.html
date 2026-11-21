@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salle d'armes des mousquetaires</title>
+<style>
+  :root { --deep: #2a0508; --crimson: #9c1020; --black: #111111; --yellow: #ffe14d; --cream: #fff1d6; --muted: #ffd6d6; --red: #e8142b; --gold: #ffd23f; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { background: linear-gradient(135deg, var(--deep) 0%, var(--crimson) 55%, #d4182b 100%); color: #fff; font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif; overflow: hidden; }
+  body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 5; background: repeating-linear-gradient(0deg, rgba(0,0,0,.08) 0 2px, transparent 2px 4px); }
+
+  main { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; padding: 3vh 4vw 4.5vh; gap: 1.6vh; }
+  .org { background: var(--black); color: var(--yellow); font-weight: bold; letter-spacing: .25em; text-transform: uppercase; font-size: clamp(14px, 2.2vh, 28px); padding: .6vh 1.6vw; border-radius: 999px; box-shadow: 0 0 20px rgba(255,210,63,.6); }
+  h1 { margin: 0; font-size: clamp(34px, 7vh, 90px); line-height: 1.05; text-shadow: 4px 4px 0 var(--black); text-align: center; }
+
+  .cards { display: flex; gap: 1.4vw; justify-content: center; perspective: 900px; }
+  .card { width: 8vw; max-width: 12vh; min-width: 48px; aspect-ratio: 3 / 4; position: relative; transform-style: preserve-3d; transition: transform .8s cubic-bezier(.3,1.3,.5,1); }
+  .card.flip { transform: rotateY(180deg); }
+  .face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 12px; border: 4px solid var(--black); display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 0 var(--black); }
+  .face.back { background: repeating-linear-gradient(45deg, var(--black) 0 10px, #2b0a0e 10px 20px); color: var(--gold); font-size: clamp(22px, 5vh, 60px); font-weight: bold; }
+  .face.front { background: var(--yellow); color: var(--deep); font-weight: bold; font-size: clamp(40px, 11vh, 140px); line-height: 1; transform: rotateY(180deg); }
+  .card.cur .face.back { border-color: var(--gold); box-shadow: 0 0 24px rgba(255,210,63,.8), 0 6px 0 var(--black); }
+
+  .stage { flex: 1; min-height: 0; width: 100%; display: flex; gap: 3vw; align-items: center; justify-content: center; }
+  .art { height: 100%; aspect-ratio: 1 / 1; max-width: 42vw; background: rgba(0,0,0,.35); border: 4px solid var(--cream); border-radius: 18px; padding: 1vh; }
+  .art svg { width: 100%; height: 100%; display: block; }
+  .info { flex: 1; max-width: 44vw; display: flex; flex-direction: column; gap: 2vh; }
+  .step { color: var(--muted); letter-spacing: .14em; text-transform: uppercase; font-size: clamp(16px, 2.6vh, 32px); }
+  .fname { margin: 0; color: var(--yellow); font-size: clamp(40px, 9vh, 120px); line-height: 1; text-transform: uppercase; text-shadow: 4px 4px 0 var(--black); }
+  .desc { margin: 0; font-size: clamp(22px, 3.8vh, 48px); line-height: 1.3; color: var(--cream); }
+  .target { align-self: flex-start; background: var(--yellow); color: var(--deep); font-weight: bold; border-radius: 12px; padding: 1vh 1.6vw; font-size: clamp(20px, 3.4vh, 44px); }
+  .done-msg { font-size: clamp(26px, 5vh, 64px); color: var(--yellow); font-weight: bold; line-height: 1.25; }
+  .hintbox { display: none; background: var(--black); color: var(--yellow); border: 3px solid var(--red); border-radius: 14px; padding: 1.4vh 1.6vw; font-size: clamp(18px, 3vh, 38px); line-height: 1.3; }
+  .hintbox.on { display: block; animation: pop .4s backwards; }
+  .hintbox small { display: block; color: var(--muted); font-size: .55em; letter-spacing: .14em; text-transform: uppercase; margin-bottom: .5vh; }
+  @keyframes pop { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: none; } }
+
+  #help { position: fixed; inset: 0; z-index: 20; background: rgba(17,17,17,.94); display: none; align-items: center; justify-content: center; }
+  #help.on { display: flex; }
+  #help .box { max-width: 60vw; border: 3px solid var(--gold); border-radius: 18px; padding: 3vh 3vw; background: #1c0609; font-size: clamp(16px, 2.6vh, 32px); line-height: 1.5; color: var(--cream); }
+  #help h2 { margin: 0 0 1.4vh; color: var(--yellow); font-size: 1.4em; }
+  #help ul { margin: 0 0 1.4vh; padding-left: 1.2em; }
+  #help kbd { background: var(--yellow); color: var(--deep); border-radius: 6px; padding: 0 .4em; font-family: inherit; font-weight: bold; }
+  #help .safe { border-top: 2px dashed var(--red); padding-top: 1.2vh; color: var(--muted); }
+
+  .hud { position: fixed; bottom: 1vh; left: 0; right: 0; padding: 0 3vw; font-size: 12px; line-height: 1.3; text-align: center; color: var(--muted); opacity: .7; z-index: 6; }
+</style>
+</head>
+<body>
+<main>
+  <div class="org">Agence Chronos</div>
+  <h1>La salle d'armes</h1>
+  <div class="cards" id="cards"></div>
+  <div class="stage">
+    <div class="art" id="art"></div>
+    <div class="info">
+      <div class="step" id="step"></div>
+      <h2 class="fname" id="fname"></h2>
+      <p class="desc" id="desc"></p>
+      <div class="target" id="target"></div>
+      <div class="hintbox" id="hintbox"></div>
+    </div>
+  </div>
+</main>
+
+<div id="help"><div class="box">
+  <h2>Aide du maître du jeu</h2>
+  <ul>
+    <li><kbd>Espace</kbd> : figure réussie, la carte se retourne</li>
+    <li><kbd>Retour arrière</kbd> : annuler la dernière carte</li>
+    <li><kbd>1</kbd> à <kbd>5</kbd> : afficher une autre figure</li>
+    <li><kbd>H</kbd> : indice suivant (1, 2, 3, puis masqué)</li>
+    <li><kbd>Entrée</kbd> : ouvrir la saisie du mot, <kbd>F</kbd> : plein écran, <kbd>K</kbd> : fermer cette aide</li>
+  </ul>
+  <div class="safe">Sécurité : armes en mousse uniquement, pas de contact avec le visage, une distance de bras entre les enfants, pièce dégagée. Un enfant à la fois, l'animateur reste à côté.</div>
+</div></div>
+
+<div class="hud">Espace = figure réussie, Retour arrière = annuler, 1 à 5 = choisir une figure, H = indice suivant, K = aide et sécurité, F = plein écran, Entrée = ouvrir la saisie du mot</div>
+
+<script>
+  // ---------------------------------------------------------------------------
+  // CONFIG: figures and targets, to adapt. One letter of NETTE per figure.
+  // ---------------------------------------------------------------------------
+  var CONFIG = {
+    figures: [
+      { id: "salut",    name: "Le salut",    desc: "L'arme se lève droit devant le visage, puis on s'incline.",           target: "Cible n°1 : à renseigner (à hauteur de poitrine)", hints: ["Regardez bien la figure de l'animateur.", "La cible est à hauteur de poitrine.", "L'animateur guide le geste."] },
+      { id: "botte",    name: "La botte",    desc: "Le bras part droit devant, d'un seul coup, comme une flèche.",         target: "Cible n°2 : à renseigner (à hauteur de poitrine)", hints: ["Regardez bien la figure de l'animateur.", "Le bras reste tendu jusqu'à la cible.", "L'animateur guide le geste."] },
+      { id: "parade",   name: "La parade",   desc: "L'arme se place en travers pour bloquer, puis on touche la cible.",   target: "Cible n°3 : à renseigner (à hauteur de poitrine)", hints: ["Regardez bien la figure de l'animateur.", "D'abord bloquer, ensuite toucher.", "L'animateur guide le geste."] },
+      { id: "moulinet", name: "Le moulinet", desc: "L'arme dessine un grand cercle au-dessus de la tête.",               target: "Cible n°4 : à renseigner (à hauteur de poitrine)", hints: ["Regardez bien la figure de l'animateur.", "Un grand cercle, puis la cible.", "L'animateur guide le geste."] },
+      { id: "fente",    name: "La fente",    desc: "Un grand pas en avant, la jambe pliée, l'arme tendue vers la cible.", target: "Cible n°5 : à renseigner (à hauteur de poitrine)", hints: ["Regardez bien la figure de l'animateur.", "Le grand pas se fait avec la même jambe que l'arme.", "L'animateur guide le geste."] }
+    ]
+  };
+
+  var LETTERS = "NETTE".split("");
+  var $ = function (id) { return document.getElementById(id); };
+  var n = 0, view = 0, hint = 0, SVGNS = "http://www.w3.org/2000/svg";
+
+  // Stick figures (facing right). Points: [x, y] in a 400 x 400 box.
+  // Each pose: head, neck, hip, arm front (elbow, hand), arm back (elbow, hand), legs (knee, foot) x2, sword tip.
+  var POSES = {
+    salut:    { head: [190, 90],  neck: [190, 120], hip: [190, 240], af: [[225, 170], [235, 125]], ab: [[165, 190], [160, 240]], lf: [[205, 300], [215, 365]], lb: [[175, 300], [165, 365]], tip: [236, 30],  extra: "bow" },
+    botte:    { head: [170, 90],  neck: [175, 120], hip: [180, 240], af: [[235, 150], [290, 160]], ab: [[140, 150], [120, 120]], lf: [[225, 290], [250, 365]], lb: [[150, 300], [120, 365]], tip: [385, 164] },
+    parade:   { head: [190, 90],  neck: [190, 120], hip: [190, 240], af: [[235, 175], [262, 140]], ab: [[150, 175], [140, 225]], lf: [[215, 300], [230, 365]], lb: [[165, 300], [150, 365]], tip: [345, 60],  extra: "block" },
+    moulinet: { head: [190, 100], neck: [190, 130], hip: [190, 245], af: [[235, 110], [255, 60]], ab: [[150, 180], [140, 235]], lf: [[215, 305], [235, 365]], lb: [[165, 305], [150, 365]], tip: [330, 40],  extra: "circle" },
+    fente:    { head: [150, 100], neck: [160, 130], hip: [165, 230], af: [[225, 170], [285, 190]], ab: [[130, 150], [100, 110]], lf: [[250, 290], [290, 365]], lb: [[110, 310], [55, 365]], tip: [385, 205] }
+  };
+
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(SVGNS, name);
+    for (var k in attrs) if (attrs.hasOwnProperty(k)) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function line(p, a, b, w, col) { return el("line", { x1: a[0], y1: a[1], x2: b[0], y2: b[1], stroke: col || "#fff1d6", "stroke-width": w || 9, "stroke-linecap": "round" }, p); }
+
+  function drawFigure(id) {
+    var box = $("art"); box.innerHTML = "";
+    var P = POSES[id], svg = el("svg", { viewBox: "0 0 400 400" }, box);
+    el("line", { x1: 20, y1: 372, x2: 380, y2: 372, stroke: "#ffd23f", "stroke-width": 5, "stroke-dasharray": "2 12", "stroke-linecap": "round" }, svg);
+    if (P.extra === "circle") {
+      el("path", { d: "M 150 60 A 95 70 0 1 1 330 50", fill: "none", stroke: "#e8142b", "stroke-width": 7, "stroke-dasharray": "14 12", "stroke-linecap": "round" }, svg);
+      el("polygon", { points: "330,32 345,62 312,58", fill: "#e8142b" }, svg);
+    }
+    if (P.extra === "block") {
+      el("path", { d: "M 300 160 Q 345 190 300 230", fill: "none", stroke: "#e8142b", "stroke-width": 7, "stroke-linecap": "round" }, svg);
+    }
+    line(svg, P.lb[0], P.lb[1], 10); line(svg, P.hip, P.lb[0], 10);
+    line(svg, P.hip, P.lf[0], 10); line(svg, P.lf[0], P.lf[1], 10);
+    line(svg, P.neck, P.hip, 11);
+    line(svg, P.neck, P.ab[0], 9); line(svg, P.ab[0], P.ab[1], 9);
+    el("circle", { cx: P.head[0], cy: P.head[1], r: 30, fill: "#111", stroke: "#fff1d6", "stroke-width": 8 }, svg);
+    // musketeer hat with a plume
+    el("path", { d: "M " + (P.head[0] - 44) + " " + (P.head[1] - 18) + " L " + (P.head[0] + 44) + " " + (P.head[1] - 18) + " L " + (P.head[0] + 20) + " " + (P.head[1] - 46) + " L " + (P.head[0] - 20) + " " + (P.head[1] - 46) + " Z", fill: "#e8142b", stroke: "#111", "stroke-width": 3 }, svg);
+    el("path", { d: "M " + (P.head[0] - 18) + " " + (P.head[1] - 46) + " Q " + (P.head[0] - 60) + " " + (P.head[1] - 78) + " " + (P.head[0] - 50) + " " + (P.head[1] - 36), fill: "none", stroke: "#ffe14d", "stroke-width": 6, "stroke-linecap": "round" }, svg);
+    line(svg, P.af[0], P.af[1], 9, "#fff1d6");
+    line(svg, P.neck, P.af[0], 9);
+    // sword: handle at the hand, blade to the tip
+    var h = P.af[1], dx = P.tip[0] - h[0], dy = P.tip[1] - h[1], len = Math.sqrt(dx * dx + dy * dy) || 1, ux = dx / len, uy = dy / len;
+    line(svg, [h[0] - ux * 14, h[1] - uy * 14], P.tip, 7, "#ffe14d");
+    line(svg, [h[0] - uy * 16, h[1] + ux * 16], [h[0] + uy * 16, h[1] - ux * 16], 7, "#ffd23f");
+    if (P.extra === "bow") {
+      el("path", { d: "M 120 200 Q 100 150 140 120", fill: "none", stroke: "#e8142b", "stroke-width": 7, "stroke-dasharray": "12 10", "stroke-linecap": "round" }, svg);
+    }
+  }
+
+  function buildCards() {
+    var box = $("cards"); box.innerHTML = "";
+    for (var k = 0; k < LETTERS.length; k++) {
+      var c = document.createElement("div"); c.className = "card"; c.id = "c" + k;
+      c.innerHTML = '<div class="face back">' + (k + 1) + '</div><div class="face front"></div>';
+      c.querySelector(".front").textContent = LETTERS[k];
+      box.appendChild(c);
+    }
+  }
+
+  function render() {
+    for (var k = 0; k < LETTERS.length; k++) {
+      var c = $("c" + k);
+      c.className = "card" + (k < n ? " flip" : "") + (k === view && k >= n ? " cur" : "");
+    }
+    var all = n >= LETTERS.length, f = CONFIG.figures[Math.min(view, CONFIG.figures.length - 1)];
+    if (all) {
+      $("step").textContent = "Toutes les cartes sont retournées";
+      $("fname").textContent = "Touché !";
+      $("desc").className = "desc done-msg";
+      $("desc").textContent = "Tous ensemble : « Un pour tous, tous pour un ! » Puis lisez le mot et tapez-le à l'écran.";
+      $("target").style.display = "none";
+      $("art").style.visibility = "hidden";
+      $("hintbox").className = "hintbox";
+      return;
+    }
+    $("art").style.visibility = "visible";
+    $("desc").className = "desc";
+    drawFigure(f.id);
+    $("step").textContent = "Figure " + (view + 1) + " sur " + CONFIG.figures.length + (view < n ? " (déjà réussie)" : "");
+    $("fname").textContent = f.name;
+    $("desc").textContent = f.desc;
+    $("target").style.display = "";
+    $("target").textContent = f.target;
+    var hb = $("hintbox");
+    if (!hint) { hb.className = "hintbox"; }
+    else {
+      hb.className = "hintbox on";
+      hb.innerHTML = "<small>Indice " + hint + " sur 3</small>";
+      var sp = document.createElement("span"); sp.textContent = f.hints[hint - 1]; hb.appendChild(sp);
+    }
+  }
+
+  var ac = null;
+  function tone(freq, dur, delay) {
+    try {
+      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+      var o = ac.createOscillator(), g = ac.createGain(), t0 = ac.currentTime + (delay || 0);
+      o.type = "triangle"; o.frequency.value = freq; g.gain.setValueAtTime(.0001, t0); g.gain.exponentialRampToValueAtTime(.25, t0 + .02); g.gain.exponentialRampToValueAtTime(.0001, t0 + dur);
+      o.connect(g); g.connect(ac.destination); o.start(t0); o.stop(t0 + dur + .05);
+    } catch (e) {}
+  }
+
+  function validate() {
+    if (n >= LETTERS.length) return;
+    // validate the displayed figure, then move to the next one not yet done
+    if (view !== n) { view = n; }
+    n++; hint = 0; view = Math.min(n, LETTERS.length - 1);
+    render(); tone(520, .2, 0); tone(780, .35, .1);
+  }
+  function undo() { if (n > 0) { n--; view = n; hint = 0; render(); } }
+
+  document.addEventListener("keydown", function (e) {
+    var k = e.key;
+    if (e.code === "Space" || k === "ArrowRight") { e.preventDefault(); validate(); }
+    else if (k === "Backspace" || k === "ArrowLeft") { e.preventDefault(); undo(); }
+    else if (k === "Enter" && window.parent !== window) { window.parent.postMessage({ type: "next" }, "*"); }
+    else if (k >= "1" && k <= "5") { view = parseInt(k, 10) - 1; hint = 0; render(); }
+    else if (k === "h" || k === "H") { hint = (hint + 1) % 4; render(); }
+    else if (k === "k" || k === "K" || k === "?") { $("help").classList.toggle("on"); }
+    else if (k === "f" || k === "F") { try { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); } catch (x) {} }
+  });
+
+  // mousquetaires.html#N = N cards already flipped; #NhM adds hint level M; #NhelpK shows the help (testing)
+  var hm = /^#(\d+)(?:h(\d))?(help)?/.exec(location.hash);
+  if (hm) { n = Math.min(LETTERS.length, parseInt(hm[1], 10)); view = Math.min(n, LETTERS.length - 1); hint = hm[2] ? Math.min(3, parseInt(hm[2], 10)) : 0; if (hm[3]) $("help").classList.add("on"); }
+  buildCards(); render();
+</script>
+</body>
+</html>

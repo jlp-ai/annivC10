@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panneaux de porte</title>
+<style>
+  :root { --red: #e8142b; --black: #111111; --yellow: #ffe14d; --cream: #fff1d6; }
+  * { box-sizing: border-box; }
+  @page { size: A4 landscape; margin: 0; }
+  body { margin: 0; background: #ddd; font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif; color: var(--black); }
+  .bar { background: var(--black); color: var(--cream); padding: 10px 16px; font-size: 14px; line-height: 1.5; }
+  .bar button { font: inherit; padding: 4px 12px; margin-left: 8px; cursor: pointer; }
+  .sheet { width: 297mm; height: 210mm; margin: 10px auto; background: var(--black); position: relative; overflow: hidden; display: flex; flex-direction: column; color: #fff; }
+  .band { height: 28mm; flex: none; background: repeating-linear-gradient(135deg, var(--black) 0 12mm, var(--yellow) 12mm 24mm); }
+  .mid { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 14mm; text-align: center; }
+  .org { color: var(--cream); font-weight: bold; letter-spacing: .45em; text-transform: uppercase; font-size: 6mm; margin-bottom: 4mm; }
+  .head { display: flex; align-items: center; gap: 12mm; }
+  .head svg { width: 36mm; height: 48mm; flex: none; }
+  .t1 { color: var(--yellow); font-weight: bold; text-transform: uppercase; line-height: 1.05; white-space: nowrap; }
+  .t2 { color: #fff; font-weight: bold; text-transform: uppercase; line-height: 1.05; white-space: nowrap; }
+  .alert { margin-top: 7mm; background: var(--red); color: #fff; border: 1.6mm solid var(--cream); border-radius: 3mm; padding: 3mm 12mm; font-weight: bold; text-transform: uppercase; letter-spacing: .06em; white-space: nowrap; }
+  .room { margin-top: 6mm; color: var(--cream); font-size: 14mm; font-weight: bold; outline: none; min-width: 60mm; border-bottom: 0.6mm dashed #666; }
+  @media print {
+    body { background: #fff; }
+    .bar { display: none; }
+    .sheet { margin: 0; page-break-after: always; break-after: page; }
+    .sheet:last-child { page-break-after: auto; break-after: auto; }
+    .room { border-bottom: none; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  Panneaux de porte, un par page A4 paysage (échelle 100 %, couleurs activées). Le nom de la pièce se modifie au clic.
+  <button onclick="window.print()">Imprimer</button>
+</div>
+
+<main id="main"></main>
+
+<script>
+  var ICON_HOUR = '<svg viewBox="0 0 60 80" aria-hidden="true"><g fill="none" stroke="#ffe14d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5 H52 M8 75 H52"/><path d="M13 5 C13 30 28 35 30 40 C28 45 13 50 13 75 M47 5 C47 30 32 35 30 40 C32 45 47 50 47 75"/></g><polygon points="19,66 41,66 30,52" fill="#e8142b"/><polygon points="24,12 36,12 30,24" fill="#e8142b"/></svg>';
+  var ICON_MOON = '<svg viewBox="0 0 60 80" aria-hidden="true"><path d="M38 6 A30 30 0 1 0 54 56 A24 24 0 0 1 38 6 Z" fill="#ffe14d"/><circle cx="46" cy="22" r="3" fill="#e8142b"/><circle cx="52" cy="36" r="2" fill="#e8142b"/></svg>';
+  var ICON_ARROW = '<svg viewBox="0 0 60 80" aria-hidden="true"><g fill="none" stroke="#ffe14d" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 72 V8 H40"/><path d="M26 28 L46 8 L26 -12" transform="translate(0 12)"/></g><circle cx="44" cy="60" r="9" fill="#e8142b"/></svg>';
+
+  var PANELS = [
+    { icon: ICON_HOUR, a: "Zone temporelle", b: "instable", band: "Accès interdit", room: "Chambre 1", s1: 20, s2: 28, s3: 25 },
+    { icon: ICON_HOUR, a: "Zone temporelle", b: "instable", band: "Accès interdit", room: "Salle de bain", s1: 20, s2: 28, s3: 25 },
+    { icon: ICON_HOUR, a: "Zone temporelle", b: "instable", band: "Accès interdit", room: "WC", s1: 20, s2: 28, s3: 25 },
+    { icon: ICON_ARROW, a: "Extérieur", b: "Zone de mission", band: "Restez groupés", room: "", s1: 34, s2: 22, s3: 24 },
+    { icon: ICON_MOON, a: "Bureau", b: "Zone dans le noir", band: "3 agents maximum", room: "", s1: 34, s2: 22, s3: 24 }
+  ];
+
+  var html = "";
+  for (var i = 0; i < PANELS.length; i++) {
+    var p = PANELS[i];
+    html += '<section class="sheet">' +
+      '<div class="band"></div>' +
+      '<div class="mid">' +
+        '<div class="org">Agence Chronos</div>' +
+        '<div class="head">' + p.icon +
+          '<div><div class="t1" style="font-size:' + p.s1 + 'mm">' + p.a + '</div>' +
+          '<div class="t2" style="font-size:' + p.s2 + 'mm">' + p.b + '</div></div>' +
+        '</div>' +
+        '<div class="alert" style="font-size:' + p.s3 + 'mm">' + p.band + '</div>' +
+        (p.room ? '<div class="room" contenteditable="true" spellcheck="false">' + p.room + '</div>' : '') +
+      '</div>' +
+      '<div class="band"></div>' +
+      '</section>';
+  }
+  document.getElementById("main").innerHTML = html;
+</script>
+</body>
+</html>

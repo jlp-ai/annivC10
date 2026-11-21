@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Convocation de l'Agence Chronos</title>
+<style>
+  :root { --red: #e8142b; --black: #111111; --yellow: #ffe14d; --cream: #fff1d6; }
+  * { box-sizing: border-box; }
+  @page { size: A5; margin: 0; }
+  body { margin: 0; background: #ddd; font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif; color: var(--black); }
+  .bar { background: var(--black); color: var(--cream); padding: 10px 16px; font-size: 14px; line-height: 1.5; }
+  .bar button { font: inherit; padding: 4px 12px; margin-left: 8px; cursor: pointer; }
+  .sheet { width: 148mm; height: 210mm; margin: 10px auto; background: var(--cream); position: relative; overflow: hidden; display: flex; flex-direction: column; }
+  .head { background: var(--red); color: #fff; padding: 7mm 9mm 5mm; border-bottom: 1mm solid var(--black); position: relative; }
+  .head .org { font-weight: bold; letter-spacing: .3em; text-transform: uppercase; font-size: 6mm; }
+  .head .sub { font-size: 3mm; letter-spacing: .18em; text-transform: uppercase; margin-top: 1.5mm; color: var(--yellow); }
+  .stamp { position: absolute; right: 7mm; top: 18mm; transform: rotate(-12deg); border: 0.9mm solid var(--red); color: var(--red); background: var(--cream); border-radius: 1.5mm; padding: 1mm 3mm; font-weight: bold; text-transform: uppercase; letter-spacing: .14em; font-size: 4.2mm; }
+  .body { flex: 1; padding: 6mm 9mm 0; display: flex; flex-direction: column; }
+  h1 { margin: 0 0 3mm; font-size: 9.5mm; letter-spacing: .08em; text-transform: uppercase; line-height: 1; }
+  .who { font-size: 4.2mm; margin-bottom: 3mm; }
+  .who b { color: var(--red); text-transform: uppercase; font-size: 3mm; letter-spacing: .14em; margin-right: 2mm; }
+  p { margin: 0 0 2.6mm; font-size: 3.9mm; line-height: 1.38; }
+  .rows { margin: 1mm 0 3mm; border: 0.7mm solid var(--black); border-radius: 2mm; background: #fff; }
+  .row { display: flex; align-items: baseline; gap: 3mm; padding: 1.8mm 3mm; border-bottom: 0.3mm solid var(--black); }
+  .row:last-child { border-bottom: none; }
+  .row .lab { width: 18mm; flex: none; color: var(--red); font-weight: bold; text-transform: uppercase; letter-spacing: .12em; font-size: 3mm; }
+  .row .val { flex: 1; font-size: 4.6mm; font-weight: bold; outline: none; min-height: 6mm; }
+  .dress { background: var(--black); color: var(--cream); border-radius: 2mm; padding: 2.6mm 3.4mm; margin-bottom: 3mm; font-size: 3.8mm; line-height: 1.35; }
+  .dress b { color: var(--yellow); text-transform: uppercase; letter-spacing: .1em; font-size: 3.2mm; display: block; margin-bottom: .8mm; }
+  .parents { margin-top: auto; margin-bottom: 4mm; border: 0.35mm dashed var(--black); border-radius: 1.5mm; padding: 2mm 3mm; font-size: 3.1mm; line-height: 1.4; background: #fff; }
+  .parents b { text-transform: uppercase; letter-spacing: .1em; color: var(--red); }
+  .parents .val { outline: none; font-weight: bold; }
+  .stripe { height: 5mm; flex: none; background: repeating-linear-gradient(135deg, var(--black) 0 3mm, var(--yellow) 3mm 6mm); }
+  [contenteditable]:focus { background: #fff8cf; }
+  @media print {
+    body { background: #fff; }
+    .bar { display: none; }
+    .sheet { margin: 0; page-break-after: auto; }
+    [contenteditable]:focus { background: transparent; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  Convocation recto A5. Cliquer sur la date, l'heure, le lieu, les prénoms et la ligne des parents pour les modifier, puis imprimer (échelle 100 %, couleurs activées). Pour 2 par feuille A4, choisir 2 pages par feuille à l'impression.
+  <button onclick="window.print()">Imprimer</button>
+</div>
+
+<main>
+<section class="sheet">
+  <div class="head">
+    <div class="org">Agence Chronos</div>
+    <div class="sub">Service des anomalies</div>
+  </div>
+  <div class="stamp">Confidentiel</div>
+  <div class="body">
+    <h1>Convocation</h1>
+    <div class="who"><b>Agent(s)</b><span contenteditable="true" spellcheck="false">[prénoms des invités]</span></div>
+    <p>Une anomalie vient d'être détectée près de chez vous. Des choses étranges apparaissent, et personne ne sait d'où elles viennent.</p>
+    <p>L'Agence a besoin d'agents courageux, malins et discrets. Vous avez été choisis. Ce message ne se montre à personne d'autre.</p>
+    <div class="rows">
+      <div class="row"><div class="lab">Date</div><div class="val" contenteditable="true" spellcheck="false">[date]</div></div>
+      <div class="row"><div class="lab">Heure</div><div class="val" contenteditable="true" spellcheck="false">[heure d'arrivée]</div></div>
+      <div class="row"><div class="lab">Lieu</div><div class="val" contenteditable="true" spellcheck="false">[adresse]</div></div>
+    </div>
+    <div class="dress"><b>Tenue exigée</b>Venez habillés comme des agents. Costume sombre, lunettes noires, imperméable, carnet de notes : tout est permis. Prévoyez des chaussures confortables. Un badge officiel vous sera remis à l'arrivée.</div>
+    <div class="parents">
+      <b>Parents</b> : fin de la mission à <span class="val" contenteditable="true" spellcheck="false">[heure de fin]</span>. Allergies ou consignes à signaler : <span class="val" contenteditable="true" spellcheck="false">[à compléter]</span>.
+    </div>
+  </div>
+  <div class="stripe"></div>
+</section>
+</main>
+
+</body>
+</html>

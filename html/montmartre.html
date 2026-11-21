@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Les titis de Montmartre</title>
+<style>
+  :root { --deep: #2a0508; --crimson: #9c1020; --black: #111111; --yellow: #ffe14d; --cream: #fff1d6; --muted: #ffd6d6; --red: #e8142b; --gold: #ffd23f; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { background: linear-gradient(135deg, var(--deep) 0%, var(--crimson) 55%, #d4182b 100%); color: #fff; font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif; overflow: hidden; }
+  body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 5; background: repeating-linear-gradient(0deg, rgba(0,0,0,.08) 0 2px, transparent 2px 4px); }
+
+  .view { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; padding: 3vh 4vw 4.5vh; gap: 1.8vh; }
+  .view.on { display: flex; animation: pop .5s cubic-bezier(.2,1.4,.4,1); }
+  @keyframes pop { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: none; } }
+  .center { justify-content: center; text-align: center; }
+  .org { background: var(--black); color: var(--yellow); font-weight: bold; letter-spacing: .25em; text-transform: uppercase; font-size: clamp(14px, 2.2vh, 28px); padding: .6vh 1.6vw; border-radius: 999px; box-shadow: 0 0 20px rgba(255,210,63,.6); }
+  h1 { margin: 0; font-size: clamp(40px, 9vh, 120px); line-height: 1.05; text-shadow: 4px 4px 0 var(--black); text-align: center; }
+  .panel { background: rgba(0,0,0,.35); border: 3px solid var(--cream); border-radius: 18px; padding: 3vh 3vw; max-width: 78vw; }
+  .panel p { margin: 0 0 1.4vh; font-size: clamp(22px, 4vh, 52px); line-height: 1.35; color: var(--cream); }
+  .panel p:last-child { margin: 0; }
+  .panel b { color: var(--yellow); }
+  .warn { margin-top: 1.4vh; background: var(--yellow); color: var(--deep); font-weight: bold; border-radius: 12px; padding: 1vh 2vw; font-size: clamp(20px, 3.4vh, 44px); }
+
+  /* syllable tracker */
+  .syl { display: flex; gap: 1.2vw; justify-content: center; }
+  .sy { min-width: 11vw; padding: .6vh 1.2vw; border-radius: 14px; border: 4px solid var(--black); background: rgba(0,0,0,.4); color: transparent; font-weight: bold; text-align: center; font-size: clamp(36px, 9vh, 120px); line-height: 1.1; box-shadow: 0 6px 0 var(--black); }
+  .sy.on { background: var(--yellow); color: var(--deep); animation: pop .5s cubic-bezier(.2,1.4,.4,1); }
+  .sy.cur { border-color: var(--gold); box-shadow: 0 0 24px rgba(255,210,63,.7), 0 6px 0 var(--black); }
+
+  .stepbox { flex: 1; min-height: 0; width: 100%; display: flex; gap: 3vw; align-items: stretch; justify-content: center; }
+  .col { flex: 1; max-width: 46vw; display: flex; flex-direction: column; gap: 1.6vh; justify-content: center; }
+  .step { color: var(--muted); letter-spacing: .14em; text-transform: uppercase; font-size: clamp(16px, 2.6vh, 32px); }
+  .riddle { background: rgba(0,0,0,.35); border: 3px solid var(--cream); border-radius: 18px; padding: 2.4vh 2vw; font-size: clamp(22px, 4vh, 52px); line-height: 1.35; color: var(--cream); }
+  .place { align-self: flex-start; background: var(--black); color: var(--yellow); border: 3px solid var(--gold); border-radius: 12px; padding: .8vh 1.4vw; font-size: clamp(16px, 2.6vh, 32px); }
+  .place small { color: var(--muted); text-transform: uppercase; letter-spacing: .12em; margin-right: .8em; }
+  .hintbox { display: none; background: var(--black); color: var(--yellow); border: 3px solid var(--red); border-radius: 14px; padding: 1.6vh 1.6vw; font-size: clamp(20px, 3.4vh, 44px); line-height: 1.3; }
+  .hintbox.on { display: block; animation: pop .4s backwards; }
+  .hintbox small { display: block; color: var(--muted); font-size: .55em; letter-spacing: .14em; text-transform: uppercase; margin-bottom: .5vh; }
+  .big { font-size: clamp(30px, 6vh, 76px); font-weight: bold; color: var(--yellow); line-height: 1.25; text-align: center; }
+
+  .hud { position: fixed; bottom: 1vh; left: 0; right: 0; padding: 0 3vw; font-size: 12px; line-height: 1.3; text-align: center; color: var(--muted); opacity: .7; z-index: 6; }
+</style>
+</head>
+<body>
+
+<!-- Screen 0: start screen, in titi language -->
+<section class="view center" id="v0">
+  <div class="org">Agence Chronos</div>
+  <h1>Les titis de Montmartre</h1>
+  <div class="panel">
+    <p>Ohé, les titis ! Ici, c'est Montmartre, mes p'tits loups.</p>
+    <p>Quatre cartes sont planquées dans le quartier. Chacune cache <b>une syllabe</b>.</p>
+    <p>Ouvrez les mirettes, creusez-vous la cervelle : pour des malins comme vous, c'est du gâteau.</p>
+    <div class="warn">Restez groupés avec votre adulte. Ne traversez jamais sans lui.</div>
+  </div>
+</section>
+
+<!-- Screens 1 to 4: game master help -->
+<section class="view" id="vs">
+  <div class="syl" id="syl"></div>
+  <div class="stepbox">
+    <div class="col">
+      <div class="step" id="step"></div>
+      <div class="riddle" id="riddle"></div>
+      <div class="place" id="place"></div>
+    </div>
+    <div class="col">
+      <div class="hintbox" id="hintbox"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Screen 5: all syllables found -->
+<section class="view center" id="v5">
+  <div class="org">Agence Chronos</div>
+  <h1>Bravo, les titis !</h1>
+  <div class="syl" id="syl2"></div>
+  <div class="big">Les quatre cartes sont réunies.<br>Remettez-les dans le bon ordre pour lire le mot.</div>
+</section>
+
+<div class="hud">Espace = syllabe trouvée et étape suivante, Flèches = naviguer, Retour arrière = annuler la dernière syllabe, H = indice suivant (1, 2, 3, puis masqué), I = écran de départ, F = plein écran, Entrée = ouvrir la saisie du mot</div>
+
+<script>
+  // ---------------------------------------------------------------------------
+  // CONFIG: to adapt once the perimeter is defined.
+  //  - place: exact location of the hidden card (game master only)
+  //  - riddle: text read aloud to the children (generic spotting riddles by default)
+  //  - hints: coup de pouce, piste, solution
+  // ---------------------------------------------------------------------------
+  var CONFIG = {
+    steps: [
+      { syllable: "LU", place: "À renseigner (un escalier du périmètre)",
+        riddle: "Trouvez un escalier. Comptez ses marches, une par une. La carte est cachée à l'endroit que raconte ce nombre.",
+        hints: ["Lisez l'énigme à voix haute, tous ensemble.", "Cherchez un escalier ou une volée de marches, pas très loin du départ.", "L'adulte montre l'escalier et la bonne marche."] },
+      { syllable: "MI", place: "À renseigner (une porte colorée du périmètre)",
+        riddle: "Cherchez une porte qui n'a pas la même couleur que ses voisines. Regardez bien autour d'elle : la carte n'est jamais loin.",
+        hints: ["Une porte, ça se repère de loin. Levez le nez et regardez autour de vous.", "La porte est d'une couleur vive. Regardez à gauche et à droite du trottoir.", "L'adulte montre la porte et la cachette."] },
+      { syllable: "NEU", place: "À renseigner (une inscription sur un mur)",
+        riddle: "Un mur a quelque chose à dire : une inscription, un nom, une plaque. Lisez-la en entier. La carte se cache juste en dessous.",
+        hints: ["Regardez les murs, à hauteur d'enfant.", "L'inscription est gravée ou peinte. Elle est facile à lire de près.", "L'adulte montre le mur et la plaque."] },
+      { syllable: "SE", place: "À renseigner (dernière cachette, par exemple un numéro de rue)",
+        riddle: "Dernière étape, mes p'tits loups ! Trouvez un numéro de rue qui contient un chiffre impair. La dernière carte est tout près.",
+        hints: ["Relisez l'énigme en cherchant les numéros.", "Regardez les plaques de rue et les numéros sur les portes.", "L'adulte montre le numéro et la cachette."] }
+    ]
+  };
+
+  var $ = function (id) { return document.getElementById(id); };
+  var N = CONFIG.steps.length;
+  var found = 0;       // number of syllables found
+  var view = 0;        // 0 = start, 1..N = steps, N+1 = end
+  var hint = 0;
+
+  function buildSyl(id) {
+    var box = $(id); box.innerHTML = "";
+    for (var k = 0; k < N; k++) {
+      var d = document.createElement("div"); d.className = "sy"; d.textContent = CONFIG.steps[k].syllable; box.appendChild(d);
+    }
+  }
+  function paintSyl(id) {
+    var kids = $(id).children;
+    for (var k = 0; k < kids.length; k++) {
+      kids[k].className = "sy" + (k < found ? " on" : "") + (k === found && view > 0 && view <= N ? " cur" : "");
+    }
+  }
+
+  function render() {
+    $("v0").classList.toggle("on", view === 0);
+    $("vs").classList.toggle("on", view >= 1 && view <= N);
+    $("v5").classList.toggle("on", view === N + 1);
+    paintSyl("syl"); paintSyl("syl2");
+    if (view >= 1 && view <= N) {
+      var s = CONFIG.steps[view - 1];
+      $("step").textContent = "Étape " + view + " sur " + N + (view - 1 < found ? " (syllabe déjà trouvée)" : "");
+      $("riddle").textContent = s.riddle;
+      $("place").innerHTML = "<small>Maître du jeu</small>";
+      var t = document.createElement("span"); t.textContent = s.place; $("place").appendChild(t);
+      var hb = $("hintbox");
+      if (!hint) hb.className = "hintbox";
+      else {
+        hb.className = "hintbox on";
+        hb.innerHTML = "<small>Indice " + hint + " sur 3</small>";
+        var sp = document.createElement("span"); sp.textContent = s.hints[hint - 1]; hb.appendChild(sp);
+      }
+    }
+  }
+
+  function go(v) { view = Math.max(0, Math.min(N + 1, v)); hint = 0; render(); }
+  function validate() {
+    if (view === 0) { go(1); return; }
+    if (view >= 1 && view <= N) {
+      if (view - 1 === found) found++;
+      go(view + 1);
+    }
+  }
+  function undo() { if (found > 0) { found--; go(Math.min(view, found + 1)); } }
+
+  document.addEventListener("keydown", function (e) {
+    var k = e.key;
+    if (e.code === "Space") { e.preventDefault(); validate(); }
+    else if (k === "ArrowRight") { e.preventDefault(); go(view + 1); }
+    else if (k === "ArrowLeft") { e.preventDefault(); go(view - 1); }
+    else if (k === "Backspace") { e.preventDefault(); undo(); }
+    else if (k === "Enter" && window.parent !== window) { window.parent.postMessage({ type: "next" }, "*"); }
+    else if (k === "h" || k === "H") { hint = (hint + 1) % 4; render(); }
+    else if (k === "i" || k === "I") { go(0); }
+    else if (k === "f" || k === "F") { try { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); } catch (x) {} }
+  });
+
+  // montmartre.html#V = open screen V (0 start, 1 to 4 steps, 5 end), steps before V already found; #VhM adds hint level M (testing)
+  buildSyl("syl"); buildSyl("syl2");
+  var hm = /^#(\d+)(?:h(\d))?/.exec(location.hash);
+  if (hm) { view = Math.min(N + 1, parseInt(hm[1], 10)); found = Math.min(N, Math.max(0, view - 1)); hint = hm[2] ? Math.min(3, parseInt(hm[2], 10)) : 0; }
+  render();
+</script>
+</body>
+</html>

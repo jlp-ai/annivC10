@@ -5,9 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Galaxie lointaine : introduction</title>
 <style>
+  @font-face { font-family: "News Cycle"; src: url("fonts/NewsCycle-Bold.ttf") format("truetype"); font-weight: bold; }
   * { box-sizing: border-box; }
   html, body { height: 100%; margin: 0; }
-  body { background: #000; color: #fff; font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif; overflow: hidden; }
+  body { background: #000; color: #fff; font-family: "News Cycle", "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif; overflow: hidden; }
   canvas#stars { position: fixed; inset: 0; width: 100%; height: 100%; }
 
   .phase { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; text-align: center; }
@@ -23,7 +24,7 @@
 
   /* 3. crawl */
   #p3 { perspective: 420px; overflow: hidden; align-items: flex-start; }
-  #crawl { position: absolute; left: 50%; top: 100%; width: 62vw; margin-left: -31vw; transform-origin: 50% 100%; transform: rotateX(26deg); color: #feda4a; font-weight: bold; font-size: clamp(26px, 5.6vh, 70px); line-height: 1.45; text-align: justify; text-transform: none; animation: crawl var(--dur, 80s) linear forwards; }
+  #crawl { position: absolute; left: 50%; top: 100%; width: 72vw; margin-left: -36vw; transform-origin: 50% 100%; transform: rotateX(26deg); color: #feda4a; font-weight: bold; font-size: clamp(34px, 7.6vh, 96px); line-height: 1.4; text-align: justify; text-transform: none; animation: crawl var(--dur, 80s) linear forwards; }
   @keyframes crawl { from { top: 100%; } to { top: var(--end, -300%); } }
   #crawl h2 { text-align: center; text-transform: uppercase; margin: 0 0 .2em; font-size: 1.15em; letter-spacing: .08em; }
   #crawl p { margin: 0 0 1em; text-indent: 1.4em; }
