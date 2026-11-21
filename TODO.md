@@ -7,7 +7,7 @@ Dernière mise à jour : 2026-11-21 (badges, sons par page, musiques YouTube)
 - [x] Nom de l'organisation : Agence Chronos (validé)
 - [x] Portrait du chef (donneur d'ordre) sur le côté de l'intro : SVG v0 avec bouche animée pendant l'écriture. À valider : apparence (homme, lunettes noires, oreillette, cravate rose), nom ("Le Chef" ou un nom de code)
 - [x] Motif de la mission : perturbations venues de mondes parallèles, cinq mots à rapporter, un par monde (validé ; plus de faille ni d'ancres)
-- [ ] Régénérer les MP3 du briefing après changement de texte (voix/textes.json)
+- [x] MP3 du briefing générés avec Azure (voix fr-FR-HenriNeural) dans audio/briefing-1.mp3 à briefing-7.mp3 ; à réécouter, à régénérer si les textes changent (voix/generate-voices.ps1) ou à refaire avec ElevenLabs pour une voix plus expressive
 - [x] Pas d'antagoniste : la menace est une anomalie, des perturbations venues de mondes parallèles (décision 2026-11-21)
 - [x] (remplacé par les mots) Définir l'objet d'un monde parallèle de chaque univers (ex. un objet d'un autre monde qui apparaît dans la scène) et le geste qui le renvoie à son monde
 - [ ] Créer les éléments d'ambiance : sonnerie d'appel, effet de tampon, animation de perturbation, jingle d'agence (en HTML/Web Audio ou MP3)
