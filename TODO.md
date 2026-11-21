@@ -47,7 +47,8 @@ Dernière mise à jour : 2026-11-21. **Fête : dimanche 6 décembre 2026** (J-15
 
 - [ ] Star Wars : draps noirs (2 à 3) pour le bureau, ruban adhésif repositionnable ou pinces, lampe UV, bâtons lumineux, rubans phosphorescents, peinture ou marqueur fluorescent, limiter à 3 enfants dans la pièce
 - [ ] Mousquetaires : fleurets en mousse (disponibles, confirmé), 5 cibles en mousse avec les lettres au dos, costume de l'animateur, dégager la chambre 2 (objets fragiles, lampes)
-- [ ] K-Pop : costumes (3 Saja Boys avec gats, 3 Huntr/x), enceinte, internet, ordinateur relié à la télé, crayons
+- [x] K-Pop : costumes reçus, enceinte OK, internet OK (confirmé 2026-11-21)
+- [ ] K-Pop : ordinateur relié à la télé, crayons pour les carnets
 - [ ] Montmartre : 9 cartes lettres plastifiées (L U M I N E U S E), sacs étanches, adulte accompagnateur par groupe
 - [ ] Harry Potter : Lego (constructions cachées dans le salon), jus de chou rouge, bicarbonate, citron ou vinaigre, liquide vaisselle, paillettes, colorant vert, nappe plastique, tabliers, serviettes, pinceau large ; tester la recette et l'encre invisible avant le jour J
 - [ ] Cadeaux : pochettes de 5 souvenirs (fiole pailletée, médaille en chocolat, bracelet lumineux, bâton fluo, carte postale de Montmartre), 4 à 6 exemplaires de chaque ; photo d'équipe en agents
