@@ -14,10 +14,12 @@ Mots, dans l'ordre de jeu : OBSCURE, BRILLANTE, LUMINEUSE, NETTE, TRANSPARENTE. 
 
 ## 2. K-Pop Demon Hunters (salon, télé) : BRILLANTE
 
-- **Mécanisme** : « N'oubliez pas les paroles » sur « Briller » et « Ton sauveur » (YouTube). La musique se coupe 9 fois. Chaque coupure bien chantée révèle une lettre de BRILLANTE sur l'écran (page à créer).
-- **Spécialités** : Voix (chante), Mémoire (paroles), Stratège (désigne qui chante).
-- **Accessoires** : ordinateur relié à la télé, connexion internet, enceinte, micro ou faux micros, costumes (3 Saja Boys, 3 Huntr/x), paroles à trous en repères (pas de copie des paroles).
-- **Indices** : 1) fredonnez ensemble. 2) l'écran donne le premier mot de la ligne. 3) le maître du jeu chante avec eux.
+- **Mécanisme** : karaoké YouTube sur « Briller » puis « Ton sauveur » (page html/kpop.html, lecteur IFrame API). À certains moments, un mot des paroles est caché : un bandeau « Signal brouillé » (« Mot caché 3 sur 7 ») recouvre la ligne de paroles et le son de la vidéo est coupé le temps du mot. Les enfants chantent, notent les mots cachés dans l'ordre (ils connaissent la chanson ou la devinent). Mis bout à bout, ces mots forment une phrase qui mène au mot clé BRILLANTE, tapé ensuite dans l'écran de saisie d'aventure.html (Entrée). La page n'a pas de saisie. Écran « Comparez vos mots » à la fin des deux chansons.
+- **Réglage** : mots, minutes et positions des caches à renseigner dans CONFIG (URL des deux vidéos, `cues` avec start, end, word, x, y, w, h en pourcentage de la vidéo). Mode calage avec la touche C (T début, Y fin, JSON copiable). Aucune parole recopiée dans le projet.
+- **Contraintes techniques** : internet requis. L'API YouTube ne marche pas depuis file:// (erreur 153) : lancer `python -m http.server 8000` dans le dossier du projet, puis ouvrir http://localhost:8000/html/aventure.html. Une vidéo qui refuse l'intégration (erreurs 101 ou 150) ne permet ni brouillage ni coupure du son : bouton de secours vers YouTube. Le son démarre après une action au clavier (Espace).
+- **Spécialités** : Voix (chante), Mémoire (paroles), Stratège (désigne qui chante et qui note).
+- **Accessoires** : ordinateur relié à la télé, connexion internet, enceinte, micro ou faux micros, costumes (3 Saja Boys, 3 Huntr/x), papier et crayons pour noter les mots cachés.
+- **Indices** (touche H) : 1) nombre de mots cachés et « Notez les mots cachés dans l'ordre ». 2) les premières lettres de chaque mot caché. 3) la phrase complète avec le blanc du mot clé.
 
 ## 3. Titis de Montmartre (dehors) : LUMINEUSE
 

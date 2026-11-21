@@ -9,28 +9,34 @@
     "file": "briefing-2.mp3",
     "voice": "fr-FR-HenriNeural",
     "rate": "-5%",
-    "text": "Bienvenue au quartier général de l'agence Chronos. Chers agents, une fois de plus, nous faisons appel à vous pour une mission périlleuse. Des perturbations venues de mondes parallèles ont été détectées dans un appartement du dix-huitième arrondissement de Paris. Ces mondes tentent de s'insérer dans notre monde réel et brouillent tout. Chaque monde est tenu ouvert par un mot-clé. Un mot traverse les mondes sans se briser : c'est la seule chose que vous pouvez en rapporter. Rapportez un mot de chaque monde : ces mots sont la clé pour refermer les brèches. Vous allez une nouvelle fois traverser les époques pour sauver le monde. Nous comptons sur vous. Bonne chance. Fin de transmission."
+    "text": "Bienvenue au quartier général de l'agence Chronos. Chers agents, une fois de plus, nous faisons appel à vous pour une mission périlleuse. Des perturbations venues de mondes parallèles ont été détectées dans un appartement du dix-huitième arrondissement de Paris. Ces mondes tentent de s'insérer dans notre monde réel et brouillent tout. Chaque monde est tenu ouvert par un mot-clé."
   },
   {
     "file": "briefing-3.mp3",
     "voice": "fr-FR-HenriNeural",
     "rate": "-5%",
-    "text": "Anomalie détectée. Nature : perturbations de mondes parallèles. Localisation : Paris, dix-huitième arrondissement. Effet : des morceaux de mondes parallèles surgissent et brouillent la réalité. Remède : rapporter un mot de chacun des cinq mondes. Statut : actives, sous surveillance."
+    "text": "Suite de la transmission. Un mot traverse les mondes sans se briser : c'est la seule chose que vous pouvez en rapporter. Rapporter un mot de chaque monde referme les brèches. Vous allez une nouvelle fois traverser les mondes pour sauver le monde. Nous comptons sur vous. Bonne chance. Fin de transmission."
   },
   {
     "file": "briefing-4.mp3",
     "voice": "fr-FR-HenriNeural",
     "rate": "-5%",
-    "text": "Votre mission : rapporter cinq mots. Cinq portails vont s'ouvrir, un à la fois. Chaque épreuve réussie rapporte un mot."
+    "text": "Anomalie détectée. Nature : perturbations de mondes parallèles. Localisation : Paris, dix-huitième arrondissement. Effet : des morceaux de mondes parallèles surgissent et brouillent la réalité. Remède : rapporter un mot de chacun des cinq mondes. Statut : actives, sous surveillance."
   },
   {
     "file": "briefing-5.mp3",
     "voice": "fr-FR-HenriNeural",
     "rate": "-5%",
-    "text": "Code de l'agent. Un : équipe soudée, personne ne part seul. Deux : les zones marquées zone temporelle instable restent fermées. Trois : chaque monde se respecte, on touche avec soin et on range après usage. Quatre : en cas de blocage, appelez-moi pour que j'essaie de vous aider."
+    "text": "Votre mission : rapporter cinq mots. Cinq portails vont s'ouvrir, un à la fois. Chaque épreuve réussie rapporte un mot."
   },
   {
     "file": "briefing-6.mp3",
+    "voice": "fr-FR-HenriNeural",
+    "rate": "-5%",
+    "text": "Code de l'agent. Un : équipe soudée, personne ne part seul. Deux : les zones marquées zone temporelle instable restent fermées. Trois : chaque monde se respecte, on touche avec soin et on range après usage. Quatre : en cas de blocage, appelez-moi pour que j'essaie de vous aider."
+  },
+  {
+    "file": "briefing-7.mp3",
     "voice": "fr-FR-HenriNeural",
     "rate": "-5%",
     "text": "Mission lancée. Cinq mots vous attendent. Prenez le temps de réfléchir. Bonne chance, agents."

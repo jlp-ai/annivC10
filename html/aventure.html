@@ -41,10 +41,12 @@
   @keyframes hot { from { fill: rgba(255,210,63,.18); } to { fill: rgba(255,210,63,.5); } }
   .lbl { fill: var(--cream); font-size: 26px; font-weight: bold; text-anchor: middle; font-family: inherit; }
   .lbl.small { font-size: 20px; opacity: .8; }
+  .lbl.zti { fill: #ffe14d; font-size: 30px; font-weight: bold; letter-spacing: .02em; }
   .lbl.no { fill: #ff9a9a; font-size: 20px; }
   .pulse { animation: pulse 1.1s infinite; transform-box: fill-box; transform-origin: center; }
   @keyframes pulse { 0% { transform: scale(.8); opacity: 1; } 100% { transform: scale(1.6); opacity: 0; } }
 
+  body.helpoff .hud { display: none !important; }
   .hud { position: fixed; bottom: 1vh; left: 0; right: 0; padding: 0 3vw; font-size: 12px; line-height: 1.3; text-align: center; color: var(--muted); opacity: .6; z-index: 6; }
 
   /* epreuve placeholder + conclusion */
@@ -99,10 +101,15 @@
       <rect id="r-bureau" class="room-shape" x="683" y="592" width="229" height="160"/>
       <rect class="room-shape" x="920" y="80" width="65" height="672" style="fill: rgba(255,241,214,.04)"/>
       <text class="lbl" x="338" y="185">Chambre 2</text>
-      <text class="lbl no" x="712" y="170">Interdit</text>
-      <text class="lbl no" x="712" y="200">chambre 1</text>
-      <text class="lbl no" x="221" y="322" style="font-size:15px">WC</text>
-      <text class="lbl no" x="272" y="425">Salle de bain</text>
+      <text class="lbl no" x="712" y="135" style="font-size:24px">Chambre 1</text>
+      <text class="lbl zti" x="712" y="178">Zone temporelle</text>
+      <text class="lbl zti" x="712" y="214">instable</text>
+      <text class="lbl no" x="712" y="248" style="font-size:22px">accès interdit</text>
+      <text class="lbl no" x="221" y="311" style="font-size:15px">WC</text>
+      <text class="lbl zti" x="221" y="334" style="font-size:14px">zone instable</text>
+      <text class="lbl no" x="272" y="385" style="font-size:19px">Salle de bain</text>
+      <text class="lbl zti" x="272" y="420" style="font-size:25px">Zone temporelle</text>
+      <text class="lbl zti" x="272" y="450" style="font-size:25px">instable</text>
       <text class="lbl" x="560" y="455">Salon</text>
       <text class="lbl" x="272" y="595">Cuisine</text>
       <text class="lbl" x="798" y="680">Bureau</text>
@@ -206,7 +213,7 @@
 </section>
 <canvas id="confetti" style="display:none"></canvas>
 
-<div class="hud" id="hud">Maître du jeu : Espace = suite (briefing et portail), Entrée = ouvrir la saisie du mot, ← = retour, Maj + Entrée = forcer la validation, Maj + R = tout remettre à zéro, F = plein écran, M = couper le son du saut temporel</div>
+<div class="hud" id="hud">Maître du jeu : Espace = suite (briefing et portail), Entrée = ouvrir la saisie du mot, ← = retour, Maj + Entrée = forcer la validation, Maj + R = tout remettre à zéro, F = plein écran, M = couper le son du saut temporel, H = masquer cette aide</div>
 
 <!-- Briefing (introduction), affiché dans un cadre via srcdoc : ancien fichier briefing.html fusionné -->
 <template id="briefingTpl">
@@ -289,8 +296,9 @@
   .message p { font-size: clamp(22px, 3.8vh, 48px); }
   .row { display: flex; gap: 4vw; align-items: center; justify-content: center; width: 100%; }
   .col { flex: 1; min-width: 0; max-width: 64ch; }
-  .portrait { flex: none; width: clamp(160px, 34vh, 400px); text-align: center; }
+  .portrait { flex: none; width: clamp(200px, 42vh, 480px); text-align: center; }
   .portrait svg, .portrait img { width: 100%; display: block; border: 4px solid var(--teal); border-radius: 18px; box-shadow: 0 0 30px rgba(255,241,214,.5); }
+  .portrait img { aspect-ratio: 1 / 1; object-fit: cover; background: #12030a; }
   .portrait .tag { display: inline-block; margin-top: 1.2vh; background: var(--yellow); color: var(--deep); font-weight: bold; border-radius: 8px; padding: .4vh 1.2vw; font-size: clamp(14px, 2.4vh, 30px); text-transform: uppercase; letter-spacing: .1em; }
   .portrait .mouth { transform-box: fill-box; transform-origin: center; }
   .portrait.talking .mouth { animation: talk .22s ease-in-out infinite alternate; }
@@ -322,6 +330,7 @@
   ol li::marker { color: var(--yellow); font-weight: bold; }
 
   .hud { position: fixed; bottom: 2vh; left: 0; right: 0; display: flex; justify-content: space-between; padding: 0 3vw; font-size: 13px; color: var(--muted); opacity: .6; z-index: 2; }
+  body.helpoff .helptxt { visibility: hidden; }
   .dots { display: flex; gap: 8px; }
   .dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--muted); opacity: .4; display: block; }
   .dots i.on { background: var(--yellow); opacity: 1; }
@@ -398,8 +407,22 @@
   <div class="message" id="messageText">
     <p class="typed">Chers agents, une fois de plus, nous faisons appel à vous pour une mission périlleuse.</p>
     <p class="typed">Des perturbations venues de mondes parallèles ont été détectées dans un appartement du 18ème arrondissement de Paris. Ces mondes tentent de s'insérer dans notre monde réel et brouillent tout.</p>
-    <p class="typed">Chaque monde est tenu ouvert par un mot-clé. Un mot traverse les mondes sans se briser : c'est la seule chose que vous pouvez en rapporter. Rapportez un mot de chaque monde : ces mots sont la clé pour refermer les brèches.</p>
-    <p class="typed">Vous allez une nouvelle fois traverser les époques pour sauver le monde. Nous comptons sur vous. Bonne chance.</p>
+    <p class="typed">Chaque monde est tenu ouvert par un mot-clé.</p>
+  </div>
+  </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="org" data-org></div>
+  <h2 class="typed">Suite de la transmission</h2>
+  <div class="row">
+  <div class="portrait" id="portrait2"></div>
+  <div class="col">
+  <div class="message" id="messageText2">
+    <p class="typed">Un mot traverse les mondes sans se briser : c'est la seule chose que vous pouvez en rapporter.</p>
+    <p class="typed">Rapporter un mot de chaque monde referme les brèches.</p>
+    <p class="typed">Vous allez une nouvelle fois traverser les mondes pour sauver le monde. Nous comptons sur vous. Bonne chance.</p>
     <p class="typed end">Fin de transmission</p>
   </div>
   </div>
@@ -460,7 +483,7 @@
 </section>
 
 <div class="hud">
-  <span>Espace ou flèche droite : suivant, flèche gauche : retour, F : plein écran, P : lire à voix haute, V : vidéo (si présente)</span>
+  <span class="helptxt">Maître du jeu : Espace ou flèche droite = suivant, flèche gauche = retour, F = plein écran, P = voix off (<b id="voiceTxt">activée</b>), V = vidéo (si présente), H = masquer cette aide</span>
   <span class="dots" id="dots"></span>
 </div>
 
@@ -568,17 +591,46 @@
     Array.prototype.forEach.call(dots.children, function (d, k) { d.classList.toggle("on", k === current); });
     typeSlide(slides[current]);
     fitSlide(slides[current]);
+    if (typeof onScreen === "function") onScreen();
   }
-  // Optional deep link, e.g. briefing.html#3 opens the 4th screen (useful for testing).
-  show(parseInt(location.hash.slice(1), 10) || 0);
-
-  // The chief's mouth moves while the message is being typed.
+  // The chief: still picture (closed mouth) by default; animated GIF only while a voice is playing.
+  // The second message screen shows the same chief (SVG copy with its own gradient ids, used as a fallback).
   var portrait = document.getElementById("portrait");
-  setInterval(function () { portrait.classList.toggle("talking", typing); }, 150);
-  // Optional real picture of the chief: images/chef.jpg replaces the drawing if present.
-  var chefImg = new Image();
-  chefImg.onload = function () { portrait.replaceChild(chefImg, portrait.querySelector("svg")); };
-  chefImg.src = "../images/chef.jpg";
+  var portrait2 = document.getElementById("portrait2");
+  portrait2.innerHTML = portrait.innerHTML.replace(/chief(Bg|Face|Coat|Shade)/g, "chief$1B");
+  var portraits = [portrait, portrait2];
+  var CHEF_STILL = "../images/chef-fixe.png", CHEF_GIF = "../images/chef.gif";
+  var chefTalking = false;
+  var chefImgs = [];   // one <img> per portrait, filled when the still picture loads (otherwise the SVG stays)
+  portraits.forEach(function (p) {
+    var im = new Image();
+    im.alt = "Le chef de l'agence";
+    im.onload = function () {
+      var svg = p.querySelector("svg");
+      if (svg) p.replaceChild(im, svg);
+      chefImgs.push(im);
+      if (chefTalking) setTalking(true);
+    };
+    im.onerror = function () {   // GIF missing while talking: back to the still picture
+      if (im.getAttribute("src") !== CHEF_STILL && im.src.indexOf("chef.gif") >= 0) im.src = CHEF_STILL;
+    };
+    im.src = CHEF_STILL;
+  });
+  // The chief moves while a voice plays, or, as a fallback (voice off, blocked or unavailable), while the text is typed.
+  var voicePlaying = false;
+  function refreshTalk() {
+    var on = voicePlaying || typing;
+    if (on !== chefTalking) setTalking(on);
+  }
+  setInterval(refreshTalk, 80);
+  function setTalking(on) {
+    chefTalking = on;
+    portraits.forEach(function (p) { p.classList.toggle("talking", on); });   // SVG fallback: moving mouth
+    chefImgs.forEach(function (im) {
+      if (on) im.src = CHEF_GIF + "?t=" + Date.now();   // new query string: animation restarts at frame 1
+      else if (im.src.indexOf("chef-fixe.png") < 0) im.src = CHEF_STILL;
+    });
+  }
 
   // Video: shown only if the file exists, otherwise the text message stays.
   var vid = document.getElementById("vid");
@@ -590,31 +642,69 @@
 
   // Voice-over: pre-generated MP3 (audio/briefing-N.mp3, made with voix/generate-voices*.ps1),
   // fallback to browser speech synthesis.
-  var voiceAudio = null;
-  function speakCurrent() {
-    if (voiceAudio) { voiceAudio.pause(); voiceAudio = null; }
-    if (window.speechSynthesis) window.speechSynthesis.cancel();
-    var a = new Audio("../audio/briefing-" + (current + 1) + ".mp3");
-    a.addEventListener("error", speakWithBrowser);
-    voiceAudio = a;
-    a.play().catch(function () {});
+  // The voice starts by itself on each screen when enabled (P toggles, choice remembered). The chief's mouth moves only while a voice plays.
+  var VOICE_KEY = "escape.voix", voiceOn = true, voiceAudio = null, voiceToken = 0, voiceTimer = null;
+  try { if (localStorage.getItem(VOICE_KEY) === "0") voiceOn = false; } catch (e) {}
+  function updateVoiceTxt() { var el = document.getElementById("voiceTxt"); if (el) el.textContent = voiceOn ? "activée" : "coupée"; }
+  function stopVoice() {
+    voiceToken++;
+    if (voiceTimer) { clearTimeout(voiceTimer); voiceTimer = null; }
+    if (voiceAudio) { try { voiceAudio.pause(); } catch (e) {} voiceAudio = null; }
+    try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
+    voicePlaying = false; refreshTalk();
   }
-  function speakWithBrowser() {
-    if (!window.speechSynthesis) return;
+  function speakCurrent() {
+    stopVoice();
+    var tok = voiceToken;
+    var a = new Audio("../audio/briefing-" + (current + 1) + ".mp3");
+    voiceAudio = a;
+    a.addEventListener("playing", function () { if (tok === voiceToken) { voicePlaying = true; refreshTalk(); } });
+    a.addEventListener("ended", function () { if (tok === voiceToken) { voicePlaying = false; refreshTalk(); } });
+    a.addEventListener("pause", function () { if (tok === voiceToken) { voicePlaying = false; refreshTalk(); } });
+    a.addEventListener("error", function () { if (tok === voiceToken) speakWithBrowser(tok); });   // MP3 missing: browser voice
+    var pr = a.play();
+    if (pr && pr.catch) pr.catch(function () {});
+  }
+  function speakWithBrowser(tok) {
+    if (!window.speechSynthesis || tok !== voiceToken) return;
     var text = slides[current].textContent.replace(/\s+/g, " ").trim();
     var u = new SpeechSynthesisUtterance(text);
     u.lang = "fr-FR";
     u.rate = 0.95;
     var fr = window.speechSynthesis.getVoices().filter(function (v) { return v.lang && v.lang.indexOf("fr") === 0; });
     if (fr.length) u.voice = fr[0];
+    u.onstart = function () { if (tok === voiceToken) { voicePlaying = true; refreshTalk(); } };
+    u.onend = u.onerror = function () { if (tok === voiceToken) { voicePlaying = false; refreshTalk(); } };
     window.speechSynthesis.speak(u);
   }
+  // Called on each screen change: silence, still chief, then the voice if enabled.
+  function onScreen() {
+    stopVoice();
+    if (voiceOn) { var tok = voiceToken; voiceTimer = setTimeout(function () { voiceTimer = null; if (tok === voiceToken) speakCurrent(); }, 500); }
+  }
+  function toggleVoice() {
+    voiceOn = !voiceOn;
+    try { localStorage.setItem(VOICE_KEY, voiceOn ? "1" : "0"); } catch (e) {}
+    updateVoiceTxt();
+    if (voiceOn) speakCurrent(); else stopVoice();
+  }
+  updateVoiceTxt();
+
+  // Master help line: H is handled by aventure.html (state, memory), which answers with a "help" message.
+  window.addEventListener("message", function (e) {
+    if (e.data && e.data.type === "help") document.body.classList.toggle("helpoff", !!e.data.hidden);
+  });
+  if (window.parent !== window) window.parent.postMessage({ type: "help-ready" }, "*");
 
   document.addEventListener("keydown", function (e) {
-    if (e.key === "p" || e.key === "P") { speakCurrent(); return; }
+    if (window.parent !== window) {
+      if (e.key === "h" || e.key === "H") { window.parent.postMessage({ type: "help-key" }, "*"); return; }
+      if (e.key === "R" && e.shiftKey) { window.parent.postMessage({ type: "reset" }, "*"); return; }
+    }
+    if (e.key === "p" || e.key === "P") { toggleVoice(); return; }
     if ((e.code === "Space" || e.key === "ArrowRight") && typing) { e.preventDefault(); finishTyping(); return; }
     if ((e.code === "Space" || e.key === "ArrowRight") && current === slides.length - 1 && window.parent !== window) {
-      e.preventDefault(); window.parent.postMessage({ type: "next" }, "*"); return;   // embedded in aventure.html
+      e.preventDefault(); stopVoice(); window.parent.postMessage({ type: "next" }, "*"); return;   // embedded in aventure.html
     }
     if (e.code === "Space" || e.key === "ArrowRight") { e.preventDefault(); show(current + 1); }
     else if (e.key === "ArrowLeft") { show(current - 1); }
@@ -623,6 +713,9 @@
     }
     else if ((e.key === "v" || e.key === "V") && vid.readyState > 0) { vid.paused ? vid.play() : vid.pause(); }
   });
+
+  // Optional deep link, e.g. #3 opens the 4th screen (useful for testing).
+  show(parseInt(location.hash.slice(1), 10) || 0);
 </script>
 </template>
 
@@ -647,11 +740,46 @@
   for (var u = 0; u < N; u++) { var ui = ORDER[u]; steps.push({ t: "plan", i: ui, p: u }); steps.push({ t: "lieu", i: ui, p: u }); steps.push({ t: "epreuve", i: ui, p: u }); steps.push({ t: "saisie", i: ui, p: u }); steps.push({ t: "gain", i: ui, p: u }); }
   steps.push({ t: "mot" }, { t: "fin1" }, { t: "fin2" }, { t: "fin3" }, { t: "fin4" });
 
-  var KEY = "escape.aventure", cur = 0;
-  try { var s = parseInt(localStorage.getItem(KEY), 10); if (s >= 0 && s < steps.length) cur = s; } catch (e) {}
-  function save() { try { localStorage.setItem(KEY, String(cur)); } catch (e) {} }
+  // Always opens at step 0. Resume is offered only through aventure.html#resume (last step reached).
+  // aventure.html#N opens step N (tests, nothing is saved).
+  var KEY = "escape.aventure", HELP_KEY = "escape.aide", cur = 0, testMode = false;
+  function save() { if (testMode || cur <= 0) return; try { localStorage.setItem(KEY, String(cur)); } catch (e) {} }
 
   function $(id) { return document.getElementById(id); }
+
+  // Master help lines: H hides or shows them (this page + embedded pages via postMessage).
+  // First time: shown, then hidden after 8 s. The choice is remembered (localStorage, may be unavailable).
+  var helpHidden = false, helpTimer = null;
+  function broadcastHelp() {
+    ["introFrame", "epreuveFrame"].forEach(function (id) {
+      try { $(id).contentWindow.postMessage({ type: "help", hidden: helpHidden }, "*"); } catch (e) {}
+    });
+  }
+  function setHelp(hidden, remember) {
+    helpHidden = hidden;
+    document.body.classList.toggle("helpoff", hidden);
+    if (remember) { try { localStorage.setItem(HELP_KEY, hidden ? "0" : "1"); } catch (e) {} }
+    broadcastHelp();
+  }
+  (function () {
+    var stored = null;
+    try { stored = localStorage.getItem(HELP_KEY); } catch (e) {}
+    if (stored === "0") { helpHidden = true; document.body.classList.add("helpoff"); }
+    else if (stored === null) {
+      helpTimer = setTimeout(function () { helpTimer = null; setHelp(true, true); }, 8000);
+    }
+  })();
+  function toggleHelp() {
+    if (helpTimer) { clearTimeout(helpTimer); helpTimer = null; }
+    setHelp(!helpHidden, true);
+  }
+
+  function resetAll() {
+    if (Vortex.isRunning()) return;
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    var f = $("introFrame"); f.removeAttribute("data-src"); f.srcdoc = "";
+    cur = 0; render();
+  }
   function showView(id) {
     var v = document.querySelectorAll(".view");
     for (var k = 0; k < v.length; k++) v[k].classList.toggle("active", v[k].id === id);
@@ -705,12 +833,12 @@
     var f = $(frameId);
     if (src === "briefing.html") {   // briefing is embedded in this file (template), shown through srcdoc
       if (!f.getAttribute("data-src")) { f.setAttribute("data-src", src); f.srcdoc = $("briefingTpl").innerHTML; }
-      f.onload = function () { try { f.contentWindow.focus(); } catch (e) {} };
+      f.onload = function () { try { f.contentWindow.focus(); } catch (e) {} broadcastHelp(); };
       try { f.contentWindow.focus(); } catch (e) {}
       return;
     }
     if (f.getAttribute("data-src") !== src) { f.setAttribute("data-src", src); f.src = src; }
-    f.onload = function () { try { f.contentWindow.focus(); } catch (e) {} };
+    f.onload = function () { try { f.contentWindow.focus(); } catch (e) {} broadcastHelp(); };
     try { f.contentWindow.focus(); } catch (e) {}
   }
 
@@ -721,7 +849,7 @@
     else if (st.t === "plan") { renderPlan(st.i, st.p); showView("planView"); }
     else if (st.t === "lieu") {
       var u = UNIVERS[st.i];
-      $("lieuOrg").textContent = "Portail " + (st.p + 1);
+      $("lieuOrg").textContent = "Épreuve " + (st.p + 1);
       setArt($("lieuArt"), st.i);
       $("lieuName").textContent = u.name; $("lieuEra").textContent = u.era; $("lieuRoom").textContent = "Rendez-vous : " + u.room;
       showView("lieuView");
@@ -889,7 +1017,14 @@
     go(cur + 1, st.t === "plan" || st.t === "mot");
   }
 
-  window.addEventListener("message", function (e) { if (e.data && e.data.type === "next") next(); });
+  // Messages from embedded pages: next = go on, help-key = H pressed, help-ready = page loaded (send help state), reset = Shift + R.
+  window.addEventListener("message", function (e) {
+    var d = e.data; if (!d) return;
+    if (d.type === "next") next();
+    else if (d.type === "help-key") toggleHelp();
+    else if (d.type === "help-ready") broadcastHelp();
+    else if (d.type === "reset") resetAll();
+  });
 
   document.addEventListener("keydown", function (e) {
     var t = steps[cur].t;
@@ -908,7 +1043,8 @@
     if (t === "fin4" && e.code === "Space") { e.preventDefault(); celebrate(); return; }
     if (e.key === "m" || e.key === "M") { Vortex.muted = !Vortex.muted; }
     else if (e.key === "f" || e.key === "F") { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); }
-    else if (e.key === "R" && e.shiftKey) { $("introFrame").removeAttribute("data-src"); cur = 0; render(); }
+    else if (e.key === "R" && e.shiftKey) { resetAll(); }
+    else if (e.key === "h" || e.key === "H") { toggleHelp(); }
     else if (e.key === "ArrowLeft" && !inFrame) { go(cur - 1, false); }
     else if (e.key === "Enter" && t === "epreuve") { next(); }
     else if ((e.code === "Space" || e.key === "ArrowRight") && !inFrame && t !== "epreuve") { e.preventDefault(); next(); }
@@ -917,7 +1053,10 @@
   window.addEventListener("resize", function () { var a = document.querySelector(".view.active"); if (a && a.querySelector(".fit")) showView(a.id); });
 
   var hh = parseInt(location.hash.slice(1), 10);
-  if (hh >= 0 && hh < steps.length) cur = hh;   // aventure.html#N : step N (tests)
+  if (hh >= 0 && hh < steps.length) { cur = hh; testMode = true; }   // aventure.html#N : step N (tests)
+  else if (location.hash === "#resume") {                            // aventure.html#resume : resume where it stopped
+    try { var sv = parseInt(localStorage.getItem(KEY), 10); if (sv >= 0 && sv < steps.length) cur = sv; } catch (e) {}
+  }
   render();
 </script>
 </body>

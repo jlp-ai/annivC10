@@ -66,7 +66,7 @@
   </div>
 </section>
 
-<div class="hud">Espace = passer l'introduction, Entrée = ouvrir la saisie du mot (maître du jeu)</div>
+<div class="hud">Espace = passer l'introduction, M = couper la musique, Entrée = ouvrir la saisie du mot (maître du jeu)</div>
 
 <script>
   var phases = ["p1", "p2", "p3", "p4"], idx = -1, timer = null;
@@ -98,8 +98,25 @@
     timer = setTimeout(function () { go(3); }, secs * 1000);
   }
 
+  // Music: local file audio/musique/marche-imperiale.mp3 (to be provided, private use). Starts with the intro, fades out at the instructions screen.
+  var music = new Audio("../audio/musique/marche-imperiale.mp3");
+  music.loop = true; music.volume = 0.7; music.preload = "auto";
+  var musicWanted = false, musicMissing = false;
+  music.addEventListener("error", function () { musicMissing = true; });
+  function startMusic() {
+    musicWanted = true;
+    var p = music.play();
+    if (p && p.catch) p.catch(function () { /* blocked until a key is pressed: retried on the next keydown */ });
+  }
+  function fadeMusic() {
+    musicWanted = false;
+    var iv = setInterval(function () { if (music.volume > 0.06) music.volume = Math.max(0, music.volume - 0.05); else { music.pause(); music.volume = 0.7; clearInterval(iv); } }, 120);
+  }
+
   function go(n) {
     clearTimeout(timer);
+    if (n === 0 && !musicWanted) startMusic();
+    if (n === 3 && musicWanted) fadeMusic();
     idx = n;
     for (var i = 0; i < phases.length; i++) document.getElementById(phases[i]).classList.toggle("on", i === n);
     if (n === 0) {
@@ -112,6 +129,8 @@
   }
 
   document.addEventListener("keydown", function (e) {
+    if (musicWanted && music.paused && !musicMissing) music.play().catch(function () {});   // autoplay was blocked: start on the first key
+    if (e.key === "m" || e.key === "M") { music.muted = !music.muted; return; }
     if (e.code === "Space" || e.key === "ArrowRight") { e.preventDefault(); if (idx < 3) go(idx + 1); }
     else if (e.key === "Enter" && window.parent !== window) { window.parent.postMessage({ type: "next" }, "*"); }
     else if (e.key === "f" || e.key === "F") { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); }

@@ -28,7 +28,7 @@ Dernière mise à jour : 2026-11-21 (badges, sons par page, musiques YouTube)
 - [x] KPop Demon Hunters : dans le salon, sur la télé du mur entre le bureau et le séjour
 - [x] Mousquetaires en chambre 2 : validé
 - [ ] Préparer la chambre 2 pour les mousquetaires (dégager la pièce, ranger les objets fragiles et lampes, vérifier la place pour les armes en mousse)
-- [ ] Occulter le bureau pour Star Wars (fenêtre sur le balcon : rideau noir ou couverture) et limiter le nombre d'enfants dans la pièce
+- [ ] Occulter le bureau pour Star Wars : draps noirs (2 à 3, assez grands pour couvrir la fenêtre sur le balcon, le bas de la porte et les voyants lumineux), fixés avec du ruban adhésif repositionnable ou des pinces, sans abîmer les murs ; tester le noir à la tombée de la nuit ou en journée ; limiter le nombre d'enfants dans la pièce
 - [ ] Protéger la table du salon pour les potions (nappe plastique, plateaux, serviettes)
 - [x] Page de révélation des univers un par un : html/aventure.html (portails.html supprimée, doublon)
 - [ ] Confirmer que "chambre 1" est bien la chambre en haut à droite, et statuer sur le balcon et l'entrée (zone jouable ou non)
@@ -91,12 +91,18 @@ Dernière mise à jour : 2026-11-21 (badges, sons par page, musiques YouTube)
 - [x] Le briefing ne révèle pas qu'un mot de passe est à trouver avec les 5 mots : annoncé seulement à la fin (écran de saisie du mot de passe)
 - [x] Page d'introduction Star Wars : html/starwars.html (texte bleu, titre qui s'éloigne, texte jaune qui défile en perspective, écran de consigne ; Espace passe l'intro, Entrée ouvre la saisie du mot ; #crawl et #end pour tester). Texte original, sans nom ni logo de la saga
 - [x] portails.html et briefing.html supprimés (briefing fusionné dans aventure.html)
+- [ ] Marche impériale au début de l'épreuve Star Wars (choix de l'utilisateur, usage privé) : déposer le fichier audio/musique/marche-imperiale.mp3 (mp3 de la collection personnelle ; starwars.html le lit au début de l'intro, fondu en sortie, M coupe) ; si le navigateur bloque le son, une touche le lance
 - [ ] Relire le texte du défilement Star Wars, ajouter une ambiance sonore sombre (voir materiel/audio-plan.md), vérifier la durée (environ 1 minute)
 - [x] Plan sonore : materiel/audio-plan.md ; récupération de fichiers libres dans audio/ (voir audio/CREDITS.md quand terminé)
 - [x] Écran "Mot rapporté" après chaque épreuve (lettres animées) dans aventure.html
 - [ ] Fabriquer les supports de mots : 7 cartes fluo (OBSCURE), 4 cartes syllabes plastifiées (LU MI NEU SE), 5 cartes lettres au dos des cibles (NETTE), parchemin à l'encre invisible (TRANSPARENTE)
 - [ ] Tester l'encre invisible au bicarbonate et au jus de chou rouge, le mot TRANSPARENTE en grosses lettres
-- [ ] Page K-Pop : 9 coupures qui révèlent BRILLANTE lettre par lettre
+- [x] Mécanisme K-Pop changé (2026-11-21) : mots des paroles cachés par un brouillage visuel et un son coupé pendant les 2 chansons ; les enfants notent les mots cachés, qui forment une phrase menant à BRILLANTE (page kpop.html en cours de refonte, avec mode calage T/Y)
+- [x] Lien YouTube de Ton sauveur reçu : https://www.youtube.com/watch?v=qR2QBgCKRJI
+- [x] Lien YouTube de Briller reçu : https://www.youtube.com/watch?v=EmkWAKFDj_4
+- [ ] Vérifier que l'intégration des deux vidéos YouTube est autorisée (test via http://localhost)
+- [ ] Choisir les mots à cacher (6 à 9) dans les 2 chansons, composer la phrase qui mène à BRILLANTE, caler les temps avec le mode calage
+- [ ] Servir le dossier en local (python -m http.server 8000) pour que le lecteur YouTube fonctionne (il refuse file://)
 - [x] Écran final "Mission accomplie" en 4 temps (validé) : 1) vortex final et plan avec les 5 gemmes allumées, 2) retour du chef (texte tapé, mondes à leur place), 3) tampon "Mission accomplie" et rapport clos, 4) mot final à trouver puis félicitations. Confettis rouge/jaune/crème (canvas) et fanfare synthétisée (Web Audio)
 - [ ] Mécanisme final à la Fort Boyard (validé) : chaque épreuve donne un mot, les 5 mots font penser au mot final CLAIRE (clair). Mots validés, dans l'ordre de jeu : Star Wars = OBSCURE (côté obscur ; l'utilisateur a confirmé ce choix après l'avoir remis en question), K-Pop = BRILLANTE (Briller), Montmartre = LUMINEUSE (lumière des peintres), Mousquetaires = NETTE (touche nette sur la cible), Harry Potter = TRANSPARENTE (cape d'invisibilité, potion limpide), accepter "clair" et "claire" comme réponse, encoder la réponse (hash) dans la page
 - [x] Cadeaux à emporter (validé) : diplôme d'agent, pochette de 5 souvenirs, photo d'équipe
@@ -125,6 +131,7 @@ Dernière mise à jour : 2026-11-21 (badges, sons par page, musiques YouTube)
 - [ ] Tester la recette de la potion en conditions réelles
 - [ ] Armes en mousse, sabre laser, sabre en bois
 - [ ] Costumes : mousquetaire (animateur), Saja Boys (3 gats), Huntr/x (3 filles)
+- [ ] Draps noirs pour obscurcir le bureau (Star Wars), ruban adhésif repositionnable ou pinces
 - [ ] Lampe UV, bâtons lumineux, rubans phosphorescents
 - [ ] Musiques de "Briller" et "Ton sauveur" : lues depuis YouTube (décision 2026-11-21). La page K-Pop lance les liens depuis l'HTML (bouton ou touche, ouverture dans un onglet ou lecteur intégré). Exception au mode hors ligne : connexion internet requise pour ces deux pistes. Récupérer les deux URL YouTube, repérer les minutes de coupure pour "N'oubliez pas les paroles", prévoir un plan B (fichiers audio locaux) si le réseau ou les publicités gênent
 - [ ] Écran ou vidéoprojecteur, enceinte, rallonge

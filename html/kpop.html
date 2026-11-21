@@ -11,250 +11,435 @@
   body { background: linear-gradient(135deg, var(--deep) 0%, var(--crimson) 55%, #d4182b 100%); color: #fff; font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif; overflow: hidden; }
   body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 5; background: repeating-linear-gradient(0deg, rgba(0,0,0,.08) 0 2px, transparent 2px 4px); }
 
-  main { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; padding: 3vh 4vw 4.5vh; gap: 2vh; }
-  .org { background: var(--black); color: var(--yellow); font-weight: bold; letter-spacing: .25em; text-transform: uppercase; font-size: clamp(14px, 2.2vh, 28px); padding: .6vh 1.6vw; border-radius: 999px; box-shadow: 0 0 20px rgba(255,210,63,.6); }
-  h1 { margin: 0; font-size: clamp(34px, 7vh, 90px); line-height: 1.05; text-shadow: 4px 4px 0 var(--black); text-align: center; }
-  .sub { margin: 0; font-size: clamp(18px, 3vh, 38px); color: var(--muted); text-align: center; }
+  main { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; padding: 2vh 3vw 4vh; gap: 1.2vh; }
+  .top { display: flex; align-items: center; gap: 2vw; }
+  .org { background: var(--black); color: var(--yellow); font-weight: bold; letter-spacing: .25em; text-transform: uppercase; font-size: clamp(12px, 1.8vh, 22px); padding: .5vh 1.4vw; border-radius: 999px; box-shadow: 0 0 20px rgba(255,210,63,.6); }
+  .song { font-weight: bold; color: var(--yellow); font-size: clamp(20px, 3.6vh, 44px); letter-spacing: .05em; text-shadow: 3px 3px 0 var(--black); }
 
-  .letters { display: flex; gap: 1vw; justify-content: center; margin: 1vh 0; }
-  .tile { width: 8vw; max-width: 11vh; min-width: 44px; aspect-ratio: 3 / 4; border-radius: 14px; border: 4px solid var(--black); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: clamp(40px, 11vh, 140px); line-height: 1; background: rgba(0,0,0,.4); color: transparent; box-shadow: 0 6px 0 var(--black); }
-  .tile.on { background: var(--yellow); color: var(--deep); animation: pop .55s cubic-bezier(.2,1.4,.4,1); }
-  .tile.next { border-color: var(--gold); box-shadow: 0 0 24px rgba(255,210,63,.7), 0 6px 0 var(--black); }
-  @keyframes pop { from { opacity: 0; transform: scale(.5) rotate(-6deg); } to { opacity: 1; transform: none; } }
+  .player { position: relative; width: min(78vw, calc((100vh - 26vh) * 16 / 9)); aspect-ratio: 16 / 9; background: var(--black); border: 4px solid var(--cream); border-radius: 14px; overflow: hidden; }
+  .player .yt { position: absolute; inset: 0; display: none; }
+  .player .yt.on { display: block; }
+  .player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .ph { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; text-align: center; padding: 2vh 3vw; color: var(--cream); font-size: clamp(16px, 2.8vh, 34px); line-height: 1.4; flex-direction: column; gap: 1.2vh; }
+  .ph.on { display: flex; }
+  .ph code { display: block; background: #000; color: var(--yellow); border: 2px solid var(--gold); border-radius: 10px; padding: .6vh 1vw; font-family: Consolas, "Courier New", monospace; font-size: .9em; }
+  .ph b { color: var(--yellow); }
 
-  .row { flex: 1; min-height: 0; width: 100%; display: flex; gap: 3vw; align-items: stretch; justify-content: center; }
-  .playerbox { width: 38vw; display: flex; flex-direction: column; gap: 1.2vh; }
-  .player { position: relative; width: 100%; aspect-ratio: 16 / 9; background: var(--black); border: 4px solid var(--cream); border-radius: 14px; overflow: hidden; }
-  .player iframe, .player #ytHost { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  .player .ph { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1.5vh 1.5vw; color: var(--muted); font-size: clamp(14px, 2.4vh, 28px); }
-  .song { font-weight: bold; color: var(--yellow); font-size: clamp(18px, 3vh, 38px); letter-spacing: .06em; }
-  button.rescue { align-self: flex-start; font: inherit; font-weight: bold; font-size: clamp(13px, 1.9vh, 22px); background: var(--black); color: var(--yellow); border: 3px solid var(--gold); border-radius: 999px; padding: .6vh 1.4vw; cursor: pointer; }
+  /* scrambling cover over the lyrics line */
+  .cover { position: absolute; z-index: 3; display: flex; align-items: center; justify-content: center; border-radius: 10px; overflow: hidden; border: 3px solid var(--black); box-shadow: 0 0 22px rgba(232,20,43,.8); opacity: 0; transform: scaleY(.2); transition: opacity .2s ease, transform .2s ease; pointer-events: none; }
+  .cover.on { opacity: 1; transform: none; }
+  .cover.edit { outline: 3px dashed var(--yellow); outline-offset: 2px; }
+  .cover canvas { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; }
+  .cover .lab { position: relative; font-weight: bold; color: var(--cream); text-transform: uppercase; letter-spacing: .08em; white-space: nowrap; text-shadow: 0 0 6px #000, 2px 2px 0 #000; background: rgba(17,17,17,.55); border-radius: 8px; padding: .1em .5em; }
+  .cover .lab em { font-style: normal; color: var(--yellow); }
 
-  .side { flex: 1; max-width: 46vw; display: flex; flex-direction: column; gap: 2vh; justify-content: center; }
-  .status { background: rgba(0,0,0,.4); border: 3px solid var(--cream); border-radius: 18px; padding: 2.4vh 2vw; font-size: clamp(22px, 4.4vh, 56px); line-height: 1.25; text-align: center; }
-  .status.sing { background: var(--yellow); color: var(--deep); border-color: var(--black); animation: beat 1s ease-in-out infinite; font-weight: bold; }
-  .status.done { background: var(--black); color: var(--yellow); border-color: var(--gold); }
-  @keyframes beat { 50% { transform: scale(1.03); } }
-  .hintbox { min-height: 12vh; background: var(--black); color: var(--yellow); border: 3px solid var(--red); border-radius: 14px; padding: 1.6vh 1.6vw; font-size: clamp(18px, 3.2vh, 40px); line-height: 1.3; text-align: center; display: none; }
+  .info { width: min(78vw, calc((100vh - 26vh) * 16 / 9)); min-height: 8vh; display: flex; align-items: center; justify-content: center; }
+  .status { text-align: center; color: var(--cream); font-size: clamp(18px, 3vh, 38px); line-height: 1.3; }
+  .hintbox { display: none; width: 100%; background: var(--black); color: var(--yellow); border: 3px solid var(--red); border-radius: 14px; padding: 1vh 1.6vw; font-size: clamp(18px, 3vh, 38px); line-height: 1.3; text-align: center; }
   .hintbox.on { display: block; animation: pop .4s backwards; }
-  .hintbox small { display: block; color: var(--muted); font-size: .55em; letter-spacing: .14em; text-transform: uppercase; margin-bottom: .6vh; }
+  .hintbox small { display: block; color: var(--muted); font-size: .55em; letter-spacing: .14em; text-transform: uppercase; margin-bottom: .4vh; }
+  .hintbox .blank { letter-spacing: .3em; }
+  @keyframes pop { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: none; } }
+  button.rescue { display: none; font: inherit; font-weight: bold; font-size: clamp(14px, 2vh, 24px); background: var(--black); color: var(--yellow); border: 3px solid var(--gold); border-radius: 999px; padding: .7vh 1.6vw; cursor: pointer; margin-top: 1vh; }
+  button.rescue.on { display: inline-block; }
+
+  /* end screen */
+  #end { position: fixed; inset: 0; z-index: 8; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 3vh; background: linear-gradient(135deg, var(--deep) 0%, var(--crimson) 55%, #d4182b 100%); padding: 5vh 6vw; }
+  #end.on { display: flex; animation: pop .6s cubic-bezier(.2,1.4,.4,1); }
+  #end h2 { margin: 0; font-size: clamp(40px, 10vh, 130px); text-shadow: 4px 4px 0 var(--black); }
+  #end p { margin: 0; font-size: clamp(22px, 4.6vh, 58px); line-height: 1.35; color: var(--cream); max-width: 70vw; }
+  #end p b { color: var(--yellow); }
+
+  /* help overlay */
+  #help { position: fixed; inset: 0; z-index: 20; background: rgba(17,17,17,.95); display: none; align-items: center; justify-content: center; }
+  #help.on { display: flex; }
+  #help .box { max-width: 82vw; max-height: 94vh; overflow: auto; border: 3px solid var(--gold); border-radius: 18px; padding: 2.4vh 2.4vw; background: #1c0609; font-size: clamp(13px, 2vh, 24px); line-height: 1.45; color: var(--cream); display: flex; gap: 3vw; }
+  #help h2 { margin: 0 0 1vh; color: var(--yellow); font-size: 1.25em; }
+  #help ul { margin: 0 0 1.2vh; padding-left: 1.1em; }
+  #help kbd { background: var(--yellow); color: var(--deep); border-radius: 6px; padding: 0 .35em; font-family: inherit; font-weight: bold; }
+  #help code { color: var(--yellow); font-family: Consolas, "Courier New", monospace; }
+
+  /* calibration panel (game master only) */
+  #cal { position: fixed; left: 1vw; bottom: 3.6vh; width: 34vw; max-height: 60vh; z-index: 15; display: none; flex-direction: column; gap: .6vh; background: rgba(17,17,17,.92); border: 2px solid var(--yellow); border-radius: 10px; padding: 1vh .8vw; font-size: 12px; line-height: 1.4; color: var(--cream); }
+  #cal.on { display: flex; }
+  #cal h3 { margin: 0; color: var(--yellow); font-size: 13px; }
+  #cal ol { margin: 0; padding-left: 1.6em; max-height: 18vh; overflow: auto; }
+  #cal li.cur { color: var(--yellow); font-weight: bold; }
+  #cal textarea { width: 100%; height: 14vh; background: #000; color: #9fe39f; border: 1px solid #555; font-family: Consolas, "Courier New", monospace; font-size: 11px; }
+  #cal kbd { background: var(--yellow); color: var(--deep); border-radius: 4px; padding: 0 .3em; font-family: inherit; font-weight: bold; }
 
   .hud { position: fixed; bottom: 1vh; left: 0; right: 0; padding: 0 3vw; font-size: 12px; line-height: 1.3; text-align: center; color: var(--muted); opacity: .7; z-index: 6; }
 </style>
 </head>
 <body>
 <main>
-  <div class="org">Agence Chronos</div>
-  <h1>Le concert des chasseurs de démons</h1>
-  <p class="sub" id="sub"></p>
-  <div class="letters" id="letters"></div>
-  <div class="row">
-    <div class="playerbox">
-      <div class="song" id="song"></div>
-      <div class="player"><div id="ytHost"></div><div class="ph" id="ph"></div></div>
-      <button class="rescue" id="rescue" type="button">Ouvrir sur YouTube (O)</button>
-    </div>
-    <div class="side">
-      <div class="status" id="status"></div>
-      <div class="hintbox" id="hintbox"></div>
-    </div>
+  <div class="top"><div class="org">Agence Chronos</div><div class="song" id="song"></div></div>
+  <div class="player" id="player">
+    <div class="yt" id="yt0"></div>
+    <div class="yt" id="yt1"></div>
+    <div class="ph" id="ph"></div>
+    <div class="cover" id="cover"><canvas id="noise" width="72" height="18"></canvas><div class="lab" id="lab"></div></div>
   </div>
+  <div class="info">
+    <div class="status" id="status"></div>
+    <div class="hintbox" id="hintbox"></div>
+  </div>
+  <button class="rescue" id="rescue" type="button">Ouvrir sur YouTube (O)</button>
 </main>
 
-<div class="hud">Espace = coupure réussie, Retour arrière = annuler, B = rejouer la coupure, P = lecture/pause, H = indice suivant (1, 2, 3, puis masqué), O = ouvrir YouTube, F = plein écran, Entrée = ouvrir la saisie du mot</div>
+<div id="end">
+  <h2>Comparez vos mots</h2>
+  <p>Mettez vos mots cachés <b>dans l'ordre</b>. Lisez la phrase à voix haute, tous ensemble.</p>
+  <p>Elle vous mène au mot clé de l'épreuve. Quand vous l'avez, le maître du jeu ouvre la saisie.</p>
+</div>
+
+<div id="help"><div class="box">
+  <div>
+    <h2>Touches du maître du jeu</h2>
+    <ul>
+      <li><kbd>Espace</kbd> lecture ou pause, <kbd>Flèches</kbd> reculer ou avancer de 5 s</li>
+      <li><kbd>N</kbd> chanson suivante, <kbd>Maj</kbd>+<kbd>N</kbd> chanson précédente</li>
+      <li><kbd>H</kbd> indice suivant (1, 2, 3, puis masqué), <kbd>V</kbd> révéler ou masquer le mot clé dans l'indice 3</li>
+      <li><kbd>E</kbd> écran « Comparez vos mots », <kbd>O</kbd> ouvrir YouTube, <kbd>F</kbd> plein écran</li>
+      <li><kbd>Entrée</kbd> ouvrir la saisie du mot (dans la page principale), <kbd>K</kbd> fermer cette aide</li>
+      <li><kbd>C</kbd> mode calage (voir ci-contre)</li>
+    </ul>
+    <h2>Calage des caches</h2>
+    <ul>
+      <li><kbd>T</kbd> marque le début d'un cache, <kbd>Y</kbd> la fin (crée l'entrée)</li>
+      <li><kbd>[</kbd> et <kbd>]</kbd> choisissent l'entrée, <kbd>W</kbd> change son mot, <kbd>D</kbd> la supprime</li>
+      <li><kbd>M</kbd> bascule déplacer ou redimensionner, <kbd>Maj</kbd>+<kbd>Flèches</kbd> agissent (1 % par pas)</li>
+      <li><kbd>J</kbd> affiche et copie le JSON à coller dans <code>CONFIG.cues</code></li>
+      <li><kbd>Z</kbd> efface la sauvegarde du navigateur. Les entrées y sont mémorisées et priment sur CONFIG.</li>
+    </ul>
+  </div>
+  <div>
+    <h2>Limites à connaître</h2>
+    <ul>
+      <li><b>Page ouverte depuis un fichier (file://)</b> : l'API YouTube échoue (erreur 153). Dans le dossier du projet : <code>python -m http.server 8000</code>, puis ouvrir <code>http://localhost:8000/html/aventure.html</code>.</li>
+      <li><b>Vidéo qui refuse l'intégration</b> (erreurs 101 ou 150) : le bouton « Ouvrir sur YouTube » ouvre un onglet. Le brouillage et la coupure du son ne marchent pas dans ce cas, il faut couper le son à la main.</li>
+      <li><b>Internet</b> requis pour cette épreuve.</li>
+      <li><b>Le son YouTube</b> ne démarre qu'après une action au clavier ou à la souris : appuyer sur Espace.</li>
+      <li>Remplacer les deux URL et les mots d'exemple dans <code>CONFIG</code> (haut du script) avant le jour J, puis tester avec le calage.</li>
+    </ul>
+  </div>
+</div></div>
+
+<div id="cal">
+  <h3>Calage <span id="calTime"></span></h3>
+  <div id="calMode"></div>
+  <ol id="calList"></ol>
+  <textarea id="calJson" readonly></textarea>
+  <div><kbd>T</kbd> début, <kbd>Y</kbd> fin, <kbd>[</kbd><kbd>]</kbd> choisir, <kbd>W</kbd> mot, <kbd>D</kbd> suppr., <kbd>M</kbd> mode, <kbd>Maj</kbd>+flèches, <kbd>J</kbd> JSON, <kbd>Z</kbd> purge</div>
+</div>
+
+<div class="hud">Espace = lecture/pause, Flèches = 5 s, N = chanson suivante, H = indice (1, 2, 3), E = écran de fin, O = YouTube, K = aide, C = calage, F = plein écran, Entrée = ouvrir la saisie du mot</div>
 
 <script>
   // ---------------------------------------------------------------------------
-  // CONFIG: to fill in by the game master. No lyrics here, only markers.
-  //  - url: YouTube link of the song (watch, youtu.be or embed form)
-  //  - at: cut time "m:ss" (the music pauses by itself when this time is reached)
-  //  - firstWord: first word of the line to sing (shown as hint level 2)
-  //  - word: expected word (shown as hint level 3)
-  // 9 cuts in total (5 for the first song, 4 for the second), one per letter.
+  // CONFIG, to fill in by the game master. No lyrics here, only markers.
+  //  videos: two YouTube links (watch?v=ID). Set: Briller, then Ton sauveur.
+  //  cues[song]: { start, end (seconds), word (hidden word), x, y, w, h (% of the video area) }
+  //  The words below are generic EXAMPLES, not real lyrics. Replace them (or use the calibration mode, key C).
+  //  sentence: list of words in order (null = the words of the cues in order)
+  //  keyword: never shown unless the game master presses V while hint 3 is open.
   // ---------------------------------------------------------------------------
   var CONFIG = {
-    rewindSeconds: 6,
-    songs: [
-      { title: "Briller", url: "", cuts: [
-        { at: "", firstWord: "", word: "" },
-        { at: "", firstWord: "", word: "" },
-        { at: "", firstWord: "", word: "" },
-        { at: "", firstWord: "", word: "" },
-        { at: "", firstWord: "", word: "" }
-      ] },
-      { title: "Ton sauveur", url: "", cuts: [
-        { at: "", firstWord: "", word: "" },
-        { at: "", firstWord: "", word: "" },
-        { at: "", firstWord: "", word: "" },
-        { at: "", firstWord: "", word: "" }
-      ] }
+    videos: [
+      "https://www.youtube.com/watch?v=EmkWAKFDj_4",   // Briller (karaoke)
+      "https://www.youtube.com/watch?v=qR2QBgCKRJI"    // Ton sauveur (karaoke)
+    ],
+    titles: ["Briller", "Ton sauveur"],
+    lead: 0.15,    // cover appears this many seconds before start
+    tail: 0.15,    // and stays this many seconds after end
+    seekStep: 5,
+    keyword: "BRILLANTE",
+    sentence: null,
+    cues: [
+      [
+        { start: 20.0, end: 22.0, word: "EXEMPLE-1", x: 15, y: 78, w: 70, h: 12 },
+        { start: 40.0, end: 42.0, word: "EXEMPLE-2", x: 15, y: 78, w: 70, h: 12 },
+        { start: 60.0, end: 62.0, word: "EXEMPLE-3", x: 15, y: 78, w: 70, h: 12 },
+        { start: 80.0, end: 82.0, word: "EXEMPLE-4", x: 15, y: 78, w: 70, h: 12 }
+      ],
+      [
+        { start: 20.0, end: 22.0, word: "EXEMPLE-5", x: 15, y: 78, w: 70, h: 12 },
+        { start: 40.0, end: 42.0, word: "EXEMPLE-6", x: 15, y: 78, w: 70, h: 12 },
+        { start: 60.0, end: 62.0, word: "EXEMPLE-7", x: 15, y: 78, w: 70, h: 12 }
+      ]
     ]
   };
 
-  var LETTERS = "BRILLANTE".split("");
-  var CUTS = [], i, j;
-  for (i = 0; i < CONFIG.songs.length; i++) {
-    for (j = 0; j < CONFIG.songs[i].cuts.length; j++) {
-      var c = CONFIG.songs[i].cuts[j];
-      CUTS.push({ song: i, at: parseTime(c.at), firstWord: c.firstWord || "", word: c.word || "" });
-    }
-  }
-
   var $ = function (id) { return document.getElementById(id); };
-  var n = 0, hint = 0, waiting = false, player = null, ready = false, loadedSong = -1, apiFailed = false;
+  var STORE_KEY = "kpop.cues.v1";
+  var IS_FILE = location.protocol === "file:";
+  var cur = 0, hint = 0, showKeyword = false, calOn = false, calMode = "move", sel = 0, pendingStart = null;
+  var players = [null, null], ready = [false, false], errored = [null, null], apiReady = false, apiFailed = false;
+  var muted = false, forced = -1, lastTime = 0;
 
-  function parseTime(s) {
-    if (s === null || s === undefined || s === "") return null;
-    var p = String(s).split(":"), v = 0;
-    for (var k = 0; k < p.length; k++) v = v * 60 + (parseFloat(p[k]) || 0);
-    return v;
-  }
+  // ---- cues storage ----
+  var cues = CONFIG.cues;
+  try {
+    var raw = window.localStorage.getItem(STORE_KEY);
+    if (raw) { var parsed = JSON.parse(raw); if (parsed && parsed.length === 2) cues = parsed; }
+  } catch (e) {}
+  function saveCues() { try { window.localStorage.setItem(STORE_KEY, JSON.stringify(cues)); } catch (e) {} }
+
   function videoId(url) {
-    var m = /(?:v=|youtu\.be\/|embed\/|shorts\/)([A-Za-z0-9_-]{11})/.exec(url || "");
+    if (!url || /PLACEHOLDER/i.test(url)) return null;
+    var m = /(?:v=|youtu\.be\/|embed\/|shorts\/)([A-Za-z0-9_-]{11})/.exec(url);
     return m ? m[1] : null;
   }
-  function curSong() { return n < CUTS.length ? CUTS[n].song : CONFIG.songs.length - 1; }
+  function totalCues() { return cues[0].length + cues[1].length; }
+  function globalIndex(song, i) { return (song === 0 ? 0 : cues[0].length) + i; }
+  function allWords() {
+    var out = [], s, i;
+    for (s = 0; s < 2; s++) for (i = 0; i < cues[s].length; i++) out.push(cues[s][i].word);
+    return out;
+  }
+  function sentenceWords() { return CONFIG.sentence && CONFIG.sentence.length ? CONFIG.sentence : allWords(); }
 
-  // ---- rendering ----
-  function buildTiles() {
-    var box = $("letters"); box.innerHTML = "";
-    for (var k = 0; k < LETTERS.length; k++) {
-      var d = document.createElement("div"); d.className = "tile"; d.id = "t" + k; d.textContent = LETTERS[k]; box.appendChild(d);
+  // ---- noise canvas ----
+  var cv = $("noise"), cx = cv.getContext("2d"), noiseTimer = null;
+  function drawNoise() {
+    var w = cv.width, h = cv.height, img = cx.createImageData(w, h), d = img.data, i, r;
+    for (i = 0; i < w * h; i++) {
+      r = Math.random();
+      var c = r < .38 ? [17, 17, 17] : r < .7 ? [232, 20, 43] : r < .92 ? [156, 16, 32] : [255, 225, 77];
+      d[i * 4] = c[0]; d[i * 4 + 1] = c[1]; d[i * 4 + 2] = c[2]; d[i * 4 + 3] = 255;
     }
+    cx.putImageData(img, 0, 0);
   }
-  function render(animateLast) {
-    for (var k = 0; k < LETTERS.length; k++) {
-      var t = $("t" + k);
-      t.className = "tile" + (k < n ? " on" : "") + (k === n ? " next" : "");
-      if (k < n && !(animateLast && k === n - 1)) t.style.animation = "none"; else t.style.animation = "";
-    }
-    var s = CONFIG.songs[curSong()];
-    $("song").textContent = "Chanson : " + s.title;
-    $("sub").textContent = n >= LETTERS.length ? "Toutes les lettres sont revenues." : "Chaque phrase bien chantée fait revenir une lettre. Coupure " + (n + 1) + " sur " + LETTERS.length + ".";
-    var st = $("status");
-    if (n >= LETTERS.length) { st.className = "status done"; st.textContent = "Le mot est complet. Lisez-le ensemble, puis tapez-le à l'écran."; }
-    else if (waiting) { st.className = "status sing"; st.textContent = "La musique s'arrête. À vous de chanter la suite !"; }
-    else { st.className = "status"; st.textContent = ready || !videoId(s.url) ? "Écoutez bien. La musique va s'arrêter, et ce sera votre tour." : "Chargement du lecteur..."; }
-    renderHint();
-    renderPlayerNote();
-  }
-  function renderHint() {
-    var hb = $("hintbox");
-    if (!hint || n >= LETTERS.length) { hb.className = "hintbox"; return; }
-    var cut = CUTS[n], txt = "", lab = "Indice " + hint + " sur 3";
-    if (hint === 1) txt = "Coup de pouce : fredonnez ensemble.";
-    else if (hint === 2) txt = "Piste : la ligne commence par « " + (cut.firstWord || "(mot à renseigner dans CONFIG)") + " ».";
-    else txt = "Solution : le mot attendu est « " + (cut.word || "(mot à renseigner dans CONFIG)") + " ». Le maître du jeu chante avec vous.";
-    hb.className = "hintbox on";
-    hb.innerHTML = "<small>" + lab + "</small>";
-    var sp = document.createElement("span"); sp.textContent = txt; hb.appendChild(sp);
-  }
-  function renderPlayerNote() {
-    var s = CONFIG.songs[curSong()], ph = $("ph");
-    if (!videoId(s.url)) { ph.style.display = "flex"; ph.textContent = "Lien YouTube à renseigner dans CONFIG (haut du script)."; }
-    else if (apiFailed) { ph.style.display = "flex"; ph.textContent = "Pas de connexion au lecteur. Utiliser le bouton « Ouvrir sur YouTube » et valider les coupures à la main."; }
-    else if (ready) { ph.style.display = "none"; }
-    else { ph.style.display = "flex"; ph.textContent = "Chargement du lecteur..."; }
+  function setNoise(on) {
+    if (on && !noiseTimer) { drawNoise(); noiseTimer = setInterval(drawNoise, 90); }
+    if (!on && noiseTimer) { clearInterval(noiseTimer); noiseTimer = null; }
   }
 
-  // ---- YouTube player ----
+  // ---- cover ----
+  var coverShown = -2;
+  function showCover(idx, edit) {
+    // idx: index in cues[cur], or -1 to hide
+    var cv0 = $("cover");
+    if (idx < 0 || !cues[cur][idx]) {
+      if (coverShown !== -1) { cv0.classList.remove("on"); setNoise(false); coverShown = -1; }
+      return;
+    }
+    var c = cues[cur][idx];
+    cv0.style.left = c.x + "%"; cv0.style.top = c.y + "%"; cv0.style.width = c.w + "%"; cv0.style.height = c.h + "%";
+    cv0.className = "cover on" + (edit ? " edit" : "");
+    $("lab").innerHTML = "Signal brouillé <em>·</em> Mot caché " + (globalIndex(cur, idx) + 1) + " sur " + totalCues();
+    $("lab").style.fontSize = Math.max(11, Math.min(cv0.clientHeight * .42, 46)) + "px";
+    setNoise(true); coverShown = idx;
+  }
+
+  // ---- hints and status ----
+  function render() {
+    $("song").textContent = "Chanson " + (cur + 1) + " sur 2 : " + CONFIG.titles[cur];
+    var hb = $("hintbox"), st = $("status");
+    if (hint) {
+      hb.className = "hintbox on"; st.style.display = "none";
+      hb.innerHTML = "<small>Indice " + hint + " sur 3</small>";
+      var sp = document.createElement("span");
+      if (hint === 1) sp.textContent = totalCues() + " mots sont cachés. Notez les mots cachés dans l'ordre.";
+      else if (hint === 2) {
+        var ws = allWords(), ini = [], i;
+        for (i = 0; i < ws.length; i++) ini.push(ws[i].charAt(0) + "…");
+        sp.textContent = "Premières lettres : " + ini.join("  ");
+      } else {
+        var kw = showKeyword ? CONFIG.keyword : "", blank = "";
+        if (!showKeyword) for (var k = 0; k < CONFIG.keyword.length; k++) blank += "_ ";
+        sp.textContent = "La phrase : " + sentenceWords().join(" ") + ". Mot clé : ";
+        var b = document.createElement("span"); b.className = "blank"; b.textContent = showKeyword ? kw : blank; sp.appendChild(b);
+      }
+      hb.appendChild(sp);
+    } else {
+      hb.className = "hintbox"; st.style.display = "";
+      st.textContent = statusText();
+    }
+    renderPlaceholder();
+    $("rescue").classList.toggle("on", !!errored[cur] || IS_FILE || apiFailed);
+    for (var s = 0; s < 2; s++) $("yt" + s).classList.toggle("on", s === cur);
+    renderCal();
+  }
+  function statusText() {
+    if (!videoId(CONFIG.videos[cur])) return "Lien YouTube manquant pour « " + CONFIG.titles[cur] + " ». Maître du jeu : renseigner CONFIG.videos dans kpop.html.";
+    if (errored[cur]) return "Cette vidéo refuse l'intégration. Le brouillage ne marche pas : ouvrir YouTube dans un onglet.";
+    if (IS_FILE || apiFailed) return "Lecteur indisponible, voir le message dans le cadre vidéo.";
+    if (!ready[cur]) return "Chargement du lecteur...";
+    return "Chantez et notez les mots cachés, dans l'ordre.";
+  }
+  function renderPlaceholder() {
+    var ph = $("ph"), h = "";
+    if (IS_FILE) {
+      h = "<b>Lecteur YouTube indisponible depuis un fichier local (erreur 153).</b>" +
+          "<span>Maître du jeu : dans le dossier du projet, lancer</span><code>python -m http.server 8000</code>" +
+          "<span>puis ouvrir</span><code>http://localhost:8000/html/aventure.html</code>";
+    } else if (apiFailed) {
+      h = "<b>Impossible de joindre YouTube.</b><span>Vérifier la connexion internet, ou utiliser le bouton « Ouvrir sur YouTube ».</span>";
+    } else if (errored[cur]) {
+      h = "<b>Cette vidéo refuse l'intégration.</b><span>Le brouillage et la coupure du son ne marchent pas. Ouvrir YouTube dans un onglet (touche O).</span>";
+    } else if (!videoId(CONFIG.videos[cur])) {
+      h = "<b>Lien YouTube manquant pour « " + CONFIG.titles[cur] + " ».</b><span>Maître du jeu : renseigner CONFIG.videos dans html/kpop.html (format watch?v=ID).</span>";
+    }
+    if (!videoId(CONFIG.videos[cur]) && IS_FILE) h += "<b>Lien YouTube manquant pour « " + CONFIG.titles[cur] + " ».</b>";
+    ph.innerHTML = h; ph.className = "ph" + (h ? " on" : "");
+  }
+
+  // ---- YouTube ----
   function loadApi() {
-    var any = false;
-    for (var k = 0; k < CONFIG.songs.length; k++) if (videoId(CONFIG.songs[k].url)) any = true;
-    if (!any) return;
-    if (window.YT && window.YT.Player) { onYouTubeIframeAPIReady(); return; }
+    if (IS_FILE) return;
     var sc = document.createElement("script");
     sc.src = "https://www.youtube.com/iframe_api";
     sc.onerror = function () { apiFailed = true; render(); };
     document.head.appendChild(sc);
-    setTimeout(function () { if (!ready) { apiFailed = true; render(); } }, 8000);
+    setTimeout(function () { if (!apiReady) { apiFailed = true; render(); } }, 10000);
   }
   window.onYouTubeIframeAPIReady = function () {
-    var s = CONFIG.songs[curSong()], id = videoId(s.url);
-    if (!id) return;
-    loadedSong = curSong();
-    player = new YT.Player("ytHost", {
-      videoId: id, width: "100%", height: "100%",
-      playerVars: { rel: 0, playsinline: 1, modestbranding: 1 },
-      events: { onReady: function () { ready = true; apiFailed = false; render(); }, onError: function () { apiFailed = true; render(); } }
-    });
+    apiReady = true;
+    for (var s = 0; s < 2; s++) makePlayer(s);
   };
-  function loadSong(si) {
-    if (!player || !ready) return;
-    var id = videoId(CONFIG.songs[si].url);
-    if (id && si !== loadedSong) { player.cueVideoById(id); loadedSong = si; }
+  function makePlayer(s) {
+    var id = videoId(CONFIG.videos[s]);
+    if (!id) return;
+    var holder = document.createElement("div"); holder.id = "ytp" + s; $("yt" + s).appendChild(holder);
+    players[s] = new YT.Player("ytp" + s, {
+      videoId: id, width: "100%", height: "100%",
+      playerVars: { enablejsapi: 1, origin: location.origin, rel: 0, playsinline: 1, modestbranding: 1, controls: 0, disablekb: 1, iv_load_policy: 3 },
+      events: {
+        onReady: function () { ready[s] = true; render(); },
+        onError: function (ev) { errored[s] = ev.data || true; render(); },
+        onStateChange: function (ev) {
+          if (ev.data === 0 && s === cur) {
+            if (cur === 1) { $("end").classList.add("on"); }
+            else { $("status").textContent = "Première chanson terminée. Appuyer sur N pour la suivante."; }
+          }
+          if (ev.data === 1) $("end").classList.remove("on");
+        }
+      }
+    });
   }
-  function isPlaying() { try { return player && ready && player.getPlayerState() === 1; } catch (e) { return false; } }
-  function play() { try { if (player && ready) player.playVideo(); } catch (e) {} }
-  function pause() { try { if (player && ready) player.pauseVideo(); } catch (e) {} }
-
-  setInterval(function () {
-    if (!ready || waiting || n >= CUTS.length) return;
-    var cut = CUTS[n];
-    if (cut.at === null || cut.song !== loadedSong || !isPlaying()) return;
-    var t = 0; try { t = player.getCurrentTime(); } catch (e) { return; }
-    if (t >= cut.at) { pause(); waiting = true; render(); beep(); }
-  }, 200);
-
-  // ---- actions ----
-  function validate() {
-    if (n >= LETTERS.length) return;
-    n++; waiting = false; hint = 0;
-    if (n < CUTS.length) {
-      if (CUTS[n].song === loadedSong) play(); else loadSong(CUTS[n].song);
-    }
-    render(true); ding();
+  function P() { return ready[cur] && !errored[cur] ? players[cur] : null; }
+  function toggle() {
+    var p = P(); if (!p) return;
+    try { if (p.getPlayerState() === 1) p.pauseVideo(); else p.playVideo(); } catch (e) {}
   }
-  function undo() {
-    if (n <= 0) return;
-    n--; waiting = false; hint = 0; loadSong(curSong()); render();
+  function seekBy(d) {
+    var p = P(); if (!p) return;
+    try { p.seekTo(Math.max(0, p.getCurrentTime() + d), true); } catch (e) {}
   }
-  function replay() {
-    if (n >= CUTS.length) return;
-    var cut = CUTS[n];
-    try { if (player && ready && cut.at !== null) player.seekTo(Math.max(0, cut.at - CONFIG.rewindSeconds), true); } catch (e) {}
-    waiting = false; play(); render();
+  function switchSong(d) {
+    var nx = Math.max(0, Math.min(1, cur + d));
+    if (nx === cur) return;
+    var p = P(); try { if (p) { p.pauseVideo(); p.unMute(); } } catch (e) {}
+    muted = false; cur = nx; sel = 0; pendingStart = null; hint = 0; coverShown = -2;
+    $("end").classList.remove("on"); render();
   }
-  function togglePlay() {
-    waiting = false;
-    if (isPlaying()) pause(); else play();
-    render();
-  }
-  function openTab() {
-    var u = CONFIG.songs[curSong()].url;
-    if (u) window.open(u, "_blank");
-  }
+  function openTab() { var u = CONFIG.videos[cur]; if (videoId(u)) window.open(u, "_blank"); }
   $("rescue").addEventListener("click", openTab);
 
-  // ---- sounds (optional, silent if audio is blocked) ----
-  var ac = null;
-  function tone(freq, dur, delay) {
-    try {
-      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
-      var o = ac.createOscillator(), g = ac.createGain(), t0 = ac.currentTime + (delay || 0);
-      o.type = "triangle"; o.frequency.value = freq; g.gain.setValueAtTime(.0001, t0); g.gain.exponentialRampToValueAtTime(.25, t0 + .02); g.gain.exponentialRampToValueAtTime(.0001, t0 + dur);
-      o.connect(g); g.connect(ac.destination); o.start(t0); o.stop(t0 + dur + .05);
-    } catch (e) {}
-  }
-  function ding() { tone(660, .25, 0); tone(990, .4, .12); }
-  function beep() { tone(440, .3, 0); }
+  // ---- 80 ms follow loop ----
+  setInterval(function () {
+    var p = P(), t = null, inCue = -1, i;
+    if (p) { try { t = p.getCurrentTime(); lastTime = t; } catch (e) { t = null; } }
+    if (t !== null) {
+      for (i = 0; i < cues[cur].length; i++) {
+        var c = cues[cur][i];
+        if (t >= c.start - CONFIG.lead && t <= c.end + CONFIG.tail) { inCue = i; break; }
+      }
+    }
+    if (p && inCue >= 0 !== muted) { try { if (inCue >= 0) p.mute(); else p.unMute(); } catch (e) {} muted = inCue >= 0; }
+    if (forced >= 0) showCover(forced, false);
+    else if (inCue >= 0) showCover(inCue, calOn && inCue === sel);
+    else if (calOn && cues[cur][sel]) showCover(sel, true);
+    else showCover(-1);
+    if (calOn) $("calTime").textContent = "(lecture : " + (t === null ? "pas de lecteur" : t.toFixed(2) + " s") + ")";
+  }, 80);
 
+  // ---- calibration ----
+  function fmt(c) { return JSON.stringify(c); }
+  function cuesJson() {
+    var out = "cues: [\n", s, i;
+    for (s = 0; s < 2; s++) {
+      out += "  [\n";
+      for (i = 0; i < cues[s].length; i++) out += "    " + fmt(cues[s][i]) + (i < cues[s].length - 1 ? "," : "") + "\n";
+      out += "  ]" + (s === 0 ? "," : "") + "\n";
+    }
+    return out + "]";
+  }
+  function renderCal() {
+    $("cal").classList.toggle("on", calOn);
+    if (!calOn) return;
+    $("calMode").textContent = "Mode de Maj+flèches : " + (calMode === "move" ? "déplacer" : "redimensionner") + (pendingStart !== null ? ". Début marqué à " + pendingStart.toFixed(2) + " s." : "");
+    var ol = $("calList"); ol.innerHTML = "";
+    for (var i = 0; i < cues[cur].length; i++) {
+      var c = cues[cur][i], li = document.createElement("li");
+      li.textContent = c.word + " (" + c.start.toFixed(2) + " à " + c.end.toFixed(2) + ", x" + c.x + " y" + c.y + " l" + c.w + " h" + c.h + ")";
+      if (i === sel) li.className = "cur";
+      ol.appendChild(li);
+    }
+  }
+  function r2(v) { return Math.round(v * 100) / 100; }
+  function markStart() { pendingStart = r2(lastTime); renderCal(); }
+  function markEnd() {
+    var end = r2(lastTime), st = pendingStart === null ? Math.max(0, end - 1) : pendingStart, base = cues[cur][sel] || { x: 15, y: 78, w: 70, h: 12 };
+    var c = { start: st, end: end, word: "MOT-" + (globalIndex(cur, cues[cur].length) + 1), x: base.x, y: base.y, w: base.w, h: base.h };
+    cues[cur].push(c);
+    cues[cur].sort(function (a, b) { return a.start - b.start; });
+    sel = cues[cur].indexOf(c); pendingStart = null; saveCues(); render();
+  }
+  function nudge(dx, dy) {
+    var c = cues[cur][sel]; if (!c) return;
+    if (calMode === "move") { c.x = Math.max(0, Math.min(100 - c.w, c.x + dx)); c.y = Math.max(0, Math.min(100 - c.h, c.y + dy)); }
+    else { c.w = Math.max(2, Math.min(100 - c.x, c.w + dx)); c.h = Math.max(2, Math.min(100 - c.y, c.h + dy)); }
+    saveCues(); coverShown = -2; render();
+  }
+  function copyJson() {
+    var txt = cuesJson(), ta = $("calJson");
+    ta.value = txt; ta.focus(); ta.select();
+    try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt); else document.execCommand("copy"); } catch (e) { try { document.execCommand("copy"); } catch (e2) {} }
+    ta.blur(); window.focus();
+  }
+
+  // ---- keys ----
   document.addEventListener("keydown", function (e) {
-    var k = e.key;
-    if (e.code === "Space" || k === "ArrowRight") { e.preventDefault(); validate(); }
-    else if (k === "Backspace" || k === "ArrowLeft") { e.preventDefault(); undo(); }
+    var k = e.key, key = k.length === 1 ? k.toLowerCase() : k;
+    if (calOn && e.shiftKey && (k === "ArrowLeft" || k === "ArrowRight" || k === "ArrowUp" || k === "ArrowDown")) {
+      e.preventDefault();
+      nudge(k === "ArrowLeft" ? -1 : k === "ArrowRight" ? 1 : 0, k === "ArrowUp" ? -1 : k === "ArrowDown" ? 1 : 0); return;
+    }
+    if (e.code === "Space") { e.preventDefault(); toggle(); }
+    else if (k === "ArrowLeft") { e.preventDefault(); seekBy(-CONFIG.seekStep); }
+    else if (k === "ArrowRight") { e.preventDefault(); seekBy(CONFIG.seekStep); }
     else if (k === "Enter" && window.parent !== window) { window.parent.postMessage({ type: "next" }, "*"); }
-    else if (k === "b" || k === "B") { replay(); }
-    else if (k === "p" || k === "P") { togglePlay(); }
-    else if (k === "h" || k === "H") { hint = (hint + 1) % 4; renderHint(); }
-    else if (k === "o" || k === "O") { openTab(); }
-    else if (k === "f" || k === "F") { try { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); } catch (x) {} }
+    else if (key === "n") { switchSong(e.shiftKey ? -1 : 1); }
+    else if (key === "h") { hint = (hint + 1) % 4; render(); }
+    else if (key === "v") { showKeyword = !showKeyword; render(); }
+    else if (key === "e") { $("end").classList.toggle("on"); }
+    else if (key === "o") { openTab(); }
+    else if (key === "k" || k === "?") { $("help").classList.toggle("on"); }
+    else if (key === "f") { try { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); } catch (x) {} }
+    else if (key === "c") { calOn = !calOn; coverShown = -2; render(); }
+    else if (calOn) {
+      if (key === "t") markStart();
+      else if (key === "y") markEnd();
+      else if (k === "[") { sel = Math.max(0, sel - 1); coverShown = -2; renderCal(); }
+      else if (k === "]") { sel = Math.min(cues[cur].length - 1, sel + 1); coverShown = -2; renderCal(); }
+      else if (key === "m") { calMode = calMode === "move" ? "resize" : "move"; renderCal(); }
+      else if (key === "d") { if (cues[cur][sel]) { cues[cur].splice(sel, 1); sel = Math.max(0, sel - 1); saveCues(); coverShown = -2; render(); } }
+      else if (key === "w") { var c = cues[cur][sel]; if (c) { var nv = window.prompt("Mot caché :", c.word); if (nv) { c.word = nv; saveCues(); render(); } } }
+      else if (key === "j") { copyJson(); }
+      else if (key === "z") { try { window.localStorage.removeItem(STORE_KEY); } catch (x) {} cues = CONFIG.cues; sel = 0; coverShown = -2; render(); }
+    }
   });
 
-  // kpop.html#N = N letters already revealed; kpop.html#NhM = also hint level M (testing)
-  var hm = /^#(\d+)(?:h(\d))?/.exec(location.hash);
-  if (hm) { n = Math.min(LETTERS.length, parseInt(hm[1], 10)); hint = hm[2] ? Math.min(3, parseInt(hm[2], 10)) : 0; }
-  buildTiles(); render(); loadApi();
+  // Test hashes: #cover (cover visible on example cue 3), #calage, #aide, #fin, #h1 #h2 #h3 (combine with commas)
+  var H = location.hash;
+  if (H.indexOf("cover") >= 0) forced = Math.min(2, cues[0].length - 1);
+  if (H.indexOf("calage") >= 0) { calOn = true; $("calJson").value = cuesJson(); }
+  if (H.indexOf("aide") >= 0) $("help").classList.add("on");
+  if (H.indexOf("fin") >= 0) $("end").classList.add("on");
+  var hm = /h([123])/.exec(H); if (hm) hint = parseInt(hm[1], 10);
+  render(); loadApi();
 </script>
 </body>
 </html>

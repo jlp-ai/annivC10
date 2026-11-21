@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test des sons</title>
+<style>
+  body { margin: 0; padding: 24px; background: #111; color: #fff1d6; font-family: Arial, sans-serif; }
+  h1 { color: #ffd23f; margin-top: 0; }
+  h2 { color: #e8142b; margin: 28px 0 10px; font-size: 18px; }
+  .bar { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; padding: 14px; background: #1c1c1c; border: 2px solid #ffd23f; border-radius: 8px; }
+  .grid { display: flex; flex-wrap: wrap; gap: 10px; }
+  button { font-size: 16px; padding: 12px 18px; background: #e8142b; color: #fff; border: 0; border-radius: 6px; cursor: pointer; }
+  button:hover { background: #ff3a4f; }
+  button.stop { background: #444; }
+  button.on { background: #ffd23f; color: #111; }
+  input[type=range] { width: 220px; }
+  label { font-size: 16px; }
+  p.note { color: #bbb; font-size: 14px; }
+</style>
+</head>
+<body>
+<h1>Test des sons</h1>
+<p class="note">Cliquer sur un bouton pour écouter. Le premier clic débloque le son du navigateur. Fichier testé : sons.js.</p>
+
+<div class="bar">
+  <label>Volume <input id="vol" type="range" min="0" max="100" value="50"> <span id="volVal">50</span> %</label>
+  <label><input id="mute" type="checkbox"> Muet</label>
+  <label><input id="duck" type="checkbox"> Voix off (ambiance à 20 %)</label>
+  <button class="stop" id="stopAll">Tout arrêter</button>
+</div>
+
+<h2>Bruitages</h2>
+<div class="grid" id="sfx"></div>
+
+<h2>Ambiances (boucles)</h2>
+<div class="grid" id="amb"></div>
+
+<script src="sons.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var LABELS = {
+    "sonnerie": "sonnerie (boucle)", "decroche": "décroche", "bip": "bip (lettre)", "transmission": "transmission radio",
+    "alarme": "alarme", "tampon": "tampon", "sonar": "sonar", "jingle-depart": "jingle de départ", "atterrissage": "atterrissage",
+    "tic": "tic (lettre)", "accord": "accord final", "ding": "ding", "buzz": "buzz (mot faux)", "carillon": "carillon magique",
+    "scratch": "scratch", "souffle-vaisseau": "souffle de vaisseau", "bip-console": "bip de console", "fanfare": "fanfare",
+    "pop-confettis": "pop de confettis"
+  };
+  var sfx = $("sfx"), amb = $("amb");
+
+  Sons.sounds().forEach(function (name) {
+    var b = document.createElement("button");
+    b.textContent = LABELS[name] || name;
+    b.onclick = function () {
+      Sons.unlock();
+      if (name === "sonnerie") {
+        var on = b.className === "on";
+        if (on) { Sons.stop("sonnerie"); b.className = ""; } else { Sons.play("sonnerie"); b.className = "on"; }
+      } else { Sons.play(name); }
+    };
+    sfx.appendChild(b);
+  });
+
+  var ambButtons = {};
+  Sons.ambiances().forEach(function (name) {
+    var b = document.createElement("button");
+    b.textContent = "ambiance " + name;
+    b.onclick = function () {
+      Sons.unlock();
+      var wasOn = b.className === "on", k;
+      for (k in ambButtons) ambButtons[k].className = "";
+      if (wasOn) { Sons.stopAmbiance(); } else { Sons.ambiance(name); b.className = "on"; }
+    };
+    ambButtons[name] = b; amb.appendChild(b);
+  });
+
+  $("vol").oninput = function () { Sons.volume = this.value / 100; $("volVal").textContent = this.value; };
+  $("mute").onchange = function () { Sons.muted = this.checked; };
+  $("duck").onchange = function () { Sons.duck(this.checked); };
+  $("stopAll").onclick = function () {
+    Sons.stop(); Sons.stopAmbiance();
+    var k; for (k in ambButtons) ambButtons[k].className = "";
+    Array.prototype.forEach.call(sfx.children, function (b) { b.className = ""; });
+  };
+  Sons.volume = 0.5;
+})();
+</script>
+</body>
+</html>
