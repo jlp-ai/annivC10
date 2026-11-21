@@ -208,6 +208,424 @@
 
 <div class="hud" id="hud">Maître du jeu : Espace = suite (briefing et portail), Entrée = ouvrir la saisie du mot, ← = retour, Maj + Entrée = forcer la validation, Maj + R = tout remettre à zéro, F = plein écran, M = couper le son du saut temporel</div>
 
+<!-- Briefing (introduction), affiché dans un cadre via srcdoc : ancien fichier briefing.html fusionné -->
+<template id="briefingTpl">
+<style>
+  /* Ambiance : agence d'espionnage des années 2000 (série animée d'espionnes, enquêtes autour du monde) */
+  :root {
+    --pink: #111111;
+    --violet: #9c1020;
+    --deep: #2a0508;
+    --teal: #fff1d6;
+    --yellow: #ffe14d;
+    --red: #e8142b;
+    --text: #ffffff;
+    --muted: #ffd6d6;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: linear-gradient(135deg, var(--deep) 0%, var(--violet) 55%, #d4182b 100%);
+    color: var(--text);
+    font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+    overflow: hidden;
+  }
+  /* radar / globe lines */
+  body::before {
+    content: ""; position: fixed; left: 50%; top: 50%;
+    width: 130vmin; height: 130vmin; transform: translate(-50%, -50%); border-radius: 50%;
+    background:
+      repeating-radial-gradient(circle, transparent 0 7vmin, rgba(255,241,214,.14) 7vmin 7.25vmin),
+      conic-gradient(from 0deg, rgba(255,241,214,.25), transparent 25%);
+    animation: sweep 8s linear infinite;
+  }
+  @keyframes sweep { to { transform: translate(-50%, -50%) rotate(360deg); } }
+  body::after {
+    content: ""; position: fixed; inset: 0; pointer-events: none;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,.08) 0 2px, transparent 2px 4px);
+  }
+
+  .slide {
+    position: absolute; inset: 0; padding: 6vh 6vw;
+    display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+    z-index: 1;
+  }
+  .slide.active { display: flex; animation: pop .6s cubic-bezier(.2,1.4,.4,1); }
+  @keyframes pop { from { opacity: 0; transform: scale(.92) translateY(18px); } to { opacity: 1; transform: none; } }
+
+  .org {
+    background: var(--pink); color: var(--yellow); font-weight: bold; letter-spacing: .25em; text-transform: uppercase;
+    font-size: clamp(14px, 2.2vh, 28px); padding: .6vh 1.6vw; border-radius: 999px; margin-bottom: 3vh;
+    box-shadow: 0 0 20px rgba(255,210,63,.7);
+  }
+  h1 { margin: 0 0 3vh; font-size: clamp(40px, 9vh, 120px); line-height: 1.05; text-shadow: 4px 4px 0 var(--pink); }
+  h2 { margin: 0 0 4vh; font-size: clamp(32px, 6vh, 80px); color: var(--yellow); text-shadow: 3px 3px 0 rgba(0,0,0,.35); }
+  p { font-size: clamp(22px, 4vh, 52px); line-height: 1.35; max-width: 70ch; margin: 0 0 2vh; }
+  .muted { color: var(--muted); }
+
+  .stamp {
+    display: inline-block; border: 6px solid var(--red); color: var(--red); font-weight: bold;
+    text-transform: uppercase; letter-spacing: .12em; padding: .6vh 1.4vw; border-radius: 10px;
+    font-size: clamp(22px, 4vh, 52px); transform: rotate(-6deg); background: rgba(255,255,255,.92); margin-bottom: 3vh;
+  }
+
+  /* slide 1: incoming call */
+  .ring {
+    width: clamp(120px, 24vh, 320px); aspect-ratio: 1; border-radius: 50%; background: var(--teal); margin-bottom: 4vh;
+    display: flex; align-items: center; justify-content: center; font-size: clamp(60px, 12vh, 160px); color: var(--deep); font-weight: bold;
+    animation: ring 1s ease-in-out infinite;
+  }
+  .ring::before { content: "?"; }
+  @keyframes ring {
+    0% { box-shadow: 0 0 0 0 rgba(255,241,214,.8); transform: rotate(-6deg); }
+    50% { transform: rotate(6deg); }
+    100% { box-shadow: 0 0 0 6vh rgba(255,241,214,0); transform: rotate(-6deg); }
+  }
+
+  /* slide 2: message */
+  .video-wrap { width: min(70vw, 120vh); aspect-ratio: 16 / 9; background: #000; border: 4px solid var(--teal); border-radius: 14px; overflow: hidden; margin-bottom: 3vh; display: none; }
+  .video-wrap video { width: 100%; height: 100%; }
+  .message { border-left: 8px solid var(--yellow); padding: 1vh 2vw; text-align: left; max-width: 64ch; background: rgba(0,0,0,.25); border-radius: 0 14px 14px 0; }
+  .message p { font-size: clamp(22px, 3.8vh, 48px); }
+  .row { display: flex; gap: 4vw; align-items: center; justify-content: center; width: 100%; }
+  .col { flex: 1; min-width: 0; max-width: 64ch; }
+  .portrait { flex: none; width: clamp(160px, 34vh, 400px); text-align: center; }
+  .portrait svg, .portrait img { width: 100%; display: block; border: 4px solid var(--teal); border-radius: 18px; box-shadow: 0 0 30px rgba(255,241,214,.5); }
+  .portrait .tag { display: inline-block; margin-top: 1.2vh; background: var(--yellow); color: var(--deep); font-weight: bold; border-radius: 8px; padding: .4vh 1.2vw; font-size: clamp(14px, 2.4vh, 30px); text-transform: uppercase; letter-spacing: .1em; }
+  .portrait .mouth { transform-box: fill-box; transform-origin: center; }
+  .portrait.talking .mouth { animation: talk .22s ease-in-out infinite alternate; }
+  @keyframes talk { from { transform: scaleY(1); } to { transform: scaleY(1.7); } }
+  .typed .rest { visibility: hidden; }
+  .typed .vis.cursor::after { content: "\2588"; color: var(--teal); margin-left: 2px; animation: caret .7s steps(2, start) infinite; }
+  @keyframes caret { 50% { opacity: 0; } }
+  .end { color: var(--teal); font-weight: bold; text-transform: uppercase; letter-spacing: .2em; font-size: clamp(16px, 2.6vh, 34px) !important; }
+
+  /* slide 3: anomaly report */
+  .file { display: flex; gap: 3vw; align-items: center; background: rgba(255,255,255,.1); border: 3px solid var(--teal); border-radius: 18px; padding: 3vh 3vw; max-width: 80vw; text-align: left; }
+  .rift { flex: none; width: clamp(140px, 32vh, 380px); animation: spin 14s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .file p { font-size: clamp(20px, 3.4vh, 44px); }
+  .file b { color: var(--yellow); }
+
+  /* slide 4: locked anchors */
+  .cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.6vw; width: 100%; }
+  .card { background: rgba(255,255,255,.12); border: 3px solid var(--teal); border-radius: 16px; padding: 3vh 1vw; }
+  .fit { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; transform-origin: center center; }
+  .card { padding: 1.4vh .8vw 2.4vh; }
+  .card .lock { width: 100%; aspect-ratio: 4 / 3; border-radius: 10px; margin-bottom: 1.2vh; background: rgba(0,0,0,.35); border: 2px dashed var(--teal); display: flex; align-items: center; justify-content: center; font-size: clamp(40px, 12vh, 150px); font-weight: bold; color: var(--yellow); }
+  .card .num { font-size: clamp(26px, 5vh, 70px); color: var(--yellow); font-weight: bold; line-height: 1; }
+  .card .name { font-size: clamp(18px, 3.2vh, 40px); margin-top: 1vh; }
+  .card .era { font-size: clamp(14px, 2.2vh, 28px); color: var(--muted); margin-top: .8vh; }
+
+  /* slide 5: rules */
+  ol { text-align: left; font-size: clamp(22px, 4vh, 52px); line-height: 1.5; max-width: 60ch; padding-left: 1.4em; }
+  ol li::marker { color: var(--yellow); font-weight: bold; }
+
+  .hud { position: fixed; bottom: 2vh; left: 0; right: 0; display: flex; justify-content: space-between; padding: 0 3vw; font-size: 13px; color: var(--muted); opacity: .6; z-index: 2; }
+  .dots { display: flex; gap: 8px; }
+  .dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--muted); opacity: .4; display: block; }
+  .dots i.on { background: var(--yellow); opacity: 1; }
+</style>
+<section class="slide active">
+  <div class="org" data-org></div>
+  <div class="ring"></div>
+  <h1>Appel entrant</h1>
+  <p>Ligne ultra secrète. Le quartier général vous convoque.</p>
+  <p class="muted">Agents, décrochez.</p>
+</section>
+
+<section class="slide">
+  <div class="org" data-org></div>
+  <h2 class="typed">Bienvenue au quartier général de l'agence Chronos</h2>
+  <div class="row">
+  <div class="portrait" id="portrait">
+    <svg viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Portrait du chef de l'agence">
+      <defs>
+        <radialGradient id="chiefBg" cx=".72" cy=".3" r=".95"><stop offset="0" stop-color="#a3182a"/><stop offset=".55" stop-color="#3a060c"/><stop offset="1" stop-color="#12030a"/></radialGradient>
+        <linearGradient id="chiefFace" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#100606"/><stop offset=".55" stop-color="#2e1912"/><stop offset="1" stop-color="#8a5640"/></linearGradient>
+        <linearGradient id="chiefCoat" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#050203"/><stop offset=".7" stop-color="#150a0c"/><stop offset="1" stop-color="#43201f"/></linearGradient>
+        <linearGradient id="chiefShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".85"/><stop offset="1" stop-color="#000" stop-opacity="0"/></linearGradient>
+      </defs>
+      <rect width="200" height="250" fill="url(#chiefBg)"/>
+      <circle cx="100" cy="100" r="86" fill="none" stroke="#ffd23f" stroke-opacity=".22" stroke-width="3"/>
+      <circle cx="100" cy="100" r="74" fill="none" stroke="#ffe14d" stroke-opacity=".2" stroke-width="6" stroke-dasharray="2 17.6"/>
+      <polygon points="-20,50 220,-10 220,4 -20,64" fill="#ffd23f" fill-opacity=".10"/><polygon points="-20,92 220,32 220,46 -20,106" fill="#ffd23f" fill-opacity=".10"/><polygon points="-20,134 220,74 220,88 -20,148" fill="#ffd23f" fill-opacity=".10"/><polygon points="-20,176 220,116 220,130 -20,190" fill="#ffd23f" fill-opacity=".10"/><polygon points="-20,218 220,158 220,172 -20,232" fill="#ffd23f" fill-opacity=".10"/>
+      <!-- coat, raised collar, shirt, tie -->
+      <path d="M0 250 L0 216 C6 198 40 186 74 180 L126 180 C160 186 194 198 200 216 L200 250 Z" fill="url(#chiefCoat)"/>
+      <path d="M200 216 C194 198 160 186 126 180" fill="none" stroke="#ff4a5a" stroke-width="1.6" stroke-opacity=".8"/>
+      <path d="M88 180 L100 220 L112 180 Z" fill="#b9afa3" fill-opacity=".55"/>
+      <path d="M97 192 L103 192 L106 236 L100 244 L94 236 Z" fill="#8e1220"/>
+      <path d="M74 180 L100 240 L52 250 Z" fill="#0b0506"/>
+      <path d="M126 180 L100 240 L148 250 Z" fill="#170a0c"/>
+      <path d="M84 152 L84 184 Q100 196 116 184 L116 152 Z" fill="#1b0e0b"/>
+      <path d="M72 178 L90 164 L100 186 Z" fill="#070304"/>
+      <path d="M128 178 L110 164 L100 186 Z" fill="#0d0607"/>
+      <!-- face -->
+      <ellipse cx="67" cy="108" rx="5" ry="9" fill="#1a0d0a"/>
+      <ellipse cx="133" cy="108" rx="5" ry="9" fill="#6a4030"/>
+      <path d="M68 96 C68 64 82 52 100 52 C118 52 132 64 132 96 L132 120 C132 144 118 160 100 162 C82 160 68 144 68 120 Z" fill="url(#chiefFace)"/>
+      <path d="M126 70 C132 90 132 130 120 152" fill="none" stroke="#c98c6e" stroke-opacity=".45" stroke-width="1.6"/>
+      <path d="M101 106 L99 126 Q101 130 107 128" fill="none" stroke="#6b3f2e" stroke-opacity=".7" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M84 120 Q100 128 116 120" fill="none" stroke="#000" stroke-opacity=".15" stroke-width="6"/>
+      <!-- fedora and its shadow -->
+      <rect x="68" y="76" width="64" height="30" fill="url(#chiefShade)"/>
+      <path d="M70 78 C70 42 80 28 100 28 C120 28 130 42 130 78 Z" fill="#0d0507"/>
+      <path d="M70 68 L130 68 L130 77 L70 77 Z" fill="#8e1220"/>
+      <ellipse cx="100" cy="80" rx="64" ry="10" fill="#070304"/>
+      <path d="M126 82 Q150 82 162 78" fill="none" stroke="#ff4a5a" stroke-opacity=".6" stroke-width="1.4"/>
+      <!-- dark glasses -->
+      <rect x="73" y="93" width="23" height="11" rx="4.5" fill="#050203"/>
+      <rect x="104" y="93" width="23" height="11" rx="4.5" fill="#050203"/>
+      <path d="M96 97 L104 97" stroke="#050203" stroke-width="3"/>
+      <path d="M108 95.5 L117 95.5" stroke="#ffd23f" stroke-opacity=".75" stroke-width="1.3" stroke-linecap="round"/>
+      <path d="M77 95.5 L84 95.5" stroke="#ffd23f" stroke-opacity=".5" stroke-width="1.3" stroke-linecap="round"/>
+      <!-- mouth -->
+      <g class="mouth">
+        <ellipse cx="100" cy="143" rx="9" ry="1.1" fill="#0a0305"/>
+        <path d="M86 142 Q100 139 114 142" fill="none" stroke="#0a0305" stroke-width="2.6" stroke-linecap="round"/>
+        <path d="M91 146 Q100 148 109 145" fill="none" stroke="#b46a50" stroke-opacity=".55" stroke-width="1.3" stroke-linecap="round"/>
+      </g>
+      <!-- earpiece -->
+      <rect x="130" y="100" width="7" height="14" rx="3" fill="#ffd23f"/>
+      <path d="M134 114 C134 134 124 150 112 156" fill="none" stroke="#ffd23f" stroke-opacity=".8" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <div class="tag">Le Chef</div>
+  </div>
+  <div class="col">
+  <div class="video-wrap" id="videoWrap">
+    <video id="vid" preload="auto" playsinline></video>
+  </div>
+  <div class="message" id="messageText">
+    <p class="typed">Chers agents, une fois de plus, nous faisons appel à vous pour une mission périlleuse.</p>
+    <p class="typed">Des perturbations venues de mondes parallèles ont été détectées dans un appartement du 18ème arrondissement de Paris. Ces mondes tentent de s'insérer dans notre monde réel et brouillent tout.</p>
+    <p class="typed">Chaque monde est tenu ouvert par un mot-clé. Un mot traverse les mondes sans se briser : c'est la seule chose que vous pouvez en rapporter. Rapportez un mot de chaque monde : ces mots sont la clé pour refermer les brèches.</p>
+    <p class="typed">Vous allez une nouvelle fois traverser les époques pour sauver le monde. Nous comptons sur vous. Bonne chance.</p>
+    <p class="typed end">Fin de transmission</p>
+  </div>
+  </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="org" data-org></div>
+  <div class="stamp">Anomalie détectée</div>
+  <div class="file">
+    <svg class="rift" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Perturbation temporelle">
+      <defs>
+        <radialGradient id="riftGlow">
+          <stop offset="0" stop-color="#ffffff"/>
+          <stop offset=".35" stop-color="#ffd23f"/>
+          <stop offset="1" stop-color="#9c1020" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <circle cx="100" cy="100" r="95" fill="url(#riftGlow)"/>
+      <circle cx="100" cy="100" r="88" fill="none" stroke="#ffe14d" stroke-width="4" stroke-dasharray="14 10"/>
+      <circle cx="100" cy="100" r="68" fill="none" stroke="#e8142b" stroke-width="5" stroke-dasharray="30 12"/>
+      <circle cx="100" cy="100" r="46" fill="none" stroke="#ffffff" stroke-width="3" stroke-dasharray="6 8"/>
+      <path d="M100 20 L88 80 L112 92 L92 130 L108 138 L96 182" fill="none" stroke="#2a0508" stroke-width="6" stroke-linejoin="round"/>
+    </svg>
+    <div>
+      <p><b>Nature :</b> perturbations de mondes parallèles</p>
+      <p><b>Localisation :</b> Paris, 18ème arrondissement</p>
+      <p><b>Effet :</b> des morceaux de mondes parallèles surgissent et brouillent la réalité</p>
+      <p><b>Remède :</b> rapporter un mot de chacun des cinq mondes</p>
+      <p><b>Statut :</b> actives, sous surveillance</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="org" data-org></div>
+  <h2>Votre mission : rapporter cinq mots</h2>
+  <div class="cards" id="cards"></div>
+  <p class="muted" style="margin-top:4vh">Cinq portails vont s'ouvrir, un à la fois. Chaque épreuve réussie rapporte un mot.</p>
+</section>
+
+<section class="slide">
+  <div class="org" data-org></div>
+  <h2>Code de l'agent</h2>
+  <ol>
+    <li>Équipe soudée : personne ne part seul.</li>
+    <li>Les zones marquées « Zone temporelle instable » restent fermées.</li>
+    <li>Chaque monde se respecte : on touche avec soin et on range après usage.</li>
+    <li>En cas de blocage, appelez-moi pour que j'essaie de vous aider.</li>
+  </ol>
+</section>
+
+<section class="slide">
+  <div class="org" data-org></div>
+  <h1>Mission lancée</h1>
+  <p>Cinq mots vous attendent. Prenez le temps de réfléchir.</p>
+  <p class="muted">Bonne chance, agents.</p>
+</section>
+
+<div class="hud">
+  <span>Espace ou flèche droite : suivant, flèche gauche : retour, F : plein écran, P : lire à voix haute, V : vidéo (si présente)</span>
+  <span class="dots" id="dots"></span>
+</div>
+
+<script>
+  // Placeholders to be validated (see TODO.md)
+  var CONFIG = {
+    orgName: "Agence Chronos",
+    videoSrc: "../video/briefing.mp4"
+  };
+
+  document.querySelectorAll("[data-org]").forEach(function (el) { el.textContent = CONFIG.orgName; });
+
+  // The universes are NOT revealed in the briefing: five locked cards only (see aventure.html).
+  var cards = document.getElementById("cards");
+  for (var n = 1; n <= 5; n++) {
+    var c = document.createElement("div");
+    c.className = "card";
+    c.innerHTML = '<div class="lock">?</div><div class="num"></div><div class="name">Destination inconnue</div>';
+    c.querySelector(".num").textContent = "Mot " + n;
+    cards.appendChild(c);
+  }
+
+  var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+
+  // Fit-to-screen: each slide content is wrapped and scaled down when it is taller than the window,
+  // so nothing is cut at the top or bottom whatever the screen ratio.
+  slides.forEach(function (s) {
+    var f = document.createElement("div");
+    f.className = "fit";
+    while (s.firstChild) f.appendChild(s.firstChild);
+    s.appendChild(f);
+  });
+
+  function fitSlide(slide) {
+    var f = slide.querySelector(".fit");
+    if (!f) return;
+    f.style.transform = "none";
+    var cs = getComputedStyle(slide);
+    var availH = slide.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    var need = f.scrollHeight;
+    var s = need > availH ? availH / need : 1;
+    f.style.transform = s < 1 ? "scale(" + s.toFixed(3) + ")" : "none";
+  }
+  window.addEventListener("resize", function () { fitSlide(slides[current]); });
+  var dots = document.getElementById("dots");
+  slides.forEach(function () { dots.appendChild(document.createElement("i")); });
+  var current = 0;
+
+  // Typewriter effect for elements with class "typed": letters appear one after the other.
+  // Layout stays stable: the not-yet-typed part is rendered invisible.
+  var typeToken = 0, typing = false;
+
+  function render(el, n) {
+    var full = el.getAttribute("data-full");
+    el.textContent = "";
+    var vis = document.createElement("span");
+    vis.className = "vis";
+    vis.textContent = full.slice(0, n);
+    var rest = document.createElement("span");
+    rest.className = "rest";
+    rest.textContent = full.slice(n);
+    el.appendChild(vis);
+    el.appendChild(rest);
+    return vis;
+  }
+
+  function typeSlide(slide) {
+    var els = Array.prototype.slice.call(slide.querySelectorAll(".typed"));
+    var token = ++typeToken;
+    typing = false;
+    els.forEach(function (el) {
+      if (!el.getAttribute("data-full")) el.setAttribute("data-full", el.textContent);
+      render(el, 0);
+    });
+    if (!els.length) return;
+    typing = true;
+    var i = 0, n = 0, vis = null;
+    (function step() {
+      if (token !== typeToken) return;
+      if (i >= els.length) { typing = false; return; }
+      var full = els[i].getAttribute("data-full");
+      n++;
+      if (vis) vis.classList.remove("cursor");
+      vis = render(els[i], n);
+      vis.classList.add("cursor");
+      if (n >= full.length) { i++; n = 0; setTimeout(step, 300); }
+      else { setTimeout(step, 11); }
+    })();
+  }
+
+  function finishTyping() {
+    typeToken++;
+    typing = false;
+    Array.prototype.forEach.call(slides[current].querySelectorAll(".typed"), function (el) {
+      var full = el.getAttribute("data-full");
+      if (full) render(el, full.length);
+    });
+  }
+
+  function show(i) {
+    typeToken++;
+    typing = false;
+    current = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach(function (s, k) { s.classList.toggle("active", k === current); });
+    Array.prototype.forEach.call(dots.children, function (d, k) { d.classList.toggle("on", k === current); });
+    typeSlide(slides[current]);
+    fitSlide(slides[current]);
+  }
+  // Optional deep link, e.g. briefing.html#3 opens the 4th screen (useful for testing).
+  show(parseInt(location.hash.slice(1), 10) || 0);
+
+  // The chief's mouth moves while the message is being typed.
+  var portrait = document.getElementById("portrait");
+  setInterval(function () { portrait.classList.toggle("talking", typing); }, 150);
+  // Optional real picture of the chief: images/chef.jpg replaces the drawing if present.
+  var chefImg = new Image();
+  chefImg.onload = function () { portrait.replaceChild(chefImg, portrait.querySelector("svg")); };
+  chefImg.src = "../images/chef.jpg";
+
+  // Video: shown only if the file exists, otherwise the text message stays.
+  var vid = document.getElementById("vid");
+  var wrap = document.getElementById("videoWrap");
+  var msg = document.getElementById("messageText");
+  vid.addEventListener("loadeddata", function () { wrap.style.display = "block"; msg.style.display = "none"; });
+  vid.addEventListener("error", function () { wrap.style.display = "none"; msg.style.display = "block"; });
+  vid.src = CONFIG.videoSrc;
+
+  // Voice-over: pre-generated MP3 (audio/briefing-N.mp3, made with voix/generate-voices*.ps1),
+  // fallback to browser speech synthesis.
+  var voiceAudio = null;
+  function speakCurrent() {
+    if (voiceAudio) { voiceAudio.pause(); voiceAudio = null; }
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    var a = new Audio("../audio/briefing-" + (current + 1) + ".mp3");
+    a.addEventListener("error", speakWithBrowser);
+    voiceAudio = a;
+    a.play().catch(function () {});
+  }
+  function speakWithBrowser() {
+    if (!window.speechSynthesis) return;
+    var text = slides[current].textContent.replace(/\s+/g, " ").trim();
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = "fr-FR";
+    u.rate = 0.95;
+    var fr = window.speechSynthesis.getVoices().filter(function (v) { return v.lang && v.lang.indexOf("fr") === 0; });
+    if (fr.length) u.voice = fr[0];
+    window.speechSynthesis.speak(u);
+  }
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "p" || e.key === "P") { speakCurrent(); return; }
+    if ((e.code === "Space" || e.key === "ArrowRight") && typing) { e.preventDefault(); finishTyping(); return; }
+    if ((e.code === "Space" || e.key === "ArrowRight") && current === slides.length - 1 && window.parent !== window) {
+      e.preventDefault(); window.parent.postMessage({ type: "next" }, "*"); return;   // embedded in aventure.html
+    }
+    if (e.code === "Space" || e.key === "ArrowRight") { e.preventDefault(); show(current + 1); }
+    else if (e.key === "ArrowLeft") { show(current - 1); }
+    else if (e.key === "f" || e.key === "F") {
+      if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen();
+    }
+    else if ((e.key === "v" || e.key === "V") && vid.readyState > 0) { vid.paused ? vid.play() : vid.pause(); }
+  });
+</script>
+</template>
+
 <script src="univers-data.js"></script>
 <script src="vortex.js"></script>
 <script>
@@ -285,6 +703,12 @@
 
   function loadFrame(frameId, src) {
     var f = $(frameId);
+    if (src === "briefing.html") {   // briefing is embedded in this file (template), shown through srcdoc
+      if (!f.getAttribute("data-src")) { f.setAttribute("data-src", src); f.srcdoc = $("briefingTpl").innerHTML; }
+      f.onload = function () { try { f.contentWindow.focus(); } catch (e) {} };
+      try { f.contentWindow.focus(); } catch (e) {}
+      return;
+    }
     if (f.getAttribute("data-src") !== src) { f.setAttribute("data-src", src); f.src = src; }
     f.onload = function () { try { f.contentWindow.focus(); } catch (e) {} };
     try { f.contentWindow.focus(); } catch (e) {}
@@ -484,7 +908,7 @@
     if (t === "fin4" && e.code === "Space") { e.preventDefault(); celebrate(); return; }
     if (e.key === "m" || e.key === "M") { Vortex.muted = !Vortex.muted; }
     else if (e.key === "f" || e.key === "F") { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); }
-    else if (e.key === "R" && e.shiftKey) { cur = 0; render(); }
+    else if (e.key === "R" && e.shiftKey) { $("introFrame").removeAttribute("data-src"); cur = 0; render(); }
     else if (e.key === "ArrowLeft" && !inFrame) { go(cur - 1, false); }
     else if (e.key === "Enter" && t === "epreuve") { next(); }
     else if ((e.code === "Space" || e.key === "ArrowRight") && !inFrame && t !== "epreuve") { e.preventDefault(); next(); }

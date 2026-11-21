@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Galaxie lointaine : introduction</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { background: #000; color: #fff; font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif; overflow: hidden; }
+  canvas#stars { position: fixed; inset: 0; width: 100%; height: 100%; }
+
+  .phase { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; text-align: center; }
+  .phase.on { display: flex; }
+
+  /* 1. blue line */
+  #p1 p { color: #4bd5ee; font-size: clamp(24px, 5.2vh, 64px); line-height: 1.5; max-width: 22em; margin: 0; opacity: 0; animation: bluefade 5.2s ease-in-out forwards; }
+  @keyframes bluefade { 0% { opacity: 0; } 22% { opacity: 1; } 78% { opacity: 1; } 100% { opacity: 0; } }
+
+  /* 2. title shrinking into the distance */
+  #p2 h1 { margin: 0; color: #feda4a; font-size: clamp(60px, 15vw, 260px); letter-spacing: .06em; line-height: .95; text-transform: uppercase; animation: titlezoom 6s ease-in forwards; }
+  @keyframes titlezoom { 0% { transform: scale(1.4); opacity: 1; } 70% { opacity: 1; } 100% { transform: scale(.04); opacity: 0; } }
+
+  /* 3. crawl */
+  #p3 { perspective: 420px; overflow: hidden; align-items: flex-start; }
+  #crawl { position: absolute; left: 50%; top: 100%; width: 62vw; margin-left: -31vw; transform-origin: 50% 100%; transform: rotateX(26deg); color: #feda4a; font-weight: bold; font-size: clamp(26px, 5.6vh, 70px); line-height: 1.45; text-align: justify; text-transform: none; animation: crawl var(--dur, 80s) linear forwards; }
+  @keyframes crawl { from { top: 100%; } to { top: var(--end, -300%); } }
+  #crawl h2 { text-align: center; text-transform: uppercase; margin: 0 0 .2em; font-size: 1.15em; letter-spacing: .08em; }
+  #crawl p { margin: 0 0 1em; text-indent: 1.4em; }
+  #fadeTop { position: absolute; left: 0; right: 0; top: 0; height: 38%; background: linear-gradient(#000 12%, rgba(0,0,0,0)); pointer-events: none; }
+
+  /* 4. instructions */
+  #p4 .panel { max-width: 70vw; border: 3px solid #feda4a; border-radius: 16px; padding: 4vh 4vw; background: rgba(254,218,74,.06); animation: fadein 1.2s both; }
+  @keyframes fadein { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  #p4 h2 { margin: 0 0 2vh; color: #feda4a; font-size: clamp(34px, 7vh, 90px); text-transform: uppercase; letter-spacing: .08em; }
+  #p4 p { margin: 0 0 1.6vh; font-size: clamp(22px, 4vh, 52px); line-height: 1.4; color: #fff6c9; }
+
+  .hud { position: fixed; bottom: 1vh; left: 0; right: 0; text-align: center; font: 12px Arial, sans-serif; color: #feda4a; opacity: .45; }
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<section class="phase" id="p1"><p>Il y a bien longtemps, dans une galaxie lointaine, très lointaine...</p></section>
+
+<section class="phase" id="p2"><h1>Le signal<br>dans le noir</h1></section>
+
+<section class="phase" id="p3">
+  <div id="crawl">
+    <h2>Épisode 1<br>Le signal dans le noir</h2>
+    <p>Une perturbation venue d'un monde parallèle brouille la galaxie. Tous les messages de la flotte se sont éteints, un par un.</p>
+    <p>Dans la base secrète, plus aucune lumière. Les derniers codes sont cachés dans l'obscurité, écrits en lettres qui brillent seulement pour ceux qui savent les trouver.</p>
+    <p>Une équipe d'agents courageux vient d'atterrir. Sept messages lumineux les attendent. Il faudra les retrouver, puis les remettre dans l'ordre pour reconstituer le mot qui rallumera les étoiles.</p>
+    <p>Pas de panique. Avancez ensemble, restez groupés et laissez la lumière vous guider...</p>
+  </div>
+  <div id="fadeTop"></div>
+</section>
+
+<section class="phase" id="p4">
+  <div class="panel">
+    <h2>Mission dans le noir</h2>
+    <p>Le bureau est plongé dans l'obscurité.</p>
+    <p>Trouvez les sept messages lumineux et remettez-les dans l'ordre.</p>
+    <p>Quand le mot est reconstitué, tapez-le à l'écran.</p>
+  </div>
+</section>
+
+<div class="hud">Espace = passer l'introduction, Entrée = ouvrir la saisie du mot (maître du jeu)</div>
+
+<script>
+  var phases = ["p1", "p2", "p3", "p4"], idx = -1, timer = null;
+
+  // Starfield (static, a few twinkles)
+  var cv = document.getElementById("stars"), ctx = cv.getContext("2d"), stars = [];
+  function sizeStars() {
+    cv.width = innerWidth; cv.height = innerHeight; stars = [];
+    for (var i = 0; i < 260; i++) stars.push({ x: Math.random() * cv.width, y: Math.random() * cv.height, r: Math.random() * 1.6 + .3, p: Math.random() * 6.28 });
+  }
+  function drawStars(t) {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      ctx.globalAlpha = .55 + .45 * Math.sin(t / 700 + s.p);
+      ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.2832); ctx.fill();
+    }
+    requestAnimationFrame(drawStars);
+  }
+  sizeStars(); requestAnimationFrame(drawStars); addEventListener("resize", sizeStars);
+
+  function startCrawl() {
+    var c = document.getElementById("crawl"), h = c.offsetHeight;
+    var endPct = -((h / innerHeight) * 100 + 60);               // fully gone above the top
+    c.style.setProperty("--end", endPct + "%");
+    c.style.setProperty("--dur", Math.round(Math.max(60, h / innerHeight * 38)) + "s");
+    c.style.animation = "none"; void c.offsetWidth; c.style.animation = "";
+    var secs = parseFloat(c.style.getPropertyValue("--dur"));
+    timer = setTimeout(function () { go(3); }, secs * 1000);
+  }
+
+  function go(n) {
+    clearTimeout(timer);
+    idx = n;
+    for (var i = 0; i < phases.length; i++) document.getElementById(phases[i]).classList.toggle("on", i === n);
+    if (n === 0) {
+      var p = document.querySelector("#p1 p"); p.style.animation = "none"; void p.offsetWidth; p.style.animation = "";
+      timer = setTimeout(function () { go(1); }, 5400);
+    } else if (n === 1) {
+      var h = document.querySelector("#p2 h1"); h.style.animation = "none"; void h.offsetWidth; h.style.animation = "";
+      timer = setTimeout(function () { go(2); }, 6000);
+    } else if (n === 2) { startCrawl(); }
+  }
+
+  document.addEventListener("keydown", function (e) {
+    if (e.code === "Space" || e.key === "ArrowRight") { e.preventDefault(); if (idx < 3) go(idx + 1); }
+    else if (e.key === "Enter" && window.parent !== window) { window.parent.postMessage({ type: "next" }, "*"); }
+    else if (e.key === "f" || e.key === "F") { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); }
+    else if (e.key === "r" || e.key === "R") { go(0); }
+  });
+
+  // starwars.html#crawl opens directly on the crawl (useful for testing)
+  go(location.hash === "#crawl" ? 2 : location.hash === "#end" ? 3 : 0);
+</script>
+</body>
+</html>

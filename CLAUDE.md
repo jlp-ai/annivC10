@@ -10,7 +10,7 @@ Projet personnel (hors OCTO) : créer le contenu d'un escape game pour l'anniver
   3. K-Pop Demon Hunters : déguisements (3 garçons Saja Boys, 3 filles Huntr/x), "N'oubliez pas les paroles" sur "Briller" et "Ton sauveur".
   4. Star Wars : épreuve dans le noir avec matériel fluorescent (à préciser).
   5. Titis de Montmartre : jeu de piste en extérieur.
-- **Révélation progressive** : les univers et leurs lieux dans l'appartement ne sont jamais dévoilés au briefing. Ils s'ouvrent un par un via [html/portails.html](html/portails.html) (données dans [html/univers-data.js](html/univers-data.js)).
+- **Révélation progressive** : les univers et leurs lieux dans l'appartement ne sont jamais dévoilés au briefing. Ils s'ouvrent un par un via [html/aventure.html](html/aventure.html) (données dans [html/univers-data.js](html/univers-data.js)).
 - **Lieux** : Harry Potter au salon (Lego cachés dans tout le salon, potions sur la table du salon), Mousquetaires en chambre 2, KPop sur la télé du salon (mur entre bureau et séjour), Star Wars au bureau, Titis de Montmartre dehors autour de l'appartement.
 - **Palette** : rouge, noir et jaune (agence de détectives), pas de violet.
 - **Fil rouge** : chaque enfant est membre d'une organisation secrète de voyageurs du temps. Les 5 univers sont 5 destinations de mission. Organisation : Agence Chronos. Menace : brèches de mondes parallèles. Récompense finale à définir (voir [scenario/univers.md](scenario/univers.md)).

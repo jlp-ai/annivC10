@@ -30,7 +30,7 @@ Dernière mise à jour : 2026-11-21 (badges, sons par page, musiques YouTube)
 - [ ] Préparer la chambre 2 pour les mousquetaires (dégager la pièce, ranger les objets fragiles et lampes, vérifier la place pour les armes en mousse)
 - [ ] Occulter le bureau pour Star Wars (fenêtre sur le balcon : rideau noir ou couverture) et limiter le nombre d'enfants dans la pièce
 - [ ] Protéger la table du salon pour les potions (nappe plastique, plateaux, serviettes)
-- [x] Page de révélation des univers un par un : html/portails.html (univers cachés dans le briefing)
+- [x] Page de révélation des univers un par un : html/aventure.html (portails.html supprimée, doublon)
 - [ ] Confirmer que "chambre 1" est bien la chambre en haut à droite, et statuer sur le balcon et l'entrée (zone jouable ou non)
 - [ ] Fabriquer des panneaux "Zone temporelle instable : accès interdit" pour la chambre 1, la salle de bain et les WC
 
@@ -59,7 +59,7 @@ Dernière mise à jour : 2026-11-21 (badges, sons par page, musiques YouTube)
 ## Pages HTML (grand écran)
 
 - [x] Parchemin des potions : html/potions.html (v0, à valider avec le mapping définitif)
-- [x] Page de briefing : html/briefing.html (v0 : alerte, message du directeur, 5 destinations, code de l'agent, écran de lancement, sans chrono). À valider : nom de l'organisation, textes
+- [x] Page de briefing : fusionné dans html/aventure.html (briefing.html supprimé ; v0 : alerte, message du directeur, 5 destinations, code de l'agent, écran de lancement, sans chrono). À valider : nom de l'organisation, textes
 - [x] Illustrations des 5 univers sur les cartes de destination (dessins SVG originaux v0 : château, épées et chapeau, micro, station spatiale et sabre, basilique)
 - [x] Images libres de droits trouvées pour Star Wars (stormtroopers) et Montmartre (Sacré-Cœur) : images/univers-4.jpg et univers-5.jpg
 - [ ] Fournir des images spécifiques pour les univers 1 (Poudlard), 2 (mousquetaires avec rapières), 3 (KPop Demon Hunters) : les banques libres n'en ont pas. À enregistrer depuis les sites officiels (Netflix Tudum, Warner/Wizarding World) ou une recherche d'images, sous images/univers-1.jpg, univers-2.jpg, univers-3.jpg (dessins SVG utilisés en attendant)
@@ -75,7 +75,7 @@ Dernière mise à jour : 2026-11-21 (badges, sons par page, musiques YouTube)
 
 ## Animation et voix (remplace les vidéos IA)
 
-- [x] Animation de vortex pour les sauts temporels entre univers : html/vortex.js (spirale, anneaux, flash, son Web Audio, 2,6 s), branchée dans portails.html (ouverture d'un portail et retour après objet renvoyé ; M coupe le son)
+- [x] Animation de vortex pour les sauts temporels entre univers : html/vortex.js (spirale, anneaux, flash, son Web Audio, 2,6 s), branchée dans aventure.html (5,2 s ; M coupe le son)
 - [x] Page maître de l'aventure : html/aventure.html enchaîne intro (briefing) > plan de l'appartement avec la perturbation > vortex > présentation du lieu > contenu de l'épreuve > plan suivant (gemme sur les lieux terminés) > ... > conclusion. Espace = suite, Entrée = épreuve terminée, ← = retour, Maj + R = reset
 - [x] Ordre des épreuves validé : Star Wars (bureau), K-Pop (salon, télé), Montmartre (dehors), Mousquetaires (chambre 2), Harry Potter (salon, table). Modifiable dans ORDER de aventure.html
 - [x] Plan : l'extérieur est ajouté (cadre en pointillés autour de l'appartement, "Extérieur : Montmartre")
@@ -89,6 +89,10 @@ Dernière mise à jour : 2026-11-21 (badges, sons par page, musiques YouTube)
 - [x] Mécanisme de révélation de chaque mot défini : enigmes/mots-par-epreuve.md (Star Wars : 7 cartes UV ; K-Pop : 9 coupures, une lettre chacune ; Montmartre : 4 syllabes ; Mousquetaires : 5 cartes derrière les cibles ; Harry Potter : encre invisible révélée au jus de chou rouge)
 - [x] Chaque épreuve se valide en tapant le mot à l'écran (saisie avec indices progressifs si erreur, accents et majuscules ignorés), puis écran "Mot rapporté"
 - [x] Le briefing ne révèle pas qu'un mot de passe est à trouver avec les 5 mots : annoncé seulement à la fin (écran de saisie du mot de passe)
+- [x] Page d'introduction Star Wars : html/starwars.html (texte bleu, titre qui s'éloigne, texte jaune qui défile en perspective, écran de consigne ; Espace passe l'intro, Entrée ouvre la saisie du mot ; #crawl et #end pour tester). Texte original, sans nom ni logo de la saga
+- [x] portails.html et briefing.html supprimés (briefing fusionné dans aventure.html)
+- [ ] Relire le texte du défilement Star Wars, ajouter une ambiance sonore sombre (voir materiel/audio-plan.md), vérifier la durée (environ 1 minute)
+- [x] Plan sonore : materiel/audio-plan.md ; récupération de fichiers libres dans audio/ (voir audio/CREDITS.md quand terminé)
 - [x] Écran "Mot rapporté" après chaque épreuve (lettres animées) dans aventure.html
 - [ ] Fabriquer les supports de mots : 7 cartes fluo (OBSCURE), 4 cartes syllabes plastifiées (LU MI NEU SE), 5 cartes lettres au dos des cibles (NETTE), parchemin à l'encre invisible (TRANSPARENTE)
 - [ ] Tester l'encre invisible au bicarbonate et au jus de chou rouge, le mot TRANSPARENTE en grosses lettres
