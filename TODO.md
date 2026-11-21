@@ -94,6 +94,7 @@ Dernière mise à jour : 2026-11-21 (badges, sons par page, musiques YouTube)
 - [ ] Marche impériale au début de l'épreuve Star Wars (choix de l'utilisateur, usage privé) : déposer le fichier audio/musique/marche-imperiale.mp3 (mp3 de la collection personnelle ; starwars.html le lit au début de l'intro, fondu en sortie, M coupe) ; si le navigateur bloque le son, une touche le lance
 - [ ] Relire le texte du défilement Star Wars, ajouter une ambiance sonore sombre (voir materiel/audio-plan.md), vérifier la durée (environ 1 minute)
 - [x] Plan sonore : materiel/audio-plan.md ; récupération de fichiers libres dans audio/ (voir audio/CREDITS.md quand terminé)
+- [x] Animation et bruitage "Bravo !" à chaque mot trouvé (tampon BRAVO, lettres animées, confettis courts, jingle synthétisé et applaudissements d'audio/extra, M coupe le son)
 - [x] Écran "Mot rapporté" après chaque épreuve (lettres animées) dans aventure.html
 - [ ] Fabriquer les supports de mots : 7 cartes fluo (OBSCURE), 4 cartes syllabes plastifiées (LU MI NEU SE), 5 cartes lettres au dos des cibles (NETTE), parchemin à l'encre invisible (TRANSPARENTE)
 - [ ] Tester l'encre invisible au bicarbonate et au jus de chou rouge, le mot TRANSPARENTE en grosses lettres
