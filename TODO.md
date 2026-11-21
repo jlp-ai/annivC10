@@ -101,7 +101,8 @@ Dernière mise à jour : 2026-11-21 (badges, sons par page, musiques YouTube)
 - [x] Lien YouTube de Ton sauveur reçu : https://www.youtube.com/watch?v=qR2QBgCKRJI
 - [x] Lien YouTube de Briller reçu : https://www.youtube.com/watch?v=EmkWAKFDj_4
 - [ ] Vérifier que l'intégration des deux vidéos YouTube est autorisée (test via http://localhost)
-- [ ] Choisir les mots à cacher (6 à 9) dans les 2 chansons, composer la phrase qui mène à BRILLANTE, caler les temps avec le mode calage
+- [x] Mots cachés choisis (5) : briller, nuit, lumière, forte, éblouit ; définition à trous qui mène à BRILLANTE (ÉCLATANTE, ÉBLOUISSANTE, RAYONNANTE acceptés), carnet html/print-carnet-kpop.html
+- [ ] Confirmer à l'oreille les temps des 5 mots (sous-titres automatiques) et placer le bandeau sur la ligne de paroles avec le mode calage (C, T, Y)
 - [ ] Servir le dossier en local (python -m http.server 8000) pour que le lecteur YouTube fonctionne (il refuse file://)
 - [x] Écran final "Mission accomplie" en 4 temps (validé) : 1) vortex final et plan avec les 5 gemmes allumées, 2) retour du chef (texte tapé, mondes à leur place), 3) tampon "Mission accomplie" et rapport clos, 4) mot final à trouver puis félicitations. Confettis rouge/jaune/crème (canvas) et fanfare synthétisée (Web Audio)
 - [ ] Mécanisme final à la Fort Boyard (validé) : chaque épreuve donne un mot, les 5 mots font penser au mot final CLAIRE (clair). Mots validés, dans l'ordre de jeu : Star Wars = OBSCURE (côté obscur ; l'utilisateur a confirmé ce choix après l'avoir remis en question), K-Pop = BRILLANTE (Briller), Montmartre = LUMINEUSE (lumière des peintres), Mousquetaires = NETTE (touche nette sur la cible), Harry Potter = TRANSPARENTE (cape d'invisibilité, potion limpide), accepter "clair" et "claire" comme réponse, encoder la réponse (hash) dans la page

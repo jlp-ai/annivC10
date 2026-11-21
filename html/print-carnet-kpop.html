@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carnet de l'épreuve : mots cachés</title>
+<style>
+  :root { --red: #e8142b; --black: #111111; --yellow: #ffe14d; --cream: #fff1d6; --deep: #2a0508; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #ddd; font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif; color: var(--black); }
+  .bar { background: var(--black); color: var(--cream); padding: 10px 16px; font-size: 14px; line-height: 1.5; }
+  .bar button { font: inherit; padding: 4px 12px; margin-left: 8px; cursor: pointer; }
+  .page { width: 210mm; height: 297mm; margin: 10px auto; background: var(--cream); position: relative; overflow: hidden; padding: 18mm 16mm; }
+  .frame { position: absolute; inset: 7mm; border: 1.6mm solid var(--black); outline: .8mm solid var(--red); outline-offset: -3.5mm; pointer-events: none; }
+  .org { display: inline-block; background: var(--red); color: #fff; font-weight: bold; letter-spacing: .28em; text-transform: uppercase; font-size: 4.4mm; padding: 1.4mm 7mm; border-radius: 99mm; border: .6mm solid var(--black); }
+  h1 { font-size: 13mm; margin: 6mm 0 2mm; line-height: 1.05; text-transform: uppercase; letter-spacing: .04em; text-shadow: .8mm .8mm 0 var(--yellow); }
+  .intro { font-size: 5.4mm; line-height: 1.4; margin: 2mm 0 6mm; }
+  .words { display: grid; grid-template-columns: 1fr; gap: 4mm; margin: 4mm 0 8mm; }
+  .w { display: flex; align-items: center; gap: 4mm; }
+  .w .n { width: 12mm; height: 12mm; border-radius: 50%; background: var(--black); color: var(--yellow); font-weight: bold; font-size: 7mm; display: flex; align-items: center; justify-content: center; flex: none; }
+  .w .line { flex: 1; height: 12mm; border-bottom: .6mm solid var(--black); }
+  .riddle { border: .8mm dashed var(--black); border-radius: 4mm; padding: 6mm 7mm; background: #fff; }
+  .riddle h2 { margin: 0 0 3mm; font-size: 6.4mm; text-transform: uppercase; letter-spacing: .08em; color: var(--red); }
+  .riddle p { font-size: 6.2mm; line-height: 2.1; margin: 0; }
+  .blank { display: inline-block; min-width: 30mm; border-bottom: .5mm solid var(--black); text-align: center; font-size: 4mm; color: #777; line-height: 1; vertical-align: baseline; }
+  .answer { margin-top: 6mm; font-size: 6mm; }
+  .answer .box { display: inline-block; min-width: 90mm; border-bottom: .6mm solid var(--black); height: 9mm; vertical-align: bottom; }
+  .stripe { position: absolute; left: 7mm; right: 7mm; bottom: 7mm; height: 8mm; background: repeating-linear-gradient(135deg, var(--black) 0 5mm, var(--yellow) 5mm 10mm); }
+  @media print {
+    @page { size: A4; margin: 0; }
+    body { background: #fff; } .bar { display: none; }
+    .page { margin: 0; page-break-after: always; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="bar">
+  Carnet de l'épreuve des mots cachés, à imprimer en A4 (couleurs activées), un exemplaire pour l'équipe ou un par enfant.
+  <button onclick="window.print()">Imprimer</button>
+</div>
+
+<div class="page">
+  <div class="frame"></div>
+  <div class="org">Agence Chronos</div>
+  <h1>Les mots disparus</h1>
+  <p class="intro">Pendant la chanson, des mots sont brouillés et le son s'éteint. Chantez la suite, retrouvez chaque mot manquant et notez-le dans l'ordre.</p>
+
+  <div class="words">
+    <div class="w"><div class="n">1</div><div class="line"></div></div>
+    <div class="w"><div class="n">2</div><div class="line"></div></div>
+    <div class="w"><div class="n">3</div><div class="line"></div></div>
+    <div class="w"><div class="n">4</div><div class="line"></div></div>
+    <div class="w"><div class="n">5</div><div class="line"></div></div>
+  </div>
+
+  <div class="riddle">
+    <h2>Que veut dire le message ?</h2>
+    <p>Qui sait <span class="blank">1</span> à travers la <span class="blank">2</span> avec une <span class="blank">3</span> si <span class="blank">4</span> qu'elle <span class="blank">5</span>.</p>
+    <p class="answer">Elle est <span class="box"></span></p>
+  </div>
+  <div class="stripe"></div>
+</div>
+</body>
+</html>

@@ -49,6 +49,7 @@
   #end h2 { margin: 0; font-size: clamp(40px, 10vh, 130px); text-shadow: 4px 4px 0 var(--black); }
   #end p { margin: 0; font-size: clamp(22px, 4.6vh, 58px); line-height: 1.35; color: var(--cream); max-width: 70vw; }
   #end p b { color: var(--yellow); }
+  #end #endSentence { font-size: clamp(26px, 5.4vh, 68px); max-width: 80vw; }
 
   /* help overlay */
   #help { position: fixed; inset: 0; z-index: 20; background: rgba(17,17,17,.95); display: none; align-items: center; justify-content: center; }
@@ -89,8 +90,9 @@
 
 <div id="end">
   <h2>Comparez vos mots</h2>
-  <p>Mettez vos mots cachés <b>dans l'ordre</b>. Lisez la phrase à voix haute, tous ensemble.</p>
-  <p>Elle vous mène au mot clé de l'épreuve. Quand vous l'avez, le maître du jeu ouvre la saisie.</p>
+  <p>Mettez vos mots cachés <b>dans l'ordre</b> pour compléter la définition.</p>
+  <p id="endSentence"></p>
+  <p>Lisez-la à voix haute, tous ensemble. Quel mot est défini ? Quand vous l'avez, le maître du jeu ouvre la saisie.</p>
 </div>
 
 <div id="help"><div class="box">
@@ -99,7 +101,7 @@
     <ul>
       <li><kbd>Espace</kbd> lecture ou pause, <kbd>Flèches</kbd> reculer ou avancer de 5 s</li>
       <li><kbd>N</kbd> chanson suivante, <kbd>Maj</kbd>+<kbd>N</kbd> chanson précédente</li>
-      <li><kbd>H</kbd> indice suivant (1, 2, 3, puis masqué), <kbd>V</kbd> révéler ou masquer le mot clé dans l'indice 3</li>
+      <li><kbd>H</kbd> indice suivant (1, 2, 3, puis masqué), <kbd>V</kbd> remplir ou vider la définition et le mot clé dans l'indice 3</li>
       <li><kbd>E</kbd> écran « Comparez vos mots », <kbd>O</kbd> ouvrir YouTube, <kbd>F</kbd> plein écran</li>
       <li><kbd>Entrée</kbd> ouvrir la saisie du mot (dans la page principale), <kbd>K</kbd> fermer cette aide</li>
       <li><kbd>C</kbd> mode calage (voir ci-contre)</li>
@@ -154,24 +156,34 @@
     tail: 0.15,    // and stays this many seconds after end
     seekStep: 5,
     keyword: "BRILLANTE",
-    sentence: null,
+    sentence: ["briller", "nuit", "lumière", "forte", "éblouit"],
+    // Definition of the keyword: strings are fixed text, numbers are indexes in sentence (hidden words).
+    template: ["Qui sait ", 0, " à travers la ", 1, " avec une ", 2, " si ", 3, " qu'elle ", 4],
+    templateEnd: " : elle est ",
+    // Times and words come from the YouTube auto subtitles: to confirm by ear with the calibration mode (key C).
+    // x, y, w, h are defaults (bottom of the video area): to adjust with the calibration mode.
     cues: [
       [
-        { start: 20.0, end: 22.0, word: "EXEMPLE-1", x: 15, y: 78, w: 70, h: 12 },
-        { start: 40.0, end: 42.0, word: "EXEMPLE-2", x: 15, y: 78, w: 70, h: 12 },
-        { start: 60.0, end: 62.0, word: "EXEMPLE-3", x: 15, y: 78, w: 70, h: 12 },
-        { start: 80.0, end: 82.0, word: "EXEMPLE-4", x: 15, y: 78, w: 70, h: 12 }
+        { start: 146.96, end: 148.2, word: "briller", x: 12, y: 72, w: 76, h: 18 },
+        { start: 149.64, end: 150.6, word: "nuit", x: 12, y: 72, w: 76, h: 18 }
       ],
       [
-        { start: 20.0, end: 22.0, word: "EXEMPLE-5", x: 15, y: 78, w: 70, h: 12 },
-        { start: 40.0, end: 42.0, word: "EXEMPLE-6", x: 15, y: 78, w: 70, h: 12 },
-        { start: 60.0, end: 62.0, word: "EXEMPLE-7", x: 15, y: 78, w: 70, h: 12 }
+        { start: 119.96, end: 120.5, word: "lumière", x: 12, y: 72, w: 76, h: 18 },
+        { start: 120.88, end: 121.3, word: "forte", x: 12, y: 72, w: 76, h: 18 },
+        { start: 121.6, end: 122.6, word: "éblouit", x: 12, y: 72, w: 76, h: 18 }
       ]
     ]
   };
 
+  // The definition with blanks (or filled when fill is true)
+  function templateText(fill) {
+    var out = "", i, t = CONFIG.template, sw = sentenceWords();
+    for (i = 0; i < t.length; i++) out += typeof t[i] === "number" ? (fill ? sw[t[i]] : "___") : t[i];
+    return out;
+  }
+
   var $ = function (id) { return document.getElementById(id); };
-  var STORE_KEY = "kpop.cues.v1";
+  var STORE_KEY = "kpop.cues.v2";
   var IS_FILE = location.protocol === "file:";
   var cur = 0, hint = 0, showKeyword = false, calOn = false, calMode = "move", sel = 0, pendingStart = null;
   var players = [null, null], ready = [false, false], errored = [null, null], apiReady = false, apiFailed = false;
@@ -246,10 +258,9 @@
         for (i = 0; i < ws.length; i++) ini.push(ws[i].charAt(0) + "…");
         sp.textContent = "Premières lettres : " + ini.join("  ");
       } else {
-        var kw = showKeyword ? CONFIG.keyword : "", blank = "";
-        if (!showKeyword) for (var k = 0; k < CONFIG.keyword.length; k++) blank += "_ ";
-        sp.textContent = "La phrase : " + sentenceWords().join(" ") + ". Mot clé : ";
-        var b = document.createElement("span"); b.className = "blank"; b.textContent = showKeyword ? kw : blank; sp.appendChild(b);
+        sp.textContent = templateText(showKeyword) + CONFIG.templateEnd;
+        var b = document.createElement("span"); b.className = "blank"; b.textContent = showKeyword ? CONFIG.keyword.toLowerCase() : "...";
+        sp.appendChild(b);
       }
       hb.appendChild(sp);
     } else {
@@ -439,6 +450,7 @@
   if (H.indexOf("aide") >= 0) $("help").classList.add("on");
   if (H.indexOf("fin") >= 0) $("end").classList.add("on");
   var hm = /h([123])/.exec(H); if (hm) hint = parseInt(hm[1], 10);
+  $("endSentence").innerHTML = "<b></b>"; $("endSentence").firstChild.textContent = templateText(false) + CONFIG.templateEnd + "...";
   render(); loadApi();
 </script>
 </body>

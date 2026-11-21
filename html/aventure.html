@@ -904,7 +904,8 @@
   var triesS = 0;
   function checkSaisie(force) {
     var st = steps[cur], word = UNIVERS[st.i].word, v = normalize($("saisieInput").value);
-    if (force || v === normalize(word)) { sound("ok"); next(); return; }
+    var alts = UNIVERS[st.i].alt || [], okAlt = false; for (var q = 0; q < alts.length; q++) if (v === normalize(alts[q])) okAlt = true;
+    if (force || v === normalize(word) || okAlt) { sound("ok"); next(); return; }
     if (!v) return;
     sound("no");
     triesS++;
