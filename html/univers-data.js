@@ -69,9 +69,9 @@
   ];
 
 var UNIVERS = [
-  { name: "Monde des sorciers",         era: "Harry Potter",         room: "Le salon",                        zone: 0, content: "potions.html" },
-  { name: "France des mousquetaires",   era: "XVIIe siècle",        room: "La chambre 2",                    zone: 1, content: null },
-  { name: "Chasseurs de démons",        era: "K-Pop Demon Hunters", room: "Le salon, devant la télé",        zone: 2, content: null },
-  { name: "Galaxie lointaine",          era: "Star Wars",           room: "Le bureau",                       zone: 3, content: null },
-  { name: "Montmartre d'autrefois",     era: "Les titis",           room: "Dehors, autour de l'appartement", zone: 4, content: null }
+  { name: "Monde des sorciers",         era: "Harry Potter",         room: "Le salon",                        zone: 0, word: "TRANSPARENTE", content: "potions.html" },
+  { name: "France des mousquetaires",   era: "XVIIe siècle",        room: "La chambre 2",                    zone: 1, word: "NETTE", content: null },
+  { name: "Chasseurs de démons",        era: "K-Pop Demon Hunters", room: "Le salon, devant la télé",        zone: 2, word: "BRILLANTE", content: null },
+  { name: "Galaxie lointaine",          era: "Star Wars",           room: "Le bureau",                       zone: 3, word: "OBSCURE", content: null },
+  { name: "Montmartre d'autrefois",     era: "Les titis",           room: "Dehors, autour de l'appartement", zone: 4, word: "LUMINEUSE", content: null }
 ];

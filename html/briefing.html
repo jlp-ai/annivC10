@@ -213,7 +213,8 @@
   </div>
   <div class="message" id="messageText">
     <p class="typed">Chers agents, une fois de plus, nous faisons appel à vous pour une mission périlleuse.</p>
-    <p class="typed">Des perturbations venues de mondes parallèles ont été détectées dans un appartement du 18ème arrondissement de Paris. Ces mondes tentent de s'insérer dans notre monde réel. Chaque objet intrus doit retrouver son monde.</p>
+    <p class="typed">Des perturbations venues de mondes parallèles ont été détectées dans un appartement du 18ème arrondissement de Paris. Ces mondes tentent de s'insérer dans notre monde réel et brouillent tout.</p>
+    <p class="typed">Chaque monde est tenu ouvert par un mot-clé. Les objets intrus ne sont que des échos : un objet se brise en traversant les mondes, un mot passe partout sans dégât. Rapportez les cinq mots, puis trouvez le mot de passe qui les relie. Celui-là rend tout clair et referme les brèches.</p>
     <p class="typed">Vous allez une nouvelle fois traverser les époques pour sauver le monde. Nous comptons sur vous. Bonne chance.</p>
     <p class="typed end">Fin de transmission</p>
   </div>
@@ -242,8 +243,8 @@
     <div>
       <p><b>Nature :</b> perturbations de mondes parallèles</p>
       <p><b>Localisation :</b> Paris, 18ème arrondissement</p>
-      <p><b>Effet :</b> des objets de mondes parallèles surgissent</p>
-      <p><b>Remède :</b> renvoyer cinq objets de mondes parallèles à leur monde</p>
+      <p><b>Effet :</b> des objets de mondes parallèles surgissent et brouillent la réalité</p>
+      <p><b>Remède :</b> rapporter un mot de chacun des cinq mondes, puis trouver le mot de passe qui les relie</p>
       <p><b>Statut :</b> actives, sous surveillance</p>
     </div>
   </div>
@@ -251,9 +252,9 @@
 
 <section class="slide">
   <div class="org" data-org></div>
-  <h2>Votre mission : cinq objets de mondes parallèles</h2>
+  <h2>Votre mission : rapporter cinq mots</h2>
   <div class="cards" id="cards"></div>
-  <p class="muted" style="margin-top:4vh">Cinq portails vont s'ouvrir, un à la fois. Chaque épreuve réussie renvoie un objet à son monde.</p>
+  <p class="muted" style="margin-top:4vh">Cinq portails vont s'ouvrir, un à la fois. Chaque épreuve réussie rapporte un mot.</p>
 </section>
 
 <section class="slide">
@@ -261,16 +262,16 @@
   <h2>Code de l'agent</h2>
   <ol>
     <li>Équipe soudée : personne ne part seul.</li>
-    <li>Armes en mousse uniquement, sans viser le visage.</li>
-    <li>Objets manipulés avec soin, ils appartiennent à le monde visité.</li>
-    <li>En cas de blocage, le chef peut accorder un indice.</li>
+    <li>Les zones marquées « Zone temporelle instable » restent fermées.</li>
+    <li>Objets manipulés avec soin, ils appartiennent au monde visité.</li>
+    <li>En cas de blocage, appelez-moi pour que j'essaie de vous aider.</li>
   </ol>
 </section>
 
 <section class="slide">
   <div class="org" data-org></div>
   <h1>Mission lancée</h1>
-  <p>Cinq objets de mondes parallèles vous attendent. Prenez le temps de réfléchir.</p>
+  <p>Cinq mots vous attendent. Prenez le temps de réfléchir.</p>
   <p class="muted">Bonne chance, agents.</p>
 </section>
 
@@ -294,7 +295,7 @@
     var c = document.createElement("div");
     c.className = "card";
     c.innerHTML = '<div class="lock">?</div><div class="num"></div><div class="name">Destination inconnue</div>';
-    c.querySelector(".num").textContent = "Objet " + n;
+    c.querySelector(".num").textContent = "Mot " + n;
     cards.appendChild(c);
   }
 
@@ -361,8 +362,8 @@
       if (vis) vis.classList.remove("cursor");
       vis = render(els[i], n);
       vis.classList.add("cursor");
-      if (n >= full.length) { i++; n = 0; setTimeout(step, 700); }
-      else { setTimeout(step, 24); }
+      if (n >= full.length) { i++; n = 0; setTimeout(step, 300); }
+      else { setTimeout(step, 11); }
     })();
   }
 

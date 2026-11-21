@@ -6,10 +6,10 @@ Dernière mise à jour : 2026-11-21 (badges, sons par page, musiques YouTube)
 
 - [x] Nom de l'organisation : Agence Chronos (validé)
 - [x] Portrait du chef (donneur d'ordre) sur le côté de l'intro : SVG v0 avec bouche animée pendant l'écriture. À valider : apparence (homme, lunettes noires, oreillette, cravate rose), nom ("Le Chef" ou un nom de code)
-- [x] Motif de la mission : perturbations venues de mondes parallèles, cinq objets de mondes parallèles à renvoyer à leur monde (validé ; plus de faille ni d'ancres)
+- [x] Motif de la mission : perturbations venues de mondes parallèles, cinq mots à rapporter, un par monde (validé ; plus de faille ni d'ancres)
 - [ ] Régénérer les MP3 du briefing après changement de texte (voix/textes.json)
 - [x] Pas d'antagoniste : la menace est une anomalie, des perturbations venues de mondes parallèles (décision 2026-11-21)
-- [ ] Définir l'objet d'un monde parallèle de chaque univers (ex. un objet d'un autre monde qui apparaît dans la scène) et le geste qui le renvoie à son monde
+- [x] (remplacé par les mots) Définir l'objet d'un monde parallèle de chaque univers (ex. un objet d'un autre monde qui apparaît dans la scène) et le geste qui le renvoie à son monde
 - [ ] Créer les éléments d'ambiance : sonnerie d'appel, effet de tampon, animation de perturbation, jingle d'agence (en HTML/Web Audio ou MP3)
 - [x] Prénom de l'anniversaireuse : Claire
 - [x] Rôle de Claire : agente comme les autres (même statut pour tous les enfants, Claire est la star de la fête sans grade particulier)
@@ -37,7 +37,7 @@ Dernière mise à jour : 2026-11-21 (badges, sons par page, musiques YouTube)
 ## Fil rouge et scénario
 
 - [ ] Rédiger le message d'ouverture du directeur de l'organisation
-- [ ] Définir les 5 objets de mondes parallèles (un par univers) et le code final
+- [x] Les 5 mots et le mot final CLAIRE sont définis
 - [ ] Rédiger le déroulé minute par minute
 - [ ] Rédiger les énigmes détaillées avec indices à 3 niveaux (fiches dans enigmes/)
 
@@ -65,7 +65,7 @@ Dernière mise à jour : 2026-11-21 (badges, sons par page, musiques YouTube)
 - [ ] Fournir des images spécifiques pour les univers 1 (Poudlard), 2 (mousquetaires avec rapières), 3 (KPop Demon Hunters) : les banques libres n'en ont pas. À enregistrer depuis les sites officiels (Netflix Tudum, Warner/Wizarding World) ou une recherche d'images, sous images/univers-1.jpg, univers-2.jpg, univers-3.jpg (dessins SVG utilisés en attendant)
 - [x] Correction de la troncature en haut et en bas sur grand écran : le contenu de chaque écran se réduit automatiquement pour tenir dans la fenêtre
 - [ ] Illustrer de la même façon les pages de chaque épreuve (potions, mousquetaires, K-Pop, Star Wars, Montmartre)
-- [ ] Option à trancher : jauge "stabilité du temps" qui monte à chaque objet renvoyé, sans compte à rebours (sinon rien)
+- [ ] Option à trancher : jauge "stabilité du temps" qui monte à chaque mot rapporté, sans compte à rebours (sinon rien)
 - [ ] Page d'accueil / menu du maître du jeu pour enchaîner les 5 univers
 - [ ] Page K-Pop : paroles à trous
 - [ ] Page Star Wars
@@ -82,7 +82,12 @@ Dernière mise à jour : 2026-11-21 (badges, sons par page, musiques YouTube)
 - [x] Intrigue de fond changée (2026-11-21) : perturbations issues de mondes parallèles qui tentent de s'insérer dans notre monde réel (plus d'"anachronique" ni d'"époque" pour les objets)
 - [ ] Régénérer les MP3 (textes.json a changé : mondes parallèles) et relire les fiches dans scenario/univers.md
 - [ ] Créer les pages d'épreuve manquantes pour aventure.html (Star Wars, K-Pop, Montmartre, Mousquetaires) : Entrée ou postMessage {type:"next"} = épreuve finie
-- [ ] Écran final "Mission accomplie" en 4 temps (validé) : 1) vortex final et plan avec les 5 gemmes allumées, 2) retour du chef (texte tapé, mondes à leur place), 3) tampon "Mission accomplie" et rapport clos, 4) mot final à trouver puis félicitations. Confettis rouge/jaune/crème (canvas) et fanfare synthétisée (Web Audio)
+- [x] Justification des mots (2026-11-21) : chaque monde est tenu ouvert par un mot-clé, les objets intrus ne sont que des échos, un objet se brise en traversant les mondes alors qu'un mot passe sans dégât. Intégrée au briefing, aux voix et à scenario/univers.md
+- [x] Écran de saisie du mot de passe avec indices progressifs en cas d'erreur, puis conclusion en 4 temps (plan, chef, tampon, CLAIRE + confettis) dans aventure.html
+- [x] Image Star Wars (foule de stormtroopers) retirée : dessin SVG utilisé en attendant. Fournir de vraies images pour les 5 univers (images/univers-N.jpg)
+- [x] Code de l'agent : plus de mention des armes en mousse (révélait l'univers) ; règle 4 : en cas de blocage, appelez-moi (le maître du jeu aide)
+- [ ] Définir, pour chaque épreuve, le moment où le mot est révélé (ex. fin de l'épreuve, objet ou message trouvé) et l'afficher dans la page d'épreuve
+- [x] Écran final "Mission accomplie" en 4 temps (validé) : 1) vortex final et plan avec les 5 gemmes allumées, 2) retour du chef (texte tapé, mondes à leur place), 3) tampon "Mission accomplie" et rapport clos, 4) mot final à trouver puis félicitations. Confettis rouge/jaune/crème (canvas) et fanfare synthétisée (Web Audio)
 - [ ] Mécanisme final à la Fort Boyard (validé) : chaque épreuve donne un mot, les 5 mots font penser au mot final CLAIRE (clair). Mots validés, dans l'ordre de jeu : Star Wars = OBSCURE (côté obscur ; l'utilisateur a confirmé ce choix après l'avoir remis en question), K-Pop = BRILLANTE (Briller), Montmartre = LUMINEUSE (lumière des peintres), Mousquetaires = NETTE (touche nette sur la cible), Harry Potter = TRANSPARENTE (cape d'invisibilité, potion limpide), accepter "clair" et "claire" comme réponse, encoder la réponse (hash) dans la page
 - [x] Cadeaux à emporter (validé) : diplôme d'agent, pochette de 5 souvenirs, photo d'équipe
 - [x] Modèle de diplôme : html/diplomes.html (A4 paysage, nom, nom de code, spécialité, signature du chef, tampon)

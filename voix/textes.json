@@ -9,30 +9,30 @@
     "file": "briefing-2.mp3",
     "voice": "fr-FR-HenriNeural",
     "rate": "-5%",
-    "text": "Bienvenue au quartier général de l'agence Chronos. Chers agents, une fois de plus, nous faisons appel à vous pour une mission périlleuse. Des perturbations venues de mondes parallèles ont été détectées dans un appartement du dix-huitième arrondissement de Paris. Ces mondes tentent de s'insérer dans notre monde réel. Chaque objet intrus doit retrouver son monde. Vous allez une nouvelle fois traverser les époques pour sauver le monde. Nous comptons sur vous. Bonne chance. Fin de transmission."
+    "text": "Bienvenue au quartier général de l'agence Chronos. Chers agents, une fois de plus, nous faisons appel à vous pour une mission périlleuse. Des perturbations venues de mondes parallèles ont été détectées dans un appartement du dix-huitième arrondissement de Paris. Ces mondes tentent de s'insérer dans notre monde réel et brouillent tout. Chaque monde est tenu ouvert par un mot-clé. Les objets intrus ne sont que des échos : un objet se brise en traversant les mondes, un mot passe partout sans dégât. Rapportez les cinq mots, puis trouvez le mot de passe qui les relie. Celui-là rend tout clair et referme les brèches. Vous allez une nouvelle fois traverser les époques pour sauver le monde. Nous comptons sur vous. Bonne chance. Fin de transmission."
   },
   {
     "file": "briefing-3.mp3",
     "voice": "fr-FR-HenriNeural",
     "rate": "-5%",
-    "text": "Anomalie détectée. Nature : perturbations de mondes parallèles. Localisation : Paris, dix-huitième arrondissement. Effet : des objets de mondes parallèles surgissent. Remède : renvoyer cinq objets de mondes parallèles à leur monde. Statut : actives, sous surveillance."
+    "text": "Anomalie détectée. Nature : perturbations de mondes parallèles. Localisation : Paris, dix-huitième arrondissement. Effet : des objets de mondes parallèles surgissent et brouillent la réalité. Remède : rapporter un mot de chacun des cinq mondes, puis trouver le mot de passe qui les relie. Statut : actives, sous surveillance."
   },
   {
     "file": "briefing-4.mp3",
     "voice": "fr-FR-HenriNeural",
     "rate": "-5%",
-    "text": "Votre mission : renvoyer cinq objets de mondes parallèles à leur monde. Cinq portails vont s'ouvrir, un à la fois. Chaque épreuve réussie renvoie un objet à son monde."
+    "text": "Votre mission : rapporter cinq mots. Cinq portails vont s'ouvrir, un à la fois. Chaque épreuve réussie rapporte un mot."
   },
   {
     "file": "briefing-5.mp3",
     "voice": "fr-FR-HenriNeural",
     "rate": "-5%",
-    "text": "Code de l'agent. Un : équipe soudée, personne ne part seul. Deux : armes en mousse uniquement, sans viser le visage. Trois : objets manipulés avec soin, ils appartiennent à le monde visité. Quatre : en cas de blocage, le chef peut accorder un indice."
+    "text": "Code de l'agent. Un : équipe soudée, personne ne part seul. Deux : les zones marquées zone temporelle instable restent fermées. Trois : objets manipulés avec soin, ils appartiennent au monde visité. Quatre : en cas de blocage, appelez-moi pour que j'essaie de vous aider."
   },
   {
     "file": "briefing-6.mp3",
     "voice": "fr-FR-HenriNeural",
     "rate": "-5%",
-    "text": "Mission lancée. Cinq objets de mondes parallèles vous attendent. Prenez le temps de réfléchir. Bonne chance, agents."
+    "text": "Mission lancée. Cinq mots vous attendent. Prenez le temps de réfléchir. Bonne chance, agents."
   }
 ]

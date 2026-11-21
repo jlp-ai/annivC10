@@ -11,20 +11,24 @@ Statut : brouillon v0. Les éléments marqués **[à valider]** sont des proposi
 - Les enfants reçoivent un badge, un grade et un nom de code (Agent + prénom).
 - Une alerte lance la mission : cinq mondes parallèles tentent de s'insérer dans notre monde réel, dans l'appartement. Un message vidéo du directeur de l'organisation (vidéo IA) explique la situation.
 - Chaque épreuve est une destination : le monde magique, la France des mousquetaires, un concert de chasseurs de démons, une galaxie lointaine, le Montmartre d'autrefois.
-- Le motif : des perturbations venues de mondes parallèles. Des mondes parallèles tentent de s'insérer dans notre monde réel : leurs objets surgissent là où ils n'ont rien à faire. Chaque épreuve réussie renvoie un "objet d'un monde parallèle" à son monde. Les cinq objets renvoyés rétablissent le temps et donnent le code du coffre final.
-- Aucun chrono visible : pas de pression sur les enfants. Le rythme est géré par le maître du jeu (indices, enchaînement des univers). Option douce à valider : une jauge "stabilité du temps" qui monte à chaque objet renvoyé, sans compte à rebours.
+- Le motif : des perturbations venues de mondes parallèles qui tentent de s'insérer dans notre monde réel et brouillent tout.
+- Pourquoi des mots et non des objets : chaque monde est tenu ouvert par un mot-clé. Les objets intrus ne sont que des échos de ce mot. Un objet se brise en traversant les mondes, un mot passe partout sans dégât : c'est la seule chose que les agents peuvent rapporter. Réussir l'épreuve d'un monde dissipe l'écho et livre son mot.
+- Pourquoi un mot final : les cinq mots, ensemble, désignent le mot de passe qui relie les mondes. Prononcé, il rend tout clair et referme les brèches. Mot final : CLAIRE (clair).
+- Aucun chrono visible : pas de pression sur les enfants. Le rythme est géré par le maître du jeu (indices, enchaînement des univers). Option douce à valider : une jauge "stabilité du temps" qui monte à chaque mot rapporté, sans compte à rebours.
 
-Reformulation pour le tableau ci-dessous : "Cinq portails s'ouvrent dans l'appartement. Chaque univers confie à l'équipe un objet d'un monde parallèle à renvoyer à son monde." Les reliques du tableau (fiole, médaillon, cristal, etc.) sont à reformuler en objets de mondes parallèles.
+Cinq portails s'ouvrent dans l'appartement. Chaque univers confie à l'équipe un mot à rapporter (comme à Fort Boyard). Mots dans l'ordre de jeu validé : Star Wars, K-Pop, Montmartre, Mousquetaires, Harry Potter.
 
-| # | Univers | Épreuve | Relique rapportée |
+| Ordre | Univers | Épreuve | Mot rapporté |
 |---|---|---|---|
-| 1 | Harry Potter | Potion à réaliser | Une fiole de potion colorée (la réussite donne un chiffre ou une lettre) |
-| 2 | Mousquetaires | Figure + cible | Un médaillon de mousquetaire |
-| 3 | K-Pop Demon Hunters | Karaoké "N'oubliez pas les paroles" | Un mot clé révélé par les paroles manquantes |
-| 4 | Star Wars | Épreuve dans le noir | Un cristal fluorescent |
-| 5 | Titis de Montmartre | Jeu de piste | Une clé ou le coffre final |
+| 1 | Star Wars | Épreuve dans le noir | OBSCURE (côté obscur) |
+| 2 | K-Pop Demon Hunters | Karaoké "N'oubliez pas les paroles" | BRILLANTE (la chanson Briller) |
+| 3 | Titis de Montmartre | Jeu de piste | LUMINEUSE (lumière des peintres) |
+| 4 | Mousquetaires | Figure + cible | NETTE (touche nette sur la cible) |
+| 5 | Harry Potter | Potion à réaliser | TRANSPARENTE (cape d'invisibilité, potion limpide) |
 
-L'ordre est modifiable. Proposition de rythme : potions (calme, assis) puis mousquetaires (physique) puis K-Pop (chant) puis Star Wars (noir) puis jeu de piste en extérieur (finale).
+Mot de passe final : CLAIRE. Saisie par l'équipe en fin de parcours (indices progressifs en cas d'erreur), puis écran de conclusion.
+
+Ordre validé : Star Wars (bureau), K-Pop (salon, télé), Montmartre (dehors), Mousquetaires (chambre 2), Harry Potter (salon, table).
 
 ---
 
