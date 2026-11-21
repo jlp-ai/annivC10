@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agence Chronos : l'aventure</title>
+<style>
+  :root { --deep: #2a0508; --crimson: #9c1020; --black: #111111; --yellow: #ffe14d; --cream: #fff1d6; --muted: #ffd6d6; --red: #e8142b; --gold: #ffd23f; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { background: linear-gradient(135deg, var(--deep) 0%, var(--crimson) 55%, #d4182b 100%); color: #fff; font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif; overflow: hidden; }
+  body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 5; background: repeating-linear-gradient(0deg, rgba(0,0,0,.08) 0 2px, transparent 2px 4px); }
+
+  .view { position: absolute; inset: 0; display: none; z-index: 1; }
+  .view.active { display: flex; animation: pop .6s cubic-bezier(.2,1.4,.4,1); }
+  @keyframes pop { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: none; } }
+  .center { padding: 5vh 5vw; align-items: center; justify-content: center; text-align: center; }
+  .fit { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; transform-origin: center center; }
+  iframe { border: 0; width: 100%; height: 100%; display: block; background: transparent; }
+
+  .org { background: var(--black); color: var(--yellow); font-weight: bold; letter-spacing: .25em; text-transform: uppercase; font-size: clamp(14px, 2.2vh, 28px); padding: .6vh 1.6vw; border-radius: 999px; margin-bottom: 2.5vh; box-shadow: 0 0 20px rgba(255,210,63,.6); }
+  h1 { margin: 0 0 2vh; font-size: clamp(40px, 9vh, 120px); line-height: 1.05; text-shadow: 4px 4px 0 var(--black); }
+  .sub { font-size: clamp(20px, 3.4vh, 44px); color: var(--muted); margin: 0 0 2vh; }
+  .era { color: var(--muted); font-size: clamp(20px, 3.4vh, 44px); margin: 0 0 3vh; }
+  .room { display: inline-block; background: var(--yellow); color: var(--deep); font-weight: bold; border-radius: 12px; padding: 1vh 2vw; font-size: clamp(22px, 4vh, 52px); }
+  .reveal-art { width: min(52vw, 66vh); aspect-ratio: 4 / 3; border-radius: 18px; overflow: hidden; border: 4px solid var(--cream); box-shadow: 0 0 40px rgba(255,241,214,.4); margin-bottom: 2.5vh; }
+  .reveal-art svg, .reveal-art img { width: 100%; height: 100%; display: block; object-fit: cover; }
+
+  /* plan view */
+  #planView { flex-direction: column; align-items: center; justify-content: center; padding: 3vh 4vw 6vh; gap: 1.5vh; }
+  .alert { background: var(--black); color: var(--yellow); font-weight: bold; letter-spacing: .18em; text-transform: uppercase; font-size: clamp(18px, 3.4vh, 44px); padding: 1vh 2.4vw; border-radius: 999px; border: 3px solid var(--red); animation: blink 1.2s infinite; }
+  @keyframes blink { 50% { box-shadow: 0 0 30px var(--red); } }
+  #planSub { font-size: clamp(18px, 3vh, 38px); color: var(--cream); margin: 0; min-height: 1.3em; text-align: center; }
+  #planWrap { flex: 1; min-height: 0; width: 100%; display: flex; align-items: center; justify-content: center; }
+  #plan { height: 100%; max-width: 100%; filter: drop-shadow(0 0 24px rgba(0,0,0,.6)); }
+  .room-shape { fill: rgba(255,241,214,.10); stroke: var(--cream); stroke-width: 5; stroke-linejoin: round; }
+  .room-shape.ext { stroke-dasharray: 16 10; stroke-width: 4; fill: rgba(255,241,214,.05); }
+  .room-shape.forbid { fill: url(#hatch); stroke: #8a2a30; }
+  .room-shape.hot { fill: rgba(255,210,63,.35); stroke: var(--gold); stroke-width: 7; animation: hot 1.1s infinite alternate; }
+  @keyframes hot { from { fill: rgba(255,210,63,.18); } to { fill: rgba(255,210,63,.5); } }
+  .lbl { fill: var(--cream); font-size: 26px; font-weight: bold; text-anchor: middle; font-family: inherit; }
+  .lbl.small { font-size: 20px; opacity: .8; }
+  .lbl.no { fill: #ff9a9a; font-size: 20px; }
+  .pulse { animation: pulse 1.1s infinite; transform-box: fill-box; transform-origin: center; }
+  @keyframes pulse { 0% { transform: scale(.8); opacity: 1; } 100% { transform: scale(1.6); opacity: 0; } }
+
+  .hud { position: fixed; bottom: 1.5vh; left: 0; right: 0; padding: 0 3vw; font-size: 13px; color: var(--muted); opacity: .6; z-index: 6; }
+
+  /* epreuve placeholder + conclusion */
+  .panel { background: rgba(0,0,0,.35); border: 3px solid var(--cream); border-radius: 18px; padding: 4vh 4vw; max-width: 70vw; }
+  .gems { display: flex; gap: 2vw; justify-content: center; margin: 3vh 0; }
+  .gems svg { width: clamp(50px, 11vh, 120px); height: clamp(50px, 11vh, 120px); animation: pop .6s ease backwards; }
+</style>
+</head>
+<body>
+
+<!-- Introduction : le briefing, embarqué -->
+<section class="view" id="introView"><iframe id="introFrame" title="Briefing"></iframe></section>
+
+<!-- Plan de l'appartement avec la perturbation -->
+<section class="view" id="planView">
+  <div class="alert" id="planAlert">Perturbation d'un monde parallèle détectée</div>
+  <p id="planSub"></p>
+  <div id="planWrap">
+    <svg id="plan" viewBox="105 25 950 860" xmlns="http://www.w3.org/2000/svg" aria-label="Plan de l'appartement et de l'extérieur">
+      <defs>
+        <pattern id="hatch" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="14" height="14" fill="#1a0205"/><line x1="0" y1="0" x2="0" y2="14" stroke="#7a1a22" stroke-width="6"/></pattern>
+        <polygon id="gemShape" points="0,-22 20,-8 12,22 -12,22 -20,-8" />
+      </defs>
+      <path id="r-ext" class="room-shape ext" fill-rule="evenodd" d="M112 32H1048V878H112Z M157 63H1000V787H157Z"/>
+      <text class="lbl small" x="580" y="848">Extérieur : Montmartre</text>
+      <rect x="157" y="63" width="843" height="724" rx="6" fill="rgba(0,0,0,.35)" stroke="#fff1d6" stroke-width="6"/>
+      <rect id="r-chambre2" class="room-shape" x="172" y="80" width="333" height="200"/>
+      <rect class="room-shape forbid" x="513" y="80" width="399" height="200"/>
+      <rect class="room-shape forbid" x="172" y="288" width="98" height="57"/>
+      <rect class="room-shape forbid" x="172" y="352" width="200" height="133"/>
+      <polygon id="r-sejour" class="room-shape" points="275,288 912,288 912,585 678,585 678,615 372,615 372,352 275,352"/>
+      <rect id="r-cuisine" class="room-shape" x="172" y="490" width="200" height="200"/>
+      <rect id="r-bureau" class="room-shape" x="683" y="592" width="229" height="160"/>
+      <rect class="room-shape" x="920" y="80" width="65" height="672" style="fill: rgba(255,241,214,.04)"/>
+      <text class="lbl" x="338" y="185">Chambre 2</text>
+      <text class="lbl no" x="712" y="170">Interdit</text>
+      <text class="lbl no" x="712" y="200">chambre 1</text>
+      <text class="lbl no" x="221" y="322" style="font-size:15px">WC</text>
+      <text class="lbl no" x="272" y="425">Salle de bain</text>
+      <text class="lbl" x="560" y="455">Salon</text>
+      <text class="lbl" x="272" y="595">Cuisine</text>
+      <text class="lbl" x="798" y="680">Bureau</text>
+      <text class="lbl small" x="560" y="640" transform="rotate(0)">Entrée</text>
+      <text class="lbl small" transform="translate(965 420) rotate(90)">Balcon</text>
+      <g id="gems"></g>
+      <g id="marker" style="display:none">
+        <circle class="pulse" r="40" fill="#e8142b"/>
+        <circle r="34" fill="none" stroke="#ffd23f" stroke-width="6" stroke-dasharray="10 8"><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="3s" repeatCount="indefinite"/></circle>
+        <circle r="22" fill="#111"/>
+        <text y="12" text-anchor="middle" font-size="34" font-weight="bold" fill="#ffd23f" font-family="Trebuchet MS, Arial">!</text>
+      </g>
+      <g id="outLabel" style="display:none">
+        <path d="M420 660 L420 770" stroke="#ffd23f" stroke-width="8" stroke-linecap="round" stroke-dasharray="4 14"/>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<!-- Présentation du lieu, après le vortex -->
+<section class="view center" id="lieuView">
+  <div class="fit">
+    <div class="org" id="lieuOrg"></div>
+    <div class="reveal-art" id="lieuArt"></div>
+    <h1 id="lieuName"></h1>
+    <p class="era" id="lieuEra"></p>
+    <div class="room" id="lieuRoom"></div>
+  </div>
+</section>
+
+<!-- Contenu de l'épreuve : page dédiée si elle existe -->
+<section class="view" id="epreuveView"><iframe id="epreuveFrame" title="Épreuve"></iframe></section>
+<section class="view center" id="epreuveEmpty">
+  <div class="fit"><div class="panel">
+    <div class="org" id="emptyOrg"></div>
+    <h1 id="emptyName"></h1>
+    <p class="sub">Épreuve en cours. La page de cette épreuve reste à créer.</p>
+    <p class="sub">Le maître du jeu appuie sur Entrée quand l'objet d'un monde parallèle est renvoyé à son monde.</p>
+  </div></div>
+</section>
+
+<!-- Conclusion -->
+<section class="view center" id="finView">
+  <div class="fit">
+    <div class="org">Agence Chronos</div>
+    <h1>Mission accomplie</h1>
+    <div class="gems" id="finGems"></div>
+    <p class="sub">Les cinq objets de mondes parallèles ont retrouvé leur monde. Chaque monde est à sa place.</p>
+    <p class="sub">Bravo, agents. Le coffre vous attend.</p>
+  </div>
+</section>
+
+<div class="hud">Maître du jeu : Espace = suite (briefing et portail), Entrée = épreuve terminée, ← = retour, Maj + R = tout remettre à zéro, F = plein écran, M = couper le son du saut temporel</div>
+
+<script src="univers-data.js"></script>
+<script src="vortex.js"></script>
+<script>
+  var N = UNIVERS.length;
+  // Marker position on the plan for each zone (SVG coordinates).
+  var ZONES = [
+    { rooms: ["r-sejour"],  x: 560, y: 520, text: "Dans le salon" },
+    { rooms: ["r-chambre2"], x: 338, y: 215, text: "Dans la chambre 2" },
+    { rooms: ["r-sejour"],  x: 790, y: 560, text: "Dans le salon, sur la télé du mur du bureau" },
+    { rooms: ["r-bureau"],  x: 798, y: 640, text: "Dans le bureau" },
+    { rooms: ["r-ext"],     x: 420, y: 830, text: "Dehors, autour de l'appartement", out: true }
+  ];
+  var GEM = '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><polygon points="50,4 90,34 74,92 26,92 10,34" fill="#ffd23f" stroke="#fff1d6" stroke-width="4"/><polygon points="50,4 62,34 38,34" fill="#fff6c9"/><polygon points="10,34 38,34 26,92" fill="#e0a800"/></svg>';
+
+  // Steps: intro, then for each universe plan > lieu > epreuve, then conclusion.
+  var steps = [{ t: "intro" }];
+  // Order of play (indexes in UNIVERS): Star Wars, K-Pop Demon Hunters, Montmartre, Mousquetaires, Harry Potter.
+  var ORDER = [3, 2, 4, 1, 0];
+  for (var u = 0; u < N; u++) { var ui = ORDER[u]; steps.push({ t: "plan", i: ui, p: u }); steps.push({ t: "lieu", i: ui, p: u }); steps.push({ t: "epreuve", i: ui, p: u }); }
+  steps.push({ t: "fin" });
+
+  var KEY = "escape.aventure", cur = 0;
+  try { var s = parseInt(localStorage.getItem(KEY), 10); if (s >= 0 && s < steps.length) cur = s; } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, String(cur)); } catch (e) {} }
+
+  function $(id) { return document.getElementById(id); }
+  function showView(id) {
+    var v = document.querySelectorAll(".view");
+    for (var k = 0; k < v.length; k++) v[k].classList.toggle("active", v[k].id === id);
+    var el = $(id), f = el.querySelector(".fit");
+    if (f) {
+      f.style.transform = "none";
+      var cs = getComputedStyle(el), avail = el.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+      if (f.scrollHeight > avail) f.style.transform = "scale(" + (avail / f.scrollHeight).toFixed(3) + ")";
+    }
+  }
+
+  function setArt(container, i) {
+    container.innerHTML = UNIVERS_ART[i] || "";
+    var img = new Image();
+    img.onload = function () { container.innerHTML = ""; container.appendChild(img); };
+    img.src = "../images/univers-" + (i + 1) + ".jpg";
+  }
+
+  function earnedCount() { var n = 0; for (var k = 0; k < steps.length && k < cur; k++) if (steps[k].t === "epreuve") n++; return n; }
+
+  function renderPlan(i, p) {
+    var z = ZONES[UNIVERS[i].zone];
+    var shapes = document.querySelectorAll(".room-shape");
+    for (var k = 0; k < shapes.length; k++) shapes[k].classList.remove("hot");
+    z.rooms.forEach(function (id) { $(id).classList.add("hot"); });
+    var m = $("marker"); m.style.display = "block"; m.setAttribute("transform", "translate(" + z.x + " " + z.y + ")");
+    $("outLabel").style.display = z.out ? "block" : "none";
+    var g = ""; for (var d = 0; d < p; d++) { var zd = ZONES[UNIVERS[ORDER[d]].zone]; g += '<g transform="translate(' + zd.x + ' ' + zd.y + ')"><use href="#gemShape" fill="#ffd23f" stroke="#fff1d6" stroke-width="4"/></g>'; }
+    $("gems").innerHTML = g;
+    $("planSub").textContent = "Objet venu d'ailleurs " + (p + 1) + " sur " + N + " : " + z.text;
+  }
+
+  function loadFrame(frameId, src) {
+    var f = $(frameId);
+    if (f.getAttribute("data-src") !== src) { f.setAttribute("data-src", src); f.src = src; }
+    f.onload = function () { try { f.contentWindow.focus(); } catch (e) {} };
+    try { f.contentWindow.focus(); } catch (e) {}
+  }
+
+  function render() {
+    save();
+    var st = steps[cur];
+    if (st.t === "intro") { loadFrame("introFrame", "briefing.html"); showView("introView"); }
+    else if (st.t === "plan") { renderPlan(st.i, st.p); showView("planView"); }
+    else if (st.t === "lieu") {
+      var u = UNIVERS[st.i];
+      $("lieuOrg").textContent = "Portail " + (st.p + 1);
+      setArt($("lieuArt"), st.i);
+      $("lieuName").textContent = u.name; $("lieuEra").textContent = u.era; $("lieuRoom").textContent = "Rendez-vous : " + u.room;
+      showView("lieuView");
+    }
+    else if (st.t === "epreuve") {
+      var c = UNIVERS[st.i];
+      if (c.content) { loadFrame("epreuveFrame", c.content); showView("epreuveView"); }
+      else { $("emptyOrg").textContent = c.era; $("emptyName").textContent = c.name; showView("epreuveEmpty"); }
+    }
+    else if (st.t === "fin") {
+      var h = ""; for (var k = 0; k < N; k++) h += GEM; $("finGems").innerHTML = h;
+      showView("finView");
+    }
+  }
+
+  function go(n, withVortex) {
+    if (Vortex.isRunning() || n < 0 || n >= steps.length) return;
+    if (withVortex) Vortex.play({ duration: 2600, onMid: function () { cur = n; render(); } });
+    else { cur = n; render(); }
+  }
+
+  // Next step: the plan > lieu jump is the time jump (vortex).
+  function next() {
+    var st = steps[cur];
+    go(cur + 1, st.t === "plan");
+  }
+
+  window.addEventListener("message", function (e) { if (e.data && e.data.type === "next") next(); });
+
+  document.addEventListener("keydown", function (e) {
+    var t = steps[cur].t;
+    var inFrame = t === "intro" || (t === "epreuve" && UNIVERS[steps[cur].i].content);
+    if (e.key === "m" || e.key === "M") { Vortex.muted = !Vortex.muted; }
+    else if (e.key === "f" || e.key === "F") { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); }
+    else if (e.key === "R" && e.shiftKey) { cur = 0; render(); }
+    else if (e.key === "ArrowLeft" && !inFrame) { go(cur - 1, false); }
+    else if (e.key === "Enter" && t === "epreuve") { next(); }
+    else if ((e.code === "Space" || e.key === "ArrowRight") && !inFrame && t !== "epreuve") { e.preventDefault(); next(); }
+    else if (inFrame) { try { $(t === "intro" ? "introFrame" : "epreuveFrame").contentWindow.focus(); } catch (x) {} }
+  });
+  window.addEventListener("resize", function () { var a = document.querySelector(".view.active"); if (a && a.querySelector(".fit")) showView(a.id); });
+
+  var hh = parseInt(location.hash.slice(1), 10);
+  if (hh >= 0 && hh < steps.length) cur = hh;   // aventure.html#N : step N (tests)
+  render();
+</script>
+</body>
+</html>

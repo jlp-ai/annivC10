@@ -69,7 +69,7 @@
   </div>
 </section>
 
-<div class="hud">Maître du jeu : 1 à 5 ou Espace = ouvrir un portail, Entrée = objet renvoyé à son époque (retour à la vue d'ensemble), Échap = retour, Maj + R = tout remettre à zéro, F = plein écran, M = couper le son du saut temporel</div>
+<div class="hud">Maître du jeu : 1 à 5 ou Espace = ouvrir un portail, Entrée = objet renvoyé à son monde (retour à la vue d'ensemble), Échap = retour, Maj + R = tout remettre à zéro, F = plein écran, M = couper le son du saut temporel</div>
 
 <script src="univers-data.js"></script>
 <script src="vortex.js"></script>
@@ -117,7 +117,7 @@
     }
     var done = state.earned.filter(Boolean).length;
     document.getElementById("overviewSub").textContent =
-      done === N ? "Les cinq objets ont retrouvé leur époque. Le temps est rétabli." : done + " objet" + (done > 1 ? "s renvoyés" : " renvoyé") + " sur " + N + ". Un portail s'ouvre. Où mène-t-il ?";
+      done === N ? "Les cinq objets ont retrouvé leur monde. Chaque monde est à sa place." : done + " objet" + (done > 1 ? "s renvoyés" : " renvoyé") + " sur " + N + ". Un portail s'ouvre. Où mène-t-il ?";
   }
 
   function show(viewId) {

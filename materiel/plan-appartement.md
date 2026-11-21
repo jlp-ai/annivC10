@@ -21,7 +21,7 @@ Hypothèse : "chambre 1" est la pièce marquée "Chambre" sur le plan (en haut �
 ## Règles de jeu
 
 - Aucun indice, objet caché ni construction Lego dans les 3 pièces interdites.
-- Les 3 pièces interdites restent fermées : prévoir un panneau "Zone temporelle instable : accès interdit" sur les portes (cohérent avec les perturbations anachroniques).
+- Les 3 pièces interdites restent fermées : prévoir un panneau "Zone temporelle instable : accès interdit" sur les portes (cohérent avec les perturbations venues de mondes parallèles).
 - Le jeu de piste Montmartre se déroule à l'extérieur de l'appartement (périmètre à définir).
 
 ## Proposition de répartition [à valider]
@@ -36,6 +36,8 @@ Hypothèse : "chambre 1" est la pièce marquée "Chambre" sur le plan (en haut �
 | 5. Titis de Montmartre | Dehors, autour de l'appartement | **Validé** | Jeu de piste en extérieur, départ par l'entrée. |
 
 Le salon accueille donc le briefing, Harry Potter et K-Pop, tous devant la télé : prévoir de remettre en état l'espace entre les épreuves (table des potions à dégager avant le karaoké). La cuisine, le balcon et l'entrée restent sans épreuve : on peut y cacher des indices ou des objets.
+
+Ordre des épreuves (validé) : Star Wars (bureau), K-Pop (salon, télé), Montmartre (dehors), Mousquetaires (chambre 2), Harry Potter (salon, table des potions). Le plan affiché à l'écran comporte aussi l'extérieur (cadre en pointillés) pour l'épreuve Montmartre.
 
 ## À préciser
 

@@ -122,6 +122,7 @@
 
   document.addEventListener("keydown", function (e) {
     if (e.code === "Space" || e.key === "ArrowRight") { e.preventDefault(); revealNext(); }
+    else if (e.key === "Enter" && window.parent !== window) { window.parent.postMessage({ type: "next" }, "*"); }   // epreuve finie, embedded in aventure.html
     else if (e.key === "a" || e.key === "A") { rows.forEach(function (r) { r.classList.add("revealed"); }); }
     else if (e.key === "r" || e.key === "R") { rows.forEach(function (r) { r.classList.remove("revealed"); }); }
   });

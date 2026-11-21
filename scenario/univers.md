@@ -9,12 +9,12 @@ Statut : brouillon v0. Les éléments marqués **[à valider]** sont des proposi
 **Proposition de développement [à valider]** :
 - Nom de l'organisation : "Le Cercle des Chronos" (alternatives : "Les Gardiens du Temps", "L'Ordre du Sablier").
 - Les enfants reçoivent un badge, un grade et un nom de code (Agent + prénom).
-- Une alerte lance la mission : le temps se fissure, cinq époques et univers se mélangent dans l'appartement. Un message vidéo du directeur de l'organisation (vidéo IA) explique la situation.
+- Une alerte lance la mission : cinq mondes parallèles tentent de s'insérer dans notre monde réel, dans l'appartement. Un message vidéo du directeur de l'organisation (vidéo IA) explique la situation.
 - Chaque épreuve est une destination : le monde magique, la France des mousquetaires, un concert de chasseurs de démons, une galaxie lointaine, le Montmartre d'autrefois.
-- Le motif : des perturbations anachroniques. Des objets d'autres époques et d'autres mondes surgissent là où ils n'ont rien à faire. Chaque épreuve réussie renvoie un "objet anachronique" à son époque. Les cinq objets renvoyés rétablissent le temps et donnent le code du coffre final.
+- Le motif : des perturbations venues de mondes parallèles. Des mondes parallèles tentent de s'insérer dans notre monde réel : leurs objets surgissent là où ils n'ont rien à faire. Chaque épreuve réussie renvoie un "objet d'un monde parallèle" à son monde. Les cinq objets renvoyés rétablissent le temps et donnent le code du coffre final.
 - Aucun chrono visible : pas de pression sur les enfants. Le rythme est géré par le maître du jeu (indices, enchaînement des univers). Option douce à valider : une jauge "stabilité du temps" qui monte à chaque objet renvoyé, sans compte à rebours.
 
-Reformulation pour le tableau ci-dessous : "Cinq portails s'ouvrent dans l'appartement. Chaque univers confie à l'équipe un objet anachronique à renvoyer à son époque." Les reliques du tableau (fiole, médaillon, cristal, etc.) sont à reformuler en objets anachroniques.
+Reformulation pour le tableau ci-dessous : "Cinq portails s'ouvrent dans l'appartement. Chaque univers confie à l'équipe un objet d'un monde parallèle à renvoyer à son monde." Les reliques du tableau (fiole, médaillon, cristal, etc.) sont à reformuler en objets de mondes parallèles.
 
 | # | Univers | Épreuve | Relique rapportée |
 |---|---|---|---|

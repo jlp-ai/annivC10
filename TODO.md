@@ -6,10 +6,10 @@ Dernière mise à jour : 2026-11-21 (badges, sons par page, musiques YouTube)
 
 - [x] Nom de l'organisation : Agence Chronos (validé)
 - [x] Portrait du chef (donneur d'ordre) sur le côté de l'intro : SVG v0 avec bouche animée pendant l'écriture. À valider : apparence (homme, lunettes noires, oreillette, cravate rose), nom ("Le Chef" ou un nom de code)
-- [x] Motif de la mission : perturbations anachroniques, cinq objets anachroniques à renvoyer à leur époque (validé ; plus de faille ni d'ancres)
+- [x] Motif de la mission : perturbations venues de mondes parallèles, cinq objets de mondes parallèles à renvoyer à leur monde (validé ; plus de faille ni d'ancres)
 - [ ] Régénérer les MP3 du briefing après changement de texte (voix/textes.json)
-- [x] Pas d'antagoniste : la menace est une anomalie, des perturbations anachroniques (décision 2026-11-21)
-- [ ] Définir l'objet anachronique de chaque univers (ex. un objet d'un autre monde qui apparaît dans la scène) et le geste qui le renvoie à son époque
+- [x] Pas d'antagoniste : la menace est une anomalie, des perturbations venues de mondes parallèles (décision 2026-11-21)
+- [ ] Définir l'objet d'un monde parallèle de chaque univers (ex. un objet d'un autre monde qui apparaît dans la scène) et le geste qui le renvoie à son monde
 - [ ] Créer les éléments d'ambiance : sonnerie d'appel, effet de tampon, animation de perturbation, jingle d'agence (en HTML/Web Audio ou MP3)
 - [x] Prénom de l'anniversaireuse : Claire
 - [x] Rôle de Claire : agente comme les autres (même statut pour tous les enfants, Claire est la star de la fête sans grade particulier)
@@ -37,7 +37,7 @@ Dernière mise à jour : 2026-11-21 (badges, sons par page, musiques YouTube)
 ## Fil rouge et scénario
 
 - [ ] Rédiger le message d'ouverture du directeur de l'organisation
-- [ ] Définir les 5 objets anachroniques (un par univers) et le code final
+- [ ] Définir les 5 objets de mondes parallèles (un par univers) et le code final
 - [ ] Rédiger le déroulé minute par minute
 - [ ] Rédiger les énigmes détaillées avec indices à 3 niveaux (fiches dans enigmes/)
 
@@ -76,7 +76,13 @@ Dernière mise à jour : 2026-11-21 (badges, sons par page, musiques YouTube)
 ## Animation et voix (remplace les vidéos IA)
 
 - [x] Animation de vortex pour les sauts temporels entre univers : html/vortex.js (spirale, anneaux, flash, son Web Audio, 2,6 s), branchée dans portails.html (ouverture d'un portail et retour après objet renvoyé ; M coupe le son)
-- [ ] Brancher le vortex aussi entre le briefing et les portails, et à l'ouverture des pages d'épreuve
+- [x] Page maître de l'aventure : html/aventure.html enchaîne intro (briefing) > plan de l'appartement avec la perturbation > vortex > présentation du lieu > contenu de l'épreuve > plan suivant (gemme sur les lieux terminés) > ... > conclusion. Espace = suite, Entrée = épreuve terminée, ← = retour, Maj + R = reset
+- [x] Ordre des épreuves validé : Star Wars (bureau), K-Pop (salon, télé), Montmartre (dehors), Mousquetaires (chambre 2), Harry Potter (salon, table). Modifiable dans ORDER de aventure.html
+- [x] Plan : l'extérieur est ajouté (cadre en pointillés autour de l'appartement, "Extérieur : Montmartre")
+- [x] Intrigue de fond changée (2026-11-21) : perturbations issues de mondes parallèles qui tentent de s'insérer dans notre monde réel (plus d'"anachronique" ni d'"époque" pour les objets)
+- [ ] Régénérer les MP3 (textes.json a changé : mondes parallèles) et relire les fiches dans scenario/univers.md
+- [ ] Créer les pages d'épreuve manquantes pour aventure.html (Star Wars, K-Pop, Montmartre, Mousquetaires) : Entrée ou postMessage {type:"next"} = épreuve finie
+- [ ] Page de conclusion : ajouter le code du coffre une fois défini
 - [ ] Option inspirée de la série Sliders : variante du vortex en bleu et blanc, objet "Chronomètre" de l'agence (sans compte à rebours visible), à trancher. Ne réutiliser ni images, ni musique, ni noms de la série
 - [ ] Sons et musique par page : chaque page HTML (briefing, portails, potions, K-Pop, Star Wars, jeu de piste, final) embarque ses propres sons et sa musique d'ambiance (fichiers locaux dans audio/, lecture hors ligne, touche M pour couper). Décider : sons synthétisés en Web Audio (sonnerie, tampon, jingle) ou fichiers MP3 libres de droits ; musiques de K-Pop ("Briller", "Ton sauveur") fournies par le maître du jeu
 - [ ] Définir le personnage récurrent du directeur (portrait SVG ou illustration simple en HTML)

@@ -29,7 +29,7 @@ Projet personnel (hors OCTO) : créer le contenu d'un escape game pour l'anniver
 
 - Inspirations : agence d'espionnage des séries animées des années 2000 (appel du chef, dossier confidentiel, gadgets, couleurs pop rose, violet, turquoise) et enquêtes à travers le monde et les époques d'une agence de détectives face à une organisation de voleurs.
 - S'en inspirer sans reprendre de noms ni de personnages protégés : agence inventée (proposition : Agence Chronos).
-- **Aucun ennemi ni méchant** : la menace est une anomalie : des perturbations anachroniques (objets d'autres époques et d'autres mondes qui surgissent). Cinq objets anachroniques sont à renvoyer à leur époque, un par épreuve. Pas de personnage antagoniste.
+- **Aucun ennemi ni méchant** : la menace est une anomalie : des perturbations issues de mondes parallèles qui tentent de s'insérer dans notre monde réel (leurs objets surgissent là où ils n'ont rien à faire). Cinq objets de mondes parallèles sont à renvoyer à leur monde, un par épreuve. Pas de personnage antagoniste.
 - Éléments récurrents : appel entrant, le chef (donneur d'ordre), tampon "Anomalie détectée", rapport d'anomalie, nom de code des agents.
 
 ## Public et ton
