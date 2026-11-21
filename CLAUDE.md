@@ -74,7 +74,7 @@ Anniversaire C/
 
 - Anniversaireuse : **Claire** (10 ans). Elle est une agente comme les autres, sans grade particulier. **Son prénom n'apparaît jamais dans les textes de voix off** (ils sont envoyés à un service externe pour générer les MP3).
 - Agence : **Agence Chronos** (validé).
-- Objet final dans le coffre : à décider.
+- Récompense finale (gâteau, cadeaux ou coffre à cadenas 6 lettres CLAIRE) : à décider.
 - Nombre d'énigmes (6 à 8 visées) et répartition appartement / extérieur.
-- Matériel disponible (cadenas, coffres, lampe UV, etc.).
-- Date de la fête.
+- Matériel disponible : fleurets en mousse confirmés ; cadenas, coffre, lampe UV, draps noirs à vérifier.
+- Date de la fête : **dimanche 6 décembre 2026**.

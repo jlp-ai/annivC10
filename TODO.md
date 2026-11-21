@@ -1,146 +1,68 @@
 # TODO escape game
 
-Dernière mise à jour : 2026-11-21 (badges, sons par page, musiques YouTube)
+Dernière mise à jour : 2026-11-21. **Fête : dimanche 6 décembre 2026** (J-15).
+
+## Priorité haute (cette semaine)
+
+- [ ] Envoyer les invitations : html/print-invitation.html (date renseignée, ajouter heure, lieu, prénoms, heure de fin)
+- [ ] Décider la récompense finale (gâteau, cadeaux ou coffre à cadenas 6 lettres CLAIRE) : l'écran final dit "Votre récompense vous attend"
+- [ ] Test complet de bout en bout sur l'écran réel (lisibilité à 3 mètres, son, enchaînement), sans raccourcis
+- [ ] Servir le dossier en local (`python -m http.server 8000` dans le dossier du projet, puis http://localhost:8000/html/aventure.html) : le lecteur YouTube refuse file://
+- [ ] Imprimer et fabriquer les supports (voir Impressions et Matériel)
 
 ## Décisions à prendre
 
-- [x] Nom de l'organisation : Agence Chronos (validé)
-- [x] Portrait du chef (donneur d'ordre) sur le côté de l'intro : SVG v0 avec bouche animée pendant l'écriture. À valider : apparence (homme, lunettes noires, oreillette, cravate rose), nom ("Le Chef" ou un nom de code)
-- [x] Motif de la mission : perturbations venues de mondes parallèles, cinq mots à rapporter, un par monde (validé ; plus de faille ni d'ancres)
-- [x] MP3 du briefing générés avec Azure (voix fr-FR-HenriNeural) dans audio/briefing-1.mp3 à briefing-7.mp3 ; à réécouter, à régénérer si les textes changent (voix/generate-voices.ps1) ou à refaire avec ElevenLabs pour une voix plus expressive
-- [x] Pas d'antagoniste : la menace est une anomalie, des perturbations venues de mondes parallèles (décision 2026-11-21)
-- [x] (remplacé par les mots) Définir l'objet d'un monde parallèle de chaque univers (ex. un objet d'un autre monde qui apparaît dans la scène) et le geste qui le renvoie à son monde
-- [ ] Créer les éléments d'ambiance : sonnerie d'appel, effet de tampon, animation de perturbation, jingle d'agence (en HTML/Web Audio ou MP3)
-- [x] Prénom de l'anniversaireuse : Claire
-- [x] Rôle de Claire : agente comme les autres (même statut pour tous les enfants, Claire est la star de la fête sans grade particulier)
-- [x] Prénom de Claire exclu des textes de voix off : le chef dit "agents", rien d'envoyé à Azure ou ElevenLabs sur ce point
-- [ ] Prénom de Claire sur les supports non envoyés à un service externe (badge, invitation, écran de fin) : à décider
-- [ ] Date de la fête
-- [ ] Objet final dans le coffre : gâteau ou cadeaux
-- [ ] Ordre des 5 univers
-- [ ] Choix des 2 constructions Lego manquantes, parmi les Lego déjà disponibles dans l'appartement (inventaire à faire ; propositions de départ : Quai 9 3/4, Saule cogneur)
-- [ ] Faire l'inventaire des Lego de l'appartement (sets montés ou à monter) et choisir les 2 constructions + l'objet caché de chacune
-- [ ] Idée Star Wars (proposition : parcours dans le noir + message à l'encre fluorescente)
-- [ ] Périmètre et durée du jeu de piste Montmartre (et plan B pluie)
-- [x] Outil de génération vidéo IA : écarté, tout reste en HTML animé (décision 2026-11-21)
+- [ ] Garder ou non la voix du chef activée par défaut (P la coupe) ; garder la voix Azure ou passer à ElevenLabs (clé et voix dans le .env d'Onirologos)
+- [ ] Image de Montmartre : garder la photo du Sacré-Cœur (images/univers-5.jpg) ou revenir au dessin
+- [ ] Jeu de piste Montmartre : repérage prévu le 22 novembre (périmètre, durée, plan B pluie) ; les enfants trouvent les lettres successives de LUMINEUSE (9 lettres, une par étape, nombre d'étapes libre) ; lieux et énigmes à renseigner dans html/montmartre.html avec la fiche html/print-reperage-montmartre.html
+- [ ] Inventaire des Lego de l'appartement, choix des 2 constructions manquantes (propositions : Quai 9 3/4, Saule cogneur) et de l'objet caché de chacune ; mettre à jour html/potions.html
+- [ ] Prénom de Claire sur les supports non envoyés à un service externe (badge, invitation, écran de fin)
+- [ ] Confirmer que "chambre 1" est la chambre en haut à droite, statuer sur le balcon et l'entrée (jouables ou non)
+- [ ] Option : variante du vortex inspirée de Sliders (bleu et blanc), sans reprendre images, musique ni noms de la série
 
-- [x] Lieux validés : Harry Potter dans le salon (Lego cachés dans tout le salon, potions sur la table du salon), Star Wars dans le bureau, Titis de Montmartre dehors autour de l'appartement
-- [x] KPop Demon Hunters : dans le salon, sur la télé du mur entre le bureau et le séjour
-- [x] Mousquetaires en chambre 2 : validé
-- [ ] Préparer la chambre 2 pour les mousquetaires (dégager la pièce, ranger les objets fragiles et lampes, vérifier la place pour les armes en mousse)
-- [ ] Occulter le bureau pour Star Wars : draps noirs (2 à 3, assez grands pour couvrir la fenêtre sur le balcon, le bas de la porte et les voyants lumineux), fixés avec du ruban adhésif repositionnable ou des pinces, sans abîmer les murs ; tester le noir à la tombée de la nuit ou en journée ; limiter le nombre d'enfants dans la pièce
-- [ ] Protéger la table du salon pour les potions (nappe plastique, plateaux, serviettes)
-- [x] Page de révélation des univers un par un : html/aventure.html (portails.html supprimée, doublon)
-- [ ] Confirmer que "chambre 1" est bien la chambre en haut à droite, et statuer sur le balcon et l'entrée (zone jouable ou non)
-- [ ] Fabriquer des panneaux "Zone temporelle instable : accès interdit" pour la chambre 1, la salle de bain et les WC
+## Pages et code
 
-## Fil rouge et scénario
+- [ ] K-Pop : confirmer à l'oreille les temps des 5 mots cachés (sous-titres automatiques YouTube) et placer le bandeau avec le mode calage (C, T, Y) ; vérifier que l'intégration des 2 vidéos est autorisée
+- [ ] Mousquetaires : renseigner le texte de chaque cible dans CONFIG de html/mousquetaires.html
+- [ ] Potions : mettre à jour html/potions.html (mot TRANSPARENTE, parchemin à l'encre invisible)
+- [ ] Sons : terminer html/sons.js (module synthétisé) et brancher les sons dans toutes les pages (plan dans materiel/audio-plan.md, fichiers libres dans audio/extra/)
+- [ ] Star Wars : déposer audio/musique/marche-imperiale.mp3, vérifier le lancement automatique du son dans le cadre, ambiance sonore sombre
+- [ ] Vraies images pour les 5 univers (images/univers-N.jpg) si les dessins ne plaisent pas
+- [ ] Rédiger le déroulé minute par minute et finaliser les fiches (enigmes/mots-par-epreuve.md)
+- [ ] Relier chaque spécialité des badges à un rôle dans au moins une énigme
+- [ ] Écouter les 7 MP3 du briefing (audio/briefing-1 à 7), régénérer si besoin (voix/generate-voices.ps1 avec les clés en variables d'environnement)
 
-- [ ] Rédiger le message d'ouverture du directeur de l'organisation
-- [x] Les 5 mots et le mot final CLAIRE sont définis
-- [ ] Rédiger le déroulé minute par minute
-- [ ] Rédiger les énigmes détaillées avec indices à 3 niveaux (fiches dans enigmes/)
+## Impressions (pages prêtes dans html/)
 
-## Créations à produire
+- [ ] Badges : html/badges.html, plastifier, cordons, photos, prénoms et noms de code
+- [ ] Diplômes : html/diplomes.html (papier épais)
+- [ ] Invitation : html/print-invitation.html
+- [ ] Panneaux de porte "Zone temporelle instable" : html/print-panneaux.html (chambre 1, salle de bain, WC, extérieur, bureau)
+- [ ] Étiquettes de fioles : html/print-etiquettes.html
+- [ ] Cartes de mots : html/print-cartes-mots.html (7 cartes OBSCURE, 9 lettres LUMINEUSE, 5 lettres N E T T E, parchemin TRANSPARENTE)
+- [ ] Carnet K-Pop : html/print-carnet-kpop.html (un par enfant ou par équipe)
+- [ ] Index et liste d'achats : html/print-index.html
 
-- [x] Modèles de badges : html/badges.html (6 spécialités : Décodeur, Éclaireur, Stratège, Acrobate, Mémoire, Voix ; photo et noms à ajouter à la main)
-- [ ] Imprimer les badges (A4, échelle 100 %, couleurs), plastifier, ajouter un cordon, remplir photos, prénoms et noms de code
-- [ ] Relier les spécialités aux épreuves : chaque spécialité a un rôle dans au moins une énigme (ex. Voix en K-Pop, Acrobate chez les mousquetaires, Éclaireur dans le noir Star Wars, Décodeur et Mémoire aux potions, Stratège au jeu de piste)
-- [ ] Parchemin d'invitation ou convocation (envoi avant la fête)
-- [ ] Carnet de mission ou passeport temporel (tampons à chaque univers)
-- [ ] Étiquettes des flacons d'ingrédients (noms magiques)
-- [ ] Cibles en mousse pour les mousquetaires
-- [ ] Cartes de figures mousquetaires (figure à reproduire)
-- [ ] Paroles à trous pour "N'oubliez pas les paroles" (repères, sans recopier les paroles)
-- [ ] Éléments fluorescents Star Wars (messages, rubans, cristal)
-- [ ] Indices et énigmes du jeu de piste (cachés en extérieur)
-- [ ] Coffre final et cadenas à code
+## Matériel
 
-## Pages HTML (grand écran)
-
-- [x] Parchemin des potions : html/potions.html (v0, à valider avec le mapping définitif)
-- [x] Page de briefing : fusionné dans html/aventure.html (briefing.html supprimé ; v0 : alerte, message du directeur, 5 destinations, code de l'agent, écran de lancement, sans chrono). À valider : nom de l'organisation, textes
-- [x] Illustrations des 5 univers sur les cartes de destination (dessins SVG originaux v0 : château, épées et chapeau, micro, station spatiale et sabre, basilique)
-- [x] Images libres de droits trouvées pour Star Wars (stormtroopers) et Montmartre (Sacré-Cœur) : images/univers-4.jpg et univers-5.jpg
-- [ ] Fournir des images spécifiques pour les univers 1 (Poudlard), 2 (mousquetaires avec rapières), 3 (KPop Demon Hunters) : les banques libres n'en ont pas. À enregistrer depuis les sites officiels (Netflix Tudum, Warner/Wizarding World) ou une recherche d'images, sous images/univers-1.jpg, univers-2.jpg, univers-3.jpg (dessins SVG utilisés en attendant)
-- [x] Correction de la troncature en haut et en bas sur grand écran : le contenu de chaque écran se réduit automatiquement pour tenir dans la fenêtre
-- [ ] Illustrer de la même façon les pages de chaque épreuve (potions, mousquetaires, K-Pop, Star Wars, Montmartre)
-- [ ] Option à trancher : jauge "stabilité du temps" qui monte à chaque mot rapporté, sans compte à rebours (sinon rien)
-- [ ] Page d'accueil / menu du maître du jeu pour enchaîner les 5 univers
-- [ ] Page K-Pop : paroles à trous
-- [ ] Page Star Wars
-- [ ] Page jeu de piste (indices du maître du jeu)
-- [ ] Page finale : code du coffre, félicitations
-- [ ] Tester sur le grand écran réel (lisibilité à 3 mètres, hors ligne)
-
-## Animation et voix (remplace les vidéos IA)
-
-- [x] Animation de vortex pour les sauts temporels entre univers : html/vortex.js (spirale, anneaux, flash, son Web Audio, 2,6 s), branchée dans aventure.html (5,2 s ; M coupe le son)
-- [x] Page maître de l'aventure : html/aventure.html enchaîne intro (briefing) > plan de l'appartement avec la perturbation > vortex > présentation du lieu > contenu de l'épreuve > plan suivant (gemme sur les lieux terminés) > ... > conclusion. Espace = suite, Entrée = épreuve terminée, ← = retour, Maj + R = reset
-- [x] Ordre des épreuves validé : Star Wars (bureau), K-Pop (salon, télé), Montmartre (dehors), Mousquetaires (chambre 2), Harry Potter (salon, table). Modifiable dans ORDER de aventure.html
-- [x] Plan : l'extérieur est ajouté (cadre en pointillés autour de l'appartement, "Extérieur : Montmartre")
-- [x] Intrigue de fond changée (2026-11-21) : perturbations issues de mondes parallèles qui tentent de s'insérer dans notre monde réel (plus d'"anachronique" ni d'"époque" pour les objets)
-- [ ] Régénérer les MP3 (textes.json a changé : mondes parallèles) et relire les fiches dans scenario/univers.md
-- [ ] Créer les pages d'épreuve manquantes pour aventure.html (Star Wars, K-Pop, Montmartre, Mousquetaires) : Entrée ou postMessage {type:"next"} = épreuve finie
-- [x] Justification des mots (2026-11-21) : chaque monde est tenu ouvert par un mot-clé, les objets intrus ne sont que des échos, un objet se brise en traversant les mondes alors qu'un mot passe sans dégât. Intégrée au briefing, aux voix et à scenario/univers.md
-- [x] Écran de saisie du mot de passe avec indices progressifs en cas d'erreur, puis conclusion en 4 temps (plan, chef, tampon, CLAIRE + confettis) dans aventure.html
-- [x] Image Star Wars (foule de stormtroopers) retirée : dessin SVG utilisé en attendant. Fournir de vraies images pour les 5 univers (images/univers-N.jpg)
-- [x] Code de l'agent : plus de mention des armes en mousse (révélait l'univers) ; règle 4 : en cas de blocage, appelez-moi (le maître du jeu aide)
-- [x] Mécanisme de révélation de chaque mot défini : enigmes/mots-par-epreuve.md (Star Wars : 7 cartes UV ; K-Pop : 9 coupures, une lettre chacune ; Montmartre : 4 syllabes ; Mousquetaires : 5 cartes derrière les cibles ; Harry Potter : encre invisible révélée au jus de chou rouge)
-- [x] Chaque épreuve se valide en tapant le mot à l'écran (saisie avec indices progressifs si erreur, accents et majuscules ignorés), puis écran "Mot rapporté"
-- [x] Le briefing ne révèle pas qu'un mot de passe est à trouver avec les 5 mots : annoncé seulement à la fin (écran de saisie du mot de passe)
-- [x] Page d'introduction Star Wars : html/starwars.html (texte bleu, titre qui s'éloigne, texte jaune qui défile en perspective, écran de consigne ; Espace passe l'intro, Entrée ouvre la saisie du mot ; #crawl et #end pour tester). Texte original, sans nom ni logo de la saga
-- [x] portails.html et briefing.html supprimés (briefing fusionné dans aventure.html)
-- [ ] Marche impériale au début de l'épreuve Star Wars (choix de l'utilisateur, usage privé) : déposer le fichier audio/musique/marche-imperiale.mp3 (mp3 de la collection personnelle ; starwars.html le lit au début de l'intro, fondu en sortie, M coupe) ; si le navigateur bloque le son, une touche le lance
-- [ ] Relire le texte du défilement Star Wars, ajouter une ambiance sonore sombre (voir materiel/audio-plan.md), vérifier la durée (environ 1 minute)
-- [x] Plan sonore : materiel/audio-plan.md ; récupération de fichiers libres dans audio/ (voir audio/CREDITS.md quand terminé)
-- [x] Animation et bruitage "Bravo !" à chaque mot trouvé (tampon BRAVO, lettres animées, confettis courts, jingle synthétisé et applaudissements d'audio/extra, M coupe le son)
-- [x] Écran "Mot rapporté" après chaque épreuve (lettres animées) dans aventure.html
-- [ ] Fabriquer les supports de mots : 7 cartes fluo (OBSCURE), 4 cartes syllabes plastifiées (LU MI NEU SE), 5 cartes lettres au dos des cibles (NETTE), parchemin à l'encre invisible (TRANSPARENTE)
-- [ ] Tester l'encre invisible au bicarbonate et au jus de chou rouge, le mot TRANSPARENTE en grosses lettres
-- [x] Mécanisme K-Pop changé (2026-11-21) : mots des paroles cachés par un brouillage visuel et un son coupé pendant les 2 chansons ; les enfants notent les mots cachés, qui forment une phrase menant à BRILLANTE (page kpop.html en cours de refonte, avec mode calage T/Y)
-- [x] Lien YouTube de Ton sauveur reçu : https://www.youtube.com/watch?v=qR2QBgCKRJI
-- [x] Lien YouTube de Briller reçu : https://www.youtube.com/watch?v=EmkWAKFDj_4
-- [ ] Vérifier que l'intégration des deux vidéos YouTube est autorisée (test via http://localhost)
-- [x] Mots cachés choisis (5) : briller, nuit, lumière, forte, éblouit ; définition à trous qui mène à BRILLANTE (ÉCLATANTE, ÉBLOUISSANTE, RAYONNANTE acceptés), carnet html/print-carnet-kpop.html
-- [ ] Confirmer à l'oreille les temps des 5 mots (sous-titres automatiques) et placer le bandeau sur la ligne de paroles avec le mode calage (C, T, Y)
-- [ ] Servir le dossier en local (python -m http.server 8000) pour que le lecteur YouTube fonctionne (il refuse file://)
-- [x] Écran final "Mission accomplie" en 4 temps (validé) : 1) vortex final et plan avec les 5 gemmes allumées, 2) retour du chef (texte tapé, mondes à leur place), 3) tampon "Mission accomplie" et rapport clos, 4) mot final à trouver puis félicitations. Confettis rouge/jaune/crème (canvas) et fanfare synthétisée (Web Audio)
-- [ ] Mécanisme final à la Fort Boyard (validé) : chaque épreuve donne un mot, les 5 mots font penser au mot final CLAIRE (clair). Mots validés, dans l'ordre de jeu : Star Wars = OBSCURE (côté obscur ; l'utilisateur a confirmé ce choix après l'avoir remis en question), K-Pop = BRILLANTE (Briller), Montmartre = LUMINEUSE (lumière des peintres), Mousquetaires = NETTE (touche nette sur la cible), Harry Potter = TRANSPARENTE (cape d'invisibilité, potion limpide), accepter "clair" et "claire" comme réponse, encoder la réponse (hash) dans la page
-- [x] Cadeaux à emporter (validé) : diplôme d'agent, pochette de 5 souvenirs, photo d'équipe
-- [x] Modèle de diplôme : html/diplomes.html (A4 paysage, nom, nom de code, spécialité, signature du chef, tampon)
-- [ ] Imprimer les diplômes (papier épais) et les remplir
-- [ ] Pochette de 5 souvenirs, un par univers : fiole pailletée (Harry Potter), médaille en chocolat (Mousquetaires), bracelet lumineux (K-Pop), bâton fluo (Star Wars), carte postale de Montmartre (jeu de piste). Acheter 4 à 6 exemplaires de chaque, prévoir 4 à 6 pochettes
-- [ ] Photo d'équipe en agents (fond rouge ou écran du plan), impression ou envoi aux parents
-- [ ] Option inspirée de la série Sliders : variante du vortex en bleu et blanc, objet "Chronomètre" de l'agence (sans compte à rebours visible), à trancher. Ne réutiliser ni images, ni musique, ni noms de la série
-- [ ] Sons et musique par page : chaque page HTML (briefing, portails, potions, K-Pop, Star Wars, jeu de piste, final) embarque ses propres sons et sa musique d'ambiance (fichiers locaux dans audio/, lecture hors ligne, touche M pour couper). Décider : sons synthétisés en Web Audio (sonnerie, tampon, jingle) ou fichiers MP3 libres de droits ; musiques de K-Pop ("Briller", "Ton sauveur") fournies par le maître du jeu
-- [ ] Définir le personnage récurrent du directeur (portrait SVG ou illustration simple en HTML)
-- [ ] Ajouter l'écriture progressive du message du directeur dans le briefing
-- [ ] Tester la voix off (touche P) sur l'ordinateur du salon : vérifier qu'une voix française est installée
-- [ ] Choisir le moteur de voix : ElevenLabs (rendu le plus expressif, voix de personnage) ou Azure AI Speech (voix neurales françaises, souvent suffisant)
-- [ ] Choisir la voix du directeur (ElevenLabs : récupérer un voice id ; Azure : fr-FR-HenriNeural proposé dans voix/textes.json)
-- [ ] Générer les MP3 dans audio/ avec voix/generate-voices-elevenlabs.ps1 ou voix/generate-voices.ps1 (clés en variables d'environnement, jamais dans le dossier)
-- [ ] Vérifier le plan et les quotas du compte (ElevenLabs : caractères par mois, usage non commercial ; Azure : palier gratuit)
-- [ ] Écouter chaque MP3 et ajuster les textes (voix/textes.json) avant de régénérer
-- [ ] Utiliser un compte personnel et non un compte Accenture/OCTO pour Azure et ElevenLabs
-- [ ] Voix des autres univers (K-Pop, Star Wars, jeu de piste) : ajouter les textes dans voix/textes.json une fois écrits
-
-## Matériel et logistique
-
-- [ ] Constructions Lego : utiliser celles de l'appartement (pas d'achat), les disperser dans les pièces et choisir les objets cachés
-- [ ] Mettre à jour html/potions.html et scenario/univers.md une fois les 2 constructions et leurs objets choisis
-- [ ] Ingrédients des potions : jus de chou rouge, bicarbonate, citron ou vinaigre, liquide vaisselle, paillettes, colorant
-- [ ] Tester la recette de la potion en conditions réelles
-- [ ] Armes en mousse, sabre laser, sabre en bois
-- [ ] Costumes : mousquetaire (animateur), Saja Boys (3 gats), Huntr/x (3 filles)
-- [ ] Draps noirs pour obscurcir le bureau (Star Wars), ruban adhésif repositionnable ou pinces
-- [ ] Lampe UV, bâtons lumineux, rubans phosphorescents
-- [ ] Musiques de "Briller" et "Ton sauveur" : lues depuis YouTube (décision 2026-11-21). La page K-Pop lance les liens depuis l'HTML (bouton ou touche, ouverture dans un onglet ou lecteur intégré). Exception au mode hors ligne : connexion internet requise pour ces deux pistes. Récupérer les deux URL YouTube, repérer les minutes de coupure pour "N'oubliez pas les paroles", prévoir un plan B (fichiers audio locaux) si le réseau ou les publicités gênent
-- [ ] Écran ou vidéoprojecteur, enceinte, rallonge
-- [ ] Mise en place de l'appartement : plan des cachettes (materiel/)
+- [ ] Star Wars : draps noirs (2 à 3) pour le bureau, ruban adhésif repositionnable ou pinces, lampe UV, bâtons lumineux, rubans phosphorescents, peinture ou marqueur fluorescent, limiter à 3 enfants dans la pièce
+- [ ] Mousquetaires : fleurets en mousse (disponibles, confirmé), 5 cibles en mousse avec les lettres au dos, costume de l'animateur, dégager la chambre 2 (objets fragiles, lampes)
+- [ ] K-Pop : costumes (3 Saja Boys avec gats, 3 Huntr/x), enceinte, internet, ordinateur relié à la télé, crayons
+- [ ] Montmartre : 9 cartes lettres plastifiées (L U M I N E U S E), sacs étanches, adulte accompagnateur par groupe
+- [ ] Harry Potter : Lego (constructions cachées dans le salon), jus de chou rouge, bicarbonate, citron ou vinaigre, liquide vaisselle, paillettes, colorant vert, nappe plastique, tabliers, serviettes, pinceau large ; tester la recette et l'encre invisible avant le jour J
+- [ ] Cadeaux : pochettes de 5 souvenirs (fiole pailletée, médaille en chocolat, bracelet lumineux, bâton fluo, carte postale de Montmartre), 4 à 6 exemplaires de chaque ; photo d'équipe en agents
+- [ ] Écran ou vidéoprojecteur, rallonge, câble HDMI, clavier pour les enfants
+- [ ] Plan de mise en place de l'appartement et des cachettes (materiel/)
 
 ## Fait
 
-- [x] CLAUDE.md du projet
-- [x] Fiches des 5 univers (scenario/univers.md)
-- [x] Fil rouge : voyageurs du temps
+- Fil rouge : Agence Chronos, perturbations de mondes parallèles, un mot rapporté par épreuve (Fort Boyard), mot de passe final CLAIRE, aucun antagoniste, aucun chrono
+- Ordre des épreuves : Star Wars (bureau, OBSCURE), K-Pop (salon, télé, BRILLANTE), Montmartre (dehors, LUMINEUSE trouvée lettre par lettre), Mousquetaires (chambre 2, NETTE), Harry Potter (salon, table, TRANSPARENTE)
+- Page maître html/aventure.html : briefing en 7 écrans avec chef animé et voix, plan avec zones temporelles instables, vortex de saut, lieu, épreuve, saisie du mot avec indices, mot rapporté avec "Bravo", conclusion en 4 temps (plan, chef, tampon, CLAIRE avec confettis et fanfare), départ toujours à zéro, touche H pour masquer l'aide
+- Pages d'épreuve : html/starwars.html (défilement), html/kpop.html (mots cachés par brouillage, calage), html/mousquetaires.html, html/montmartre.html, html/potions.html
+- Voix du chef : MP3 Azure (fr-FR-HenriNeural) dans audio/, textes sans prénom
+- Sons : html/vortex.js, sons synthétisés dans aventure.html, 16 bruitages et 7 musiques libres dans audio/extra/ (crédits dans audio/extra/CREDITS.md)
+- Badges (6 spécialités), diplômes, invitation, panneaux, étiquettes, cartes de mots, carnet K-Pop
+- Liens YouTube : Briller (EmkWAKFDj_4), Ton sauveur (qR2QBgCKRJI) ; 5 mots cachés : briller, nuit, lumière, forte, éblouit
+- portails.html et briefing.html supprimés (fusionnés dans aventure.html)
+- Cadeaux validés : diplôme, pochette de 5 souvenirs, photo d'équipe

@@ -1,15 +1,15 @@
 # Les 5 univers : fiches de travail
 
-Statut : brouillon v0. Les éléments marqués **[à valider]** sont des propositions.
+Statut : fiches de travail. La synthèse validée ci-dessous prime sur les sections détaillées plus bas, qui gardent les idées de départ. Mécanismes détaillés des mots : [enigmes/mots-par-epreuve.md](../enigmes/mots-par-epreuve.md).
 
 ## Fil rouge
 
 **Validé** : chaque enfant est membre d'une organisation secrète de voyageurs du temps.
 
 **Proposition de développement [à valider]** :
-- Nom de l'organisation : "Le Cercle des Chronos" (alternatives : "Les Gardiens du Temps", "L'Ordre du Sablier").
+- Organisation : Agence Chronos (validé).
 - Les enfants reçoivent un badge, un grade et un nom de code (Agent + prénom).
-- Une alerte lance la mission : cinq mondes parallèles tentent de s'insérer dans notre monde réel, dans l'appartement. Un message vidéo du directeur de l'organisation (vidéo IA) explique la situation.
+- Une alerte lance la mission : cinq mondes parallèles tentent de s'insérer dans notre monde réel, dans l'appartement. Le chef explique la situation dans un briefing animé avec voix off.
 - Chaque épreuve est une destination : le monde magique, la France des mousquetaires, un concert de chasseurs de démons, une galaxie lointaine, le Montmartre d'autrefois.
 - Le motif : des perturbations venues de mondes parallèles qui tentent de s'insérer dans notre monde réel et brouillent tout.
 - Pourquoi des mots et non des objets : chaque monde est tenu ouvert par un mot-clé. Un mot traverse les mondes sans se briser : c'est la seule chose que les agents peuvent en rapporter. Réussir l'épreuve d'un monde dissipe l'écho et livre son mot.
@@ -142,10 +142,14 @@ Lampe UV (lumière noire), peinture ou stylo fluorescent, rubans ou cordelettes 
 
 ---
 
-## Prochaines décisions
+## Synthèse validée
 
-1. Valider le fil rouge et l'ordre des univers.
-2. Choisir les deux constructions Lego manquantes.
-3. Choisir l'idée Star Wars.
-4. Préciser le périmètre du jeu de piste.
-5. Choisir l'outil de génération vidéo.
+| Ordre | Univers | Lieu | Mécanisme du mot | Mot |
+|---|---|---|---|---|
+| 1 | Star Wars | bureau, dans le noir | 7 cartes fluo lues à la lampe UV, texte défilant en introduction | OBSCURE |
+| 2 | K-Pop Demon Hunters | salon, télé | karaoké YouTube, 5 mots cachés (brouillage et son coupé), définition à trous | BRILLANTE |
+| 3 | Titis de Montmartre | dehors | jeu de piste, une lettre de LUMINEUSE trouvée à chaque étape (9 lettres, nombre d'étapes libre) | LUMINEUSE |
+| 4 | Mousquetaires | chambre 2 | 5 figures, 5 cibles, cartes lettres N E T T E (fleurets en mousse) | NETTE |
+| 5 | Harry Potter | salon, table | potion et Lego, parchemin à l'encre invisible révélé au jus de chou rouge | TRANSPARENTE |
+
+Mot de passe final : CLAIRE, saisi après les cinq épreuves. Décisions restantes : voir [TODO.md](../TODO.md).
